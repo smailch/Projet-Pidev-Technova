@@ -41,6 +41,17 @@ public class DossierFiscaleService implements IService<DossierFiscale> {
             System.out.println(e.getMessage());
         }
     }
+    public void deleteEntityWithID(int id) {
+        String req = "DELETE FROM DossierFiscale WHERE id = ?";
+        try {
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);
+            pst.setInt(1, id);
+            pst.executeUpdate();
+            System.out.println("Dossier Fiscale Supprimé");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     @Override
     public void updateEntity(DossierFiscale dossierFiscale) {
