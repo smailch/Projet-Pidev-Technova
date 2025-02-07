@@ -1,5 +1,4 @@
 package services;
-
 import com.itextpdf.kernel.color.Color;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -13,14 +12,13 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import entities.DossierFiscale;
-
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class PDFGenerator {
-    public void GeneratePDF(DossierFiscale dossier){
+    public static void GeneratePDF(DossierFiscale dossier){
         String path="dossier_"+dossier.getId()+".pdf";
         try {
             DossierFiscaleService df=new DossierFiscaleService();

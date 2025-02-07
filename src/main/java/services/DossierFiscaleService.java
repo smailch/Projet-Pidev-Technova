@@ -104,7 +104,9 @@ public class DossierFiscaleService implements IService<DossierFiscale> {
         return dossier.getTotalImpot()-dossier.getTotalImpotPaye() ;
     }
     public void ExportPDF(DossierFiscale dossier){
-        PDFGenerator pdf=new PDFGenerator();
-        pdf.GeneratePDF(dossier);
+        PDFGenerator.GeneratePDF(dossier);
+    }
+    public void ExportExcel(String file){
+        ExcelGenerator.exportDossiersToExcel(this.getAllData(),file);
     }
 }

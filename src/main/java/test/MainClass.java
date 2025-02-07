@@ -28,5 +28,6 @@ public class MainClass {
         DocS.addEntity(doc);
         //dossierService.deleteEntity(dossier1);
         dossierService.ExportPDF(dossier);
+        dossierService.ExportExcel("data");
     }
 }
