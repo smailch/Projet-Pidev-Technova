@@ -40,4 +40,8 @@ build/
 
 
 ### Main Class ###
-src/main/java/test/MainClass
+#### src/main/java/test/MainClass
+
+### My connection ###
+
+src/main/java/tools/MyConnection
