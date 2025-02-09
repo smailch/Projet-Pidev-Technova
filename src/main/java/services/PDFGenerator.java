@@ -19,7 +19,7 @@ import java.util.List;
 
 public class PDFGenerator {
     public static void GeneratePDF(DossierFiscale dossier){
-        String path="dossier_"+dossier.getId()+".pdf";
+        String path="dossier_"+dossier.getId()+"_"+dossier.getAnneeFiscale()+".pdf";
         try {
             DossierFiscaleService df=new DossierFiscaleService();
             PdfWriter pdf=new PdfWriter(path);

@@ -38,6 +38,7 @@ public class ExcelGenerator {
             row.createCell(3).setCellValue(dossier.getTotalImpot());
             row.createCell(4).setCellValue(dossier.getTotalImpotPaye());
             row.createCell(5).setCellValue(dossier.getStatus());
+            row.createCell(6).setCellValue(dossier.getDateCreation());
             row.createCell(7).setCellValue(dossier.getMoyenPaiement());
         }
 
