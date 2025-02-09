@@ -5,6 +5,10 @@ import entities.DossierFiscale;
 import services.DocumentAdministratifService;
 import services.DossierFiscaleService;
 import services.PDFGenerator;
+import entities.Lampadaire;
+import entities.Quartier;
+import services.LampadaireService;
+import services.QuartierService;
 import tools.MyConnection;
 
 public class MainClass {
@@ -32,5 +36,16 @@ public class MainClass {
         //dossierService.deleteEntity(dossier1);
         dossierService.ExportPDF(dossier2);
         dossierService.ExportExcel("data");
+
+
+        
+        Lampadaire p=new Lampadaire(3, "Rue de Bourguiba", true, 150.3);
+        Quartier q=new Quartier(2,4,150.0);
+        LampadaireService ps=new LampadaireService();
+        QuartierService qs = new QuartierService();
+        qs.updateEntity(q);
+        //ps.addEntity(p);
+        System.out.println(ps.getAllData());
+        System.out.println(qs.getAllData());
     }
 }
