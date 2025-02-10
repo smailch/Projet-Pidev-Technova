@@ -1,6 +1,4 @@
-package Entities;
-
-import Entities.Role;
+package entities;
 
 import java.util.Date;
 
@@ -11,29 +9,31 @@ public class Utilisateur {
     private String email;
     private Role role;
     private Date dateInscription;
-
-    public Utilisateur(int id) {
+    private String motDePasse;
+    public Utilisateur(int id, String nom, String prenom, String email, Role role, java.sql.Date dateInscription) {
         this.id = id;
     }
 
     public Utilisateur() {
     }
 
-    public Utilisateur(String nom, String prenom, String email, Role role, Date dateInscription) {
+    public Utilisateur(String nom, String prenom, String email, Role role, Date dateInscription, String motDePasse) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.role = role;
         this.dateInscription = dateInscription;
+        this.motDePasse = motDePasse;
     }
 
-    public Utilisateur(int id, String nom, String prenom, String email, Role role, Date dateInscription) {
+    public Utilisateur(int id, String nom, String prenom, String email, Role role, Date dateInscription , String motDePasse) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.role = role;
         this.dateInscription = dateInscription;
+        this.motDePasse = motDePasse;
     }
 
     public int getId() {
@@ -82,6 +82,12 @@ public class Utilisateur {
 
     public void setDateInscription(Date dateInscription) {
         this.dateInscription = dateInscription;
+    }
+    public String getMotDePasse() {
+        return motDePasse;
+    }
+    public void setMotDePasse(String motDePasse) {
+        this.motDePasse = motDePasse;
     }
 
 

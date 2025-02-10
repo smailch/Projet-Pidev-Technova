@@ -1,4 +1,4 @@
-package Interfaces;
+package interfaces;
 import java.util.List;
 public interface IService<T> {
     public void addEntity(T t) ;
