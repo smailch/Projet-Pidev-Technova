@@ -13,7 +13,7 @@ import java.io.IOException;
 public class PDFGenerator {
     public static void generatePDF(DocumentAdministratif doc) {
         // Création du dossier "documents" s'il n'existe pas
-        String directoryPath = "documents";
+        String directoryPath = "./";
         File directory = new File(directoryPath);
         if (!directory.exists()) {
             if (directory.mkdir()) {
