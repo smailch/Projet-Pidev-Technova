@@ -1,38 +1,45 @@
 package test;
 
-import entities.DocumentAdministratif;
-import entities.DossierFiscale;
-import services.DocumentAdministratifService;
-import services.DossierFiscaleService;
-import services.PDFGenerator;
-import entities.Lampadaire;
-import entities.Quartier;
-import services.LampadaireService;
-import services.QuartierService;
-import tools.MyConnection;
+import entities.*;
+import services.*;
 
 public class MainClass {
     public static void main(String[] args){
-        MyConnection mc = MyConnection.getInstance();
 
-        DossierFiscale dossier = new DossierFiscale(1, 9, 2024, 1000.0, 200.0, "En cours", "2025-02-05", "Carte bancaire");
-        DossierFiscale dossier1 = new DossierFiscale(1, 9, 2025, 1000.0, 600.0, "En cours", "2025-02-05", "Carte bancaire");
-        DossierFiscale dossier2 = new DossierFiscale(2, 9, 2025, 100000.0, 10.0, "En cours", "2025-02-05", "cash");
+        //declarations des entites
+        DossierFiscale dossier = new DossierFiscale(1, 13, 2024, 1000.0, 200.0, "En cours", "2025-02-05", "Carte bancaire");
+        DossierFiscale dossier1 = new DossierFiscale(1, 14, 2025, 1000.0, 600.0, "En cours", "2025-02-05", "Carte bancaire");
+        DossierFiscale dossier2 = new DossierFiscale(2, 13, 2025, 100000.0, 10.0, "En cours", "2025-02-05", "cash");
+        DeclarationRevenues dr= new DeclarationRevenues(1,1,200.0,"esprit","2025-06-04","/fichier");
+        DeclarationRevenues dr1= new DeclarationRevenues(1,1,500000,"saraya","2025-06-04","/fichier");
 
+        //declarations des services
         DossierFiscaleService dossierService = new DossierFiscaleService();
+        DeclarationRevenuesService declarationS=new DeclarationRevenuesService();
+
+
+        //delete 1
         dossierService.deleteEntity(dossier1);
         dossierService.deleteEntity(dossier2);
+        declarationS.deleteEntity(dr);
 
+
+        //ajout
         dossierService.addEntity(dossier);
         dossierService.addEntity(dossier2);
+        declarationS.addEntity(dr);
 
+        //mise a jour
         dossierService.updateEntity(dossier1);
-        System.out.println(dossierService.getAllData());
+        declarationS.updateEntity(dr1);
 
-        DocumentAdministratif doc=new DocumentAdministratif(1,1,"Justificatif a domicile","/projet","2025-01-03","validé","pas de remarque");
-        DocumentAdministratifService DocS=new DocumentAdministratifService();
-        DocS.addEntity(doc);
-        //dossierService.deleteEntity(dossier1);
+        //affichage
+        System.out.println(dossierService.getAllData());
+        System.out.println(declarationS.getAllData());
+
+
+
+        //exporter
         dossierService.ExportPDF(dossier2);
         dossierService.ExportExcel("data");
 
