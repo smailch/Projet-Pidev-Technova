@@ -15,25 +15,25 @@ public class MainClass {
         java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
 
         // Création d'une instance de la classe Utilisateur
-        Utilisateur utilisateur = new Utilisateur(11,"mourad ", "Missaoui", "missaoui.mourad@esprit.tn", Role.Admin, sqlDate, "123456");
+        Utilisateur utilisateur = new Utilisateur(11,"ismail ", "chaabane", "ichaabane6@gmail.com", Role.Admin, sqlDate, "123456");
 
         // Création d'une instance de UtilisateurService
         UtilisateurService utilisateurService = new UtilisateurService();
 
         // Ajouter un utilisateur avec la méthode addEntity (utilisant PreparedStatement)
-        //utilisateurService.addEntity(utilisateur);
+        utilisateurService.addEntity(utilisateur);
 
         // Envoyer un email après l'ajout de l'utilisateur
-        //utilisateurService.EnvoyerEmail(utilisateur);  // 🔥 Appel de la méthode d'envoi d'email
+        utilisateurService.EnvoyerEmail(utilisateur);  // 🔥 Appel de la méthode d'envoi d'email
 
         // Mettre à jour un utilisateur
         //utilisateur.setNom("NouveauNom");
        // utilisateurService.updateEntity(utilisateur);
-        utilisateurService.deleteEntity(utilisateur);
+        //utilisateurService.deleteEntity(utilisateur);
 
         // UtilisateurService utilisateurService = new UtilisateurService();
 
-        String email = "jihadd.ch@esprit.tn";
+        String email = "chaabane.ismail@esprit.tn";
         String motDePasse = "123456";
 
         Utilisateur utilisateurConnecte = utilisateurService.connexion(email, motDePasse);

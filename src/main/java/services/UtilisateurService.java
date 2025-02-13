@@ -154,7 +154,7 @@ public class UtilisateurService implements IService<Utilisateur> {
         String host = "smtp.gmail.com"; // Serveur SMTP Gmail
 
         // 🖼 Chemin du logo (⚠️ Vérifiez que l'image existe)
-        String imagePath = "C:\\Users\\chemlali smail\\OneDrive\\Bureau\\ProjetPI\\ProjetPiDev - Copie\\Images\\logo.png";
+        String imagePath = "C:\\Users\\chemlali smail\\OneDrive\\Bureau\\ProjetPI\\ProjetPiDev\\Images\\logo.png";
 
         // Configuration SMTP
         Properties props = new Properties();
@@ -296,7 +296,9 @@ public class UtilisateurService implements IService<Utilisateur> {
                     System.out.println("Utilisateur connecté : " + utilisateur.getNom() + " " + utilisateur.getPrenom());
 
                     // Génération du JWT
+
                     String jwtToken = jwtService.generateToken(utilisateur);
+
                     System.out.println("JWT Token : " + jwtToken);
 
                 } else {
