@@ -8,17 +8,25 @@ import entities.Quartier;
 import services.LampadaireService;
 import services.QuartierService;
 import tools.MyConnection;
+
+import java.util.Calendar;
 import java.util.List;
 
 public class MainClass {
     public static void main(String[] args){
-        //FXMLLoader loader=new FXMLLoader(ge)
+        //ajout d'utilisateur
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
+        Utilisateur utilisateur = new Utilisateur(16,"ismail ", "chaabane", "ichaabane66@gmail.com", Role.Admin, sqlDate, "123456");
+        UtilisateurService utilisateurService = new UtilisateurService();
+        utilisateurService.addEntity(utilisateur);
 
-        //declarations des entites
-        DossierFiscale dossier = new DossierFiscale(1, 13, 2024, 1000.0, 200.0, "En cours", "2025-02-05", "Carte bancaire");
-        DossierFiscale dossier1 = new DossierFiscale(1, 14, 2025, 1000.0, 600.0, "En cours", "2025-02-05", "Carte bancaire");
-        DossierFiscale dossier2 = new DossierFiscale(2, 13, 2025, 100000.0, 10.0, "En cours", "2025-02-05", "cash");
-        DossierFiscale dossier3 = new DossierFiscale(3, 13, 2025, 100000.0, 10.0, "En cours", "2025-02-05", "cash");
+        // Ajouter un utilisateur avec la méthode addEntity (utilisant PreparedStatement)
+        utilisateurService.addEntity(utilisateur);        //declarations des entites
+        DossierFiscale dossier = new DossierFiscale(1, 15, 2024, 1000.0, 200.0, "En cours", "2025-02-05", "Carte bancaire");
+        DossierFiscale dossier1 = new DossierFiscale(1, 16, 2025, 1000.0, 600.0, "En cours", "2025-02-05", "Carte bancaire");
+        DossierFiscale dossier2 = new DossierFiscale(2, 15, 2025, 100000.0, 10.0, "En cours", "2025-02-05", "cash");
+        DossierFiscale dossier3 = new DossierFiscale(3, 16, 2025, 100000.0, 10.0, "En cours", "2025-02-05", "cash");
         DeclarationRevenues dr= new DeclarationRevenues(1,1,200.0,"esprit","2025-06-04","/fichier");
         DeclarationRevenues dr1= new DeclarationRevenues(1,1,500000,"saraya","2025-06-04","/fichier");
 

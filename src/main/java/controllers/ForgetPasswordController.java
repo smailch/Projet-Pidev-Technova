@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class ForgetPasswordController {
@@ -35,11 +36,6 @@ public class ForgetPasswordController {
             lblErrors.setText("Please enter your email.");
             return;
         }
-
-        // Implement the password reset logic here
-        // For example, send a reset email or validate the email.
-        // Show success or error messages accordingly.
-
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Password Reset");
         alert.setHeaderText(null);
@@ -47,24 +43,17 @@ public class ForgetPasswordController {
         alert.showAndWait();
     }
 
-    // Handle Return to Login
     @FXML
     private void handleReturnToLogin(Event event) {
         // Get the current stage
-        Stage stage = (Stage) btnReturnToLogin.getScene().getWindow();
+        Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
-        // Load the Login page FXML
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
-            Parent root = loader.load();  // Load the FXML file into a Parent object
+        // Create custom title bar
+        HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
 
-            // Set the scene with the loaded root node
-            Scene loginScene = new Scene(root);
-            stage.setScene(loginScene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // Switch to the login page
+        NavigationUtils.switchPage("/Login.fxml", currentStage, titleBar);
     }
+
 
 }

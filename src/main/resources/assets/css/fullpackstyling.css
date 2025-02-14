@@ -1,6 +1,6 @@
 /* Global Styles */
 * {
-    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-font-family: 'Roboto', 'Open Sans', 'Lato', Arial, sans-serif;
     -fx-font-size: 14px;
     -fx-base: #FFF;
 }
@@ -129,6 +129,7 @@
     -fx-border-color: derive(-fx-pie-color, 1%);
     -fx-border-width: 0px;
 }
+
 /* Sidebar styles */
 .nav-button {
     -fx-background-color: transparent;
@@ -156,9 +157,6 @@
     -fx-text-fill: white;
     -fx-background-color: #7F8C8D;
 }
-
-/* Button hover effect */
-
 
 /* Main Content */
 hbox {

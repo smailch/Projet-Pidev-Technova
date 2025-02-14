@@ -1,10 +1,10 @@
 package controllers;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import entities.Utilisateur;
+import javafx.event.ActionEvent;
+import javafx.scene.layout.HBox;
+import services.JwtService;
+import services.UtilisateurService;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -25,10 +25,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import tools.MyConnection;
 
-/**
- *
- * @author oXCToo
- */
 public class LoginController implements Initializable {
 
     @FXML
@@ -43,54 +39,42 @@ public class LoginController implements Initializable {
     @FXML
     private Button btnSignin;
 
-    /// --
+    private UtilisateurService utilisateurService;
+    private JwtService jwtService;
+
     Connection con = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
     @FXML
-
     public void handleButtonAction(MouseEvent event) {
         if (event.getSource() == btnSignin) {
-            //login here
-            String loginStatus = logIn();
-            if (loginStatus.equals("Success")) {
-                try {
-                    Node node = (Node) event.getSource();
-                    Stage stage = (Stage) node.getScene().getWindow();
-                    stage.close();
-                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/AjouterUser.fxml")));
-                    stage.setScene(scene);
-                    stage.show();
-                } catch (IOException ex) {
-                    System.err.println("Error loading the scene: " + ex.getMessage());
-                    setLblError(Color.TOMATO, "Failed to load next screen");
-                }
+            Utilisateur utilisateur = logIn();
+            if (utilisateur != null) {
+                Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+                HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
+                NavigationUtils.switchPage("/ForgetPassword.fxml", currentStage, titleBar);
             }
         }
     }
+
+    @FXML
     public void redirectToForgotPassword(MouseEvent event) {
-        try {
-            // Load the ForgetPassword.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ForgetPassword.fxml"));
-            Scene scene = new Scene(loader.load());
+        Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
-            // Get the current stage and set the new scene
-            Stage currentStage = (Stage) ((Label) event.getSource()).getScene().getWindow();
-            currentStage.setScene(scene);
+        // Create custom title bar
+        HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
 
-            // Optionally, set the title or perform other stage customizations
-            currentStage.setTitle("Forgot Password");
-        } catch (Exception e) {
-            e.printStackTrace();  // Handle the error gracefully
-        }
+        // Switch to the login page
+        NavigationUtils.switchPage("/ForgetPassword.fxml", currentStage, titleBar);
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        utilisateurService = new UtilisateurService();
+        jwtService = new JwtService();
+        con = MyConnection.getInstance().getCnx();
+
         if (con == null) {
             lblErrors.setTextFill(Color.TOMATO);
             lblErrors.setText("Server Error : Check");
@@ -100,39 +84,24 @@ public class LoginController implements Initializable {
         }
     }
 
-    public LoginController() {
-        con = MyConnection.getInstance().getCnx();
-    }
-
-    //we gonna use string to check for status
-    private String logIn() {
-        String status = "Success";
+    private Utilisateur logIn() {
         String email = txtUsername.getText();
         String password = txtPassword.getText();
-        if(email.isEmpty() || password.isEmpty()) {
-            setLblError(Color.TOMATO, "Empty credentials");
-            status = "Error";
-        } else {
-            //query
-            String sql = "SELECT * FROM utilisateur Where email = ? and motDePasse = ?";
-            try {
-                preparedStatement = con.prepareStatement(sql);
-                preparedStatement.setString(1, email);
-                preparedStatement.setString(2, password);
-                resultSet = preparedStatement.executeQuery();
-                if (!resultSet.next()) {
-                    setLblError(Color.TOMATO, "Enter Correct Email/Password");
-                    status = "Error";
-                } else {
-                    setLblError(Color.GREEN, "Login Successful..Redirecting..");
-                }
-            } catch (SQLException ex) {
-                System.err.println(ex.getMessage());
-                status = "Exception";
-            }
+
+        if (email.isEmpty() || password.isEmpty()) {
+            setLblError(Color.TOMATO, "⚠️ Email et mot de passe requis !");
+            return null;
         }
 
-        return status;
+        Utilisateur utilisateur = utilisateurService.connexion(email, password);
+
+        if (utilisateur == null) {
+            setLblError(Color.TOMATO, "❌ Email ou mot de passe incorrect.");
+        } else {
+            setLblError(Color.GREEN, "✅ Connexion réussie !");
+        }
+
+        return utilisateur;
     }
 
     private void setLblError(Color color, String text) {
@@ -140,4 +109,16 @@ public class LoginController implements Initializable {
         lblErrors.setText(text);
         System.out.println(text);
     }
+    @FXML
+    public void redirectToSignUp(MouseEvent event) {
+        Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+        // Create custom title bar
+        HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
+
+        // Switch to the login page
+        NavigationUtils.switchPage("/SignUp.fxml", currentStage, titleBar);
+    }
+
+
 }
