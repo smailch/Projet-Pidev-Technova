@@ -15,7 +15,7 @@ public class MainClass {
         java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
 
         // Création d'une instance de la classe Utilisateur
-        Utilisateur utilisateur = new Utilisateur(11,"ismail ", "chaabane", "ichaabane6@gmail.com", Role.Admin, sqlDate, "123456");
+        Utilisateur utilisateur = new Utilisateur("ismail ", "chaabane", "ichaabane6@gmail.com", Role.Admin, sqlDate, "123456");
 
         // Création d'une instance de UtilisateurService
         UtilisateurService utilisateurService = new UtilisateurService();

@@ -63,6 +63,7 @@ public class LoginController implements Initializable {
 
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/ForgetPassword.fxml"));
                     Scene scene = new Scene(loader.load());
+
                     stage.setScene(scene);
                     stage.show();
                 } catch (IOException ex) {
@@ -76,7 +77,7 @@ public class LoginController implements Initializable {
     @FXML
     public void redirectToForgotPassword(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ForgetPassword.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionutilisateurs.fxml"));
             Scene scene = new Scene(loader.load());
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.setScene(scene);

@@ -10,7 +10,7 @@ public class Utilisateur {
     private Role role;
     private Date dateInscription;
     private String motDePasse;
-    public Utilisateur(int id, String nom, String prenom, String email, Role role, java.sql.Date dateInscription) {
+    public Utilisateur(int id, String nom, String prenom, String email, java.sql.Date role, String dateInscription) {
         this.id = id;
     }
 

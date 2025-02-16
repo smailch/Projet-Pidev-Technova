@@ -1,80 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 <?import javafx.collections.FXCollections?>
-<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="900.0" style="-fx-background-color: #f0f0f5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignUpController">
+<?import java.lang.String?>
 
+<AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="787.0" style="-fx-background-color: #f0f0f5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignUpController">
     <children>
-        <!-- Left panel with branding and image -->
-        <AnchorPane prefHeight="550.0" prefWidth="392.0" style="-fx-background-color: #6200ea;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <!-- Left panel with branding -->
+        <AnchorPane layoutY="-10.0" prefHeight="593.0" prefWidth="404.0" style="-fx-background-color: #6200ea;">
             <children>
-                <ImageView fitHeight="261.0" fitWidth="259.0" layoutX="61.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="193.0" fitWidth="250.0" layoutX="86.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="/assets/images/logo.png" />
+                        <Image url="@assets/images/logo.png" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="62.0" layoutY="313.0" prefHeight="30.0" prefWidth="268.0" text="Gestion de la Ville Intelligente" textFill="WHITE">
+                <Label alignment="CENTER" layoutX="79.0" layoutY="377.0" prefHeight="30.0" prefWidth="240.0" text="Gestion de la Ville Intelligente" textFill="WHITE">
                     <font>
-                        <Font name="Roboto" size="20.0" />
+                        <Font name="Roboto" size="16.0" />
                     </font>
                 </Label>
             </children>
         </AnchorPane>
 
         <!-- Right panel with sign-up form -->
-        <Pane layoutX="450.0" layoutY="20.0" prefHeight="510.0" prefWidth="400.0">
+        <VBox alignment="TOP_CENTER" layoutX="412.0" layoutY="14.0" prefHeight="538.0" prefWidth="361.0" spacing="10" style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 10px; -fx-border-color: #ccc; -fx-border-radius: 10px;">
             <children>
-                <Label alignment="CENTER" layoutX="50.0" layoutY="10.0" prefHeight="30.0" prefWidth="300.0" text="Créer un compte" textFill="#6200ea">
-                    <font>
-                        <Font size="24.0" />
-                    </font>
-                </Label>
+                <!-- Title -->
+                <Label alignment="CENTER" prefHeight="25.0" prefWidth="250.0" text="Créer un compte" textFill="#6200ea" style="-fx-font-size: 22px; -fx-font-weight: bold;" />
 
-                <!-- User Fields -->
-                <TextField fx:id="txtNom" layoutX="50.0" layoutY="60.0" prefHeight="34.0" prefWidth="300.0" promptText="Nom" />
-                <TextField fx:id="txtPrenom" layoutX="50.0" layoutY="100.0" prefHeight="34.0" prefWidth="300.0" promptText="Prénom" />
-                <TextField fx:id="txtEmail" layoutX="50.0" layoutY="140.0" prefHeight="34.0" prefWidth="300.0" promptText="Email" onKeyReleased="#onEmailKeyReleased"/>
-                <ComboBox fx:id="comboRole" layoutX="50.0" layoutY="180.0" prefHeight="34.0" prefWidth="300.0">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="Utilisateur" />
-                            <String fx:value="Admin" />
-                        </FXCollections>
-                    </items>
-                </ComboBox>
-                <DatePicker fx:id="dateInscription" layoutX="
+                <!-- Form Fields -->
+                <VBox alignment="CENTER" spacing="8">
+                    <children>
+                        <!-- Nom -->
+                        <VBox spacing="3">
+                            <children>
+                                <Label fx:id="lblErrorNom" style="-fx-font-size: 11px; -fx-text-fill: red;" />
+                                <TextField fx:id="txtNom" prefHeight="34.0" prefWidth="275.0" promptText="Nom" style="-fx-background-color: #f0f0f5; -fx-border-radius: 25px; -fx-border-color: #ccc; -fx-padding: 5px;" />
+                            </children>
+                        </VBox>
 
+                        <!-- Prénom -->
+                        <VBox spacing="3">
+                            <children>
+                                <Label fx:id="lblErrorPrenom" style="-fx-font-size: 11px; -fx-text-fill: red;" />
+                                <TextField fx:id="txtPrenom" prefHeight="34.0" prefWidth="275.0" promptText="Prénom" style="-fx-background-color: #f0f0f5; -fx-border-radius: 25px; -fx-border-color: #ccc; -fx-padding: 5px;" />
+                            </children>
+                        </VBox>
 
-               50.0" layoutY="220.0" prefHeight="34.0" prefWidth="300.0" promptText="Date d'inscription" />
+                        <!-- Email -->
+                        <VBox spacing="3">
+                            <children>
+                                <Label fx:id="lblErrorEmail" style="-fx-font-size: 11px; -fx-text-fill: red;" />
+                                <TextField fx:id="txtEmail" prefHeight="34.0" prefWidth="275.0" promptText="Email" style="-fx-background-color: #f0f0f5; -fx-border-radius: 25px; -fx-border-color: #ccc; -fx-padding: 5px;" />
+                            </children>
+                        </VBox>
 
-                <!-- Password Fields -->
-                <PasswordField fx:id="txtPassword" layoutX="50.0" layoutY="260.0" prefHeight="34.0" prefWidth="300.0" promptText="Mot de passe" />
-                <PasswordField fx:id="txtConfirmPassword" layoutX="50.0" layoutY="300.0" prefHeight="34.0" prefWidth="300.0" promptText="Confirmer le mot de passe" />
+                        <!-- Role -->
+                        <VBox spacing="3">
+                            <children>
+                                <Label fx:id="lblErrorRole" style="-fx-font-size: 11px; -fx-text-fill: red;" />
+                                <ComboBox fx:id="comboRole" prefHeight="34.0" prefWidth="275.0" style="-fx-background-color: #f0f0f5; -fx-border-radius: 25px; -fx-border-color: #ccc; -fx-padding: 5px;">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="Admin" />
+                                            <String fx:value="Citoyen" />
+                                            <String fx:value="Employé" />
+                                        </FXCollections>
+                                    </items>
+                                    <value>
+                                        <String fx:value="selection Role ..." />
+                                    </value>
+                                </ComboBox>
+                            </children>
+                        </VBox>
 
-                <!-- Password Strength Bar (Modern and Professional Style) -->
-                <ProgressBar fx:id="passwordStrengthBar" layoutX="50.0" layoutY="340.0" prefHeight="12.0" prefWidth="300.0" style="
-                    -fx-background-color: #eeeeee;
-                    -fx-background-radius: 6px;
-                    -fx-accent: linear-gradient(from 0% 0% to 100% 0%, #00796b, #004d40);
-                    -fx-border-radius: 6px;
-                    -fx-border-color: #004d40;
-                    -fx-border-width: 1px;
-                    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 6, 0, 0, 2);" />
+                        <!-- Password -->
+                        <VBox spacing="3">
+                            <children>
+                                <Label fx:id="lblErrorPassword" style="-fx-font-size: 11px; -fx-text-fill: red;" />
+                                <PasswordField fx:id="txtPassword" prefHeight="34.0" prefWidth="275.0" promptText="Mot de passe" style="-fx-background-color: #f0f0f5; -fx-border-radius: 25px; -fx-border-color: #ccc; -fx-padding: 5px;" />
+                            </children>
+                        </VBox>
+
+                        <!-- Confirm Password -->
+                        <VBox spacing="3">
+                            <children>
+                                <Label fx:id="lblErrorConfirmPassword" style="-fx-font-size: 11px; -fx-text-fill: red;" />
+                                <PasswordField fx:id="txtConfirmPassword" prefHeight="34.0" prefWidth="275.0" promptText="Confirmer" style="-fx-background-color: #f0f0f5; -fx-border-radius: 25px; -fx-border-color: #ccc; -fx-padding: 5px;" />
+                            </children>
+                        </VBox>
+
+                        <!-- Password Strength Bar -->
+                        <ProgressBar fx:id="passwordStrengthBar" prefHeight="10.0" prefWidth="275.0" />
+                    </children>
+                </VBox>
 
                 <!-- Sign Up Button -->
-                <Button fx:id="btnSignUp" layoutX="130.0" layoutY="370.0" prefHeight="34.0" prefWidth="140.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 25px;" text="S'inscrire" onAction="#onSignUpButtonClicked"/>
+                <Button fx:id="btnSignUp" onAction="#onSignUpButtonClicked" prefHeight="34.0" prefWidth="137.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold;" text="S'inscrire" />
 
                 <!-- Already have an account -->
-                <Label fx:id="btnAlreadyAccount" alignment="CENTER" layoutX="95.0" layoutY="420.0" prefHeight="23.0" prefWidth="200.0" style="-fx-font-size: 12px; -fx-cursor: hand;" text="Vous avez déjà un compte ?" textFill="#00796b" />
+                <Label fx:id="btnAlreadyAccount" alignment="CENTER" style="-fx-font-size: 12px; -fx-cursor: hand; -fx-text-fill: #00796b;" text="Vous avez déjà un compte ?" onMouseClicked="#redirectToLogin"/>
 
-                <!-- Error Message Label -->
-                <Label fx:id="lblErrors" alignment="CENTER" layoutX="50.0" layoutY="450.0" prefHeight="23.0" prefWidth="300.0" style="-fx-font-size: 10px; -fx-font-weight: bold;" textFill="#ff6354" />
             </children>
-        </Pane>
+        </VBox>
     </children>
 </AnchorPane>
