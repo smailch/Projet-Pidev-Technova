@@ -53,7 +53,7 @@ public class LoginController implements Initializable {
             if (utilisateur != null) {
                 Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
                 HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
-                NavigationUtils.switchPage("/ForgetPassword.fxml", currentStage, titleBar);
+                NavigationUtils.switchPage("/Sample.fxml", currentStage, titleBar);
             }
         }
     }

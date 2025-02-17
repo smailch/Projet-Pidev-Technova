@@ -18,7 +18,7 @@
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" minHeight="600.0" minWidth="800.0" maxHeight="600.0" maxWidth="800" style="-fx-background-color: #f0f0f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignUpController">
     <children>
         <!-- Left panel with branding and image -->
-        <AnchorPane prefHeight="550.0" prefWidth="400.0" style="-fx-background-color: #6200ea;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane prefHeight="503.0" prefWidth="400.0" style="-fx-background-color: linear-gradient(to bottom, #512da8, #673ab7);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <ImageView fitHeight="261.0" fitWidth="259.0" layoutX="61.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -69,5 +69,17 @@
                 </Label>
             </children>
         </Pane>
+        <!-- Footer Texts -->
+        <Label alignment="CENTER" layoutX="408.0" layoutY="563.0" prefHeight="23.0" prefWidth="213.0" text="© 2025 TechNova. Tous droits réservés." textFill="#5b5a5a" AnchorPane.bottomAnchor="14.0">
+            <font>
+                <Font name="Roboto" size="12.0" />
+            </font>
+        </Label>
+
+        <Label alignment="CENTER" layoutX="667.0" layoutY="563.0" prefHeight="23.0" prefWidth="119.0" text="Design par TechNova" textFill="#a6b1cc" AnchorPane.bottomAnchor="14.0">
+            <font>
+                <Font name="Roboto" size="12.0" />
+            </font>
+        </Label>
     </children>
 </AnchorPane>

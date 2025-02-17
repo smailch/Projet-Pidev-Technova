@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
+import javafx.scene.layout.StackPane;
+
 import java.io.IOException;
 
 public class NavigationUtils {
@@ -74,15 +76,16 @@ public class NavigationUtils {
     }
 
     private static StackPane createCircleButton(Color color, Runnable action) {
-        Circle circle = new Circle(5, color);
+        Circle circle = new Circle(7, color);
         StackPane buttonContainer = new StackPane(circle);
         buttonContainer.setPadding(new Insets(0)); // No extra padding
         buttonContainer.setOnMouseClicked(e -> action.run());
 
         // Hover effect: Slightly increase size
-        buttonContainer.setOnMouseEntered(e -> circle.setRadius(6));
-        buttonContainer.setOnMouseExited(e -> circle.setRadius(5));
+        buttonContainer.setOnMouseEntered(e -> circle.setRadius(7.2));
+        buttonContainer.setOnMouseExited(e -> circle.setRadius(7));
 
         return buttonContainer;
     }
+
 }
