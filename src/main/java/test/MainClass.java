@@ -1,24 +1,14 @@
 package test;
 
 import entities.*;
-import javafx.fxml.FXMLLoader;
 import services.*;
-import entities.Lampadaire;
-import entities.Quartier;
-import services.LampadaireService;
-import services.QuartierService;
 import entities.AssistantDocumentaire;
 import entities.DocumentAdministratif;
 import entities.Validation;
 import services.AssistantDocumentaireService;
 import services.DocumentAdministratifService;
 import services.ValidationService;
-import services.PDFGenerator;
-import services.ExcelGenerator;
-import tools.MyConnection;
-
 import java.util.Calendar;
-import java.util.List;
 
 public class MainClass {
     public static void main(String[] args){
@@ -48,8 +38,8 @@ public class MainClass {
         AssistantDocumentaireService assistantService = new AssistantDocumentaireService();
 
         // 📌 Création de documents administratifs
-        DocumentAdministratif doc1 = new DocumentAdministratif(1, 1, "Justificatif de domicile", "/projet/docs", "2025-01-03", "Validé", "Aucune remarque");
-        DocumentAdministratif doc2 = new DocumentAdministratif(2, 1, "Permis de travail", "/projet/docs", "2025-02-10", "En attente", "Vérification en cours");
+        DocumentAdministratif doc1 = new DocumentAdministratif(1,  "Justificatif de domicile", "/projet/docs", "2025-01-03", "Validé", "Aucune remarque");
+        DocumentAdministratif doc2 = new DocumentAdministratif(2, "Permis de travail", "/projet/docs", "2025-02-10", "En attente", "Vérification en cours");
 
         // ✅ Ajout des documents
         docService.addEntity(doc1);
@@ -108,8 +98,8 @@ public class MainClass {
         // 📌 Création d'une assistance documentaire
         // Note: Now using idDocument (an integer) instead of documentsRequis.
         // Here, we use the id of doc2 as the idDocument for testing.
-        AssistantDocumentaire assistant1 = new AssistantDocumentaire(1, 13, doc2.getId(), "Renouvellement", "2025-02-11 10:00:00", "En attente", "Vérification nécessaire", true);
-        AssistantDocumentaire assistant2 = new AssistantDocumentaire(2, 13, doc2.getId(), "Nouveau document", "2025-02-12 15:30:00", "Traitée", "Documents validés", false);
+        AssistantDocumentaire assistant1 = new AssistantDocumentaire(1, utilisateur.getId(), doc2.getId(), "Renouvellement", "2025-02-11 10:00:00", "En attente", "Vérification nécessaire", true);
+        AssistantDocumentaire assistant2 = new AssistantDocumentaire(2, utilisateur.getId(), doc2.getId(), "Nouveau document", "2025-02-12 15:30:00", "Traitée", "Documents validés", false);
 
         // ✅ Ajout des assistances documentaires
         assistantService.addEntity(assistant1);

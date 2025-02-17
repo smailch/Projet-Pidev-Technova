@@ -3,7 +3,6 @@ package entities;
 public class DocumentAdministratif {
 
     private int id;
-    private int idDossier;
     private String nomDocument;
     private String cheminFichier;
     private String dateEmission;
@@ -13,10 +12,9 @@ public class DocumentAdministratif {
     public DocumentAdministratif() {
     }
 
-    public DocumentAdministratif(int id, int idDossier, String nomDocument, String cheminFichier,
+    public DocumentAdministratif(int id, String nomDocument, String cheminFichier,
                                  String dateEmission, String status, String remarque) {
         this.id = id;
-        this.idDossier = idDossier;
         this.nomDocument = nomDocument;
         this.cheminFichier = cheminFichier;
         this.dateEmission = dateEmission;
@@ -33,13 +31,6 @@ public class DocumentAdministratif {
         this.id = id;
     }
 
-    public int getIdDossier() {
-        return idDossier;
-    }
-
-    public void setIdDossier(int idDossier) {
-        this.idDossier = idDossier;
-    }
 
     public String getNomDocument() {
         return nomDocument;
@@ -83,7 +74,7 @@ public class DocumentAdministratif {
 
     @Override
     public String toString() {
-        return "id: " + id + ", idDossier: " + idDossier + ", nomDocument: " + nomDocument +
+        return "id: " + id + ", nomDocument: " + nomDocument +
                 ", cheminFichier: " + cheminFichier + ", dateEmission: " + dateEmission +
                 ", status: " + status + ", remarque: " + remarque + "\n";
     }

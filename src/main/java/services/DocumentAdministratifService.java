@@ -10,17 +10,16 @@ public class DocumentAdministratifService implements IService<DocumentAdministra
 
     @Override
     public void addEntity(DocumentAdministratif documentAdministratif) {
-        String req ="INSERT INTO DocumentAdministratif(id, idDossier, nomDocument, cheminFichier, dateEmission, status, remarque) " +
-                "VALUES(?,?,?,?,?,?,?)";
+        String req ="INSERT INTO DocumentAdministratif(id,nomDocument, cheminFichier, dateEmission, status, remarque) " +
+                "VALUES(?,?,?,?,?,?)";
         try {
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);
             pst.setInt(1, documentAdministratif.getId());
-            pst.setInt(2, documentAdministratif.getIdDossier());
-            pst.setString(3, documentAdministratif.getNomDocument());
-            pst.setString(4, documentAdministratif.getCheminFichier());
-            pst.setString(5, documentAdministratif.getDateEmission());
-            pst.setString(6, documentAdministratif.getStatus());
-            pst.setString(7, documentAdministratif.getRemarque());
+            pst.setString(2, documentAdministratif.getNomDocument());
+            pst.setString(3, documentAdministratif.getCheminFichier());
+            pst.setString(4, documentAdministratif.getDateEmission());
+            pst.setString(5, documentAdministratif.getStatus());
+            pst.setString(6, documentAdministratif.getRemarque());
             pst.executeUpdate();
             System.out.println("Document Administratif Ajouté");
         } catch (SQLException e) {
@@ -43,17 +42,16 @@ public class DocumentAdministratifService implements IService<DocumentAdministra
 
     @Override
     public void updateEntity(DocumentAdministratif documentAdministratif) {
-        String req = "UPDATE DocumentAdministratif SET idDossier = ?, nomDocument = ?, cheminFichier = ?, " +
+        String req = "UPDATE DocumentAdministratif SET nomDocument = ?, cheminFichier = ?, " +
                 "dateEmission = ?, status = ?, remarque = ? WHERE id = ?";
         try {
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);
-            pst.setInt(1, documentAdministratif.getIdDossier());
-            pst.setString(2, documentAdministratif.getNomDocument());
-            pst.setString(3, documentAdministratif.getCheminFichier());
-            pst.setString(4, documentAdministratif.getDateEmission());
-            pst.setString(5, documentAdministratif.getStatus());
-            pst.setString(6, documentAdministratif.getRemarque());
-            pst.setInt(7, documentAdministratif.getId());
+            pst.setString(1, documentAdministratif.getNomDocument());
+            pst.setString(2, documentAdministratif.getCheminFichier());
+            pst.setString(3, documentAdministratif.getDateEmission());
+            pst.setString(4, documentAdministratif.getStatus());
+            pst.setString(5, documentAdministratif.getRemarque());
+            pst.setInt(6, documentAdministratif.getId());
             pst.executeUpdate();
             System.out.println("Document Administratif Mis à Jour");
         } catch (SQLException e) {
@@ -71,12 +69,11 @@ public class DocumentAdministratifService implements IService<DocumentAdministra
             while (rs.next()) {
                 DocumentAdministratif doc = new DocumentAdministratif();
                 doc.setId(rs.getInt(1));
-                doc.setIdDossier(rs.getInt(2));
-                doc.setNomDocument(rs.getString(3));
-                doc.setCheminFichier(rs.getString(4));
-                doc.setDateEmission(rs.getString(5));
-                doc.setStatus(rs.getString(6));
-                doc.setRemarque(rs.getString(7));
+                doc.setNomDocument(rs.getString(2));
+                doc.setCheminFichier(rs.getString(3));
+                doc.setDateEmission(rs.getString(4));
+                doc.setStatus(rs.getString(5));
+                doc.setRemarque(rs.getString(6));
                 result.add(doc);
             }
         } catch (SQLException e) {
