@@ -191,7 +191,7 @@ public class PDFGenerator {
         return new Cell().add(textValue).setFontSize(12f).setBold().setBorder(Border.NO_BORDER).setTextAlignment(TextAlignment.LEFT);
     }
 
-    static  Cell getCell10fLeft(String textValue,Boolean isBold){
+    static  Cell getCell10fLeft(String textValue,boolean isBold){
         Cell myCell=new Cell().add(textValue).setFontSize(10f).setBorder(Border.NO_BORDER).setTextAlignment(TextAlignment.LEFT);
         return  isBold ?myCell.setBold():myCell;
 

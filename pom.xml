@@ -18,9 +18,12 @@
             <id>itext-releases</id>
             <url>https://repo.itextsupport.com/releases</url>
         </repository>
+            <repository>
+                <id>central</id>
+                <url>https://repo.maven.apache.org/maven2</url>
+            </repository>
     </repositories>
     <dependencies>
-
 
         <dependency>
             <groupId>com.itextpdf</groupId>
@@ -32,9 +35,6 @@
             <artifactId>layout</artifactId>
             <version>7.0.4</version>
         </dependency>
-
-
-
 
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -87,18 +87,27 @@
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
+
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.17.0</version>
+        </dependency>
+
         <dependency>
             <groupId>de.jensd</groupId>
             <artifactId>fontawesomefx</artifactId>
             <version>8.9</version>
+
         </dependency>
-
-
-
-
-
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -112,5 +121,6 @@
         </plugins>
 
     </build>
+
 
 </project>
