@@ -15,13 +15,13 @@ public class MainClass {
         java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
 
         // Création d'une instance de la classe Utilisateur
-        Utilisateur utilisateur = new Utilisateur("ismail ", "chaabane", "ichaabane6@gmail.com", Role.Admin, sqlDate, "123456");
+        Utilisateur utilisateur = new Utilisateur("ismail ", "chaabane", "smail.chemlali@esprit.tn", Role.Admin, sqlDate, "123456");
 
         // Création d'une instance de UtilisateurService
         UtilisateurService utilisateurService = new UtilisateurService();
 
         // Ajouter un utilisateur avec la méthode addEntity (utilisant PreparedStatement)
-        utilisateurService.addEntity(utilisateur);
+        //utilisateurService.addEntity(utilisateur);
 
         // Envoyer un email après l'ajout de l'utilisateur
         utilisateurService.EnvoyerEmail(utilisateur);  // 🔥 Appel de la méthode d'envoi d'email
@@ -33,7 +33,7 @@ public class MainClass {
 
         // UtilisateurService utilisateurService = new UtilisateurService();
 
-        String email = "chaabane.ismail@esprit.tn";
+        String email = "smail.chemlali@esprit.tn";
         String motDePasse = "123456";
 
         Utilisateur utilisateurConnecte = utilisateurService.connexion(email, motDePasse);

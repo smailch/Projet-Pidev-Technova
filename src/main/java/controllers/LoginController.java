@@ -61,11 +61,11 @@ public class LoginController implements Initializable {
                     Stage stage = (Stage) node.getScene().getWindow();
                     stage.close();
 
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/ForgetPassword.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionutilisateurs.fxml"));
                     Scene scene = new Scene(loader.load());
-
                     stage.setScene(scene);
                     stage.show();
+
                 } catch (IOException ex) {
                     System.err.println("Error loading the scene: " + ex.getMessage());
                     setLblError(Color.TOMATO, "Failed to load next screen");
@@ -77,7 +77,7 @@ public class LoginController implements Initializable {
     @FXML
     public void redirectToForgotPassword(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionutilisateurs.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ForgetPassword.fxml"));
             Scene scene = new Scene(loader.load());
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.setScene(scene);
@@ -136,11 +136,11 @@ public class LoginController implements Initializable {
             Scene scene = new Scene(loader.load());
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.setScene(scene);
-            currentStage.setTitle("Mot de passe oublié");
+            currentStage.setTitle("SignUp");
             currentStage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            setLblError(Color.TOMATO, "Erreur lors du chargement de l'écran de réinitialisation du mot de passe.");
+            setLblError(Color.TOMATO, "Erreur lors du chargement de l'écran de réinitialisation du SignUp.");
         }
     }
 

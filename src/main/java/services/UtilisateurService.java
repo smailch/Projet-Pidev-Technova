@@ -54,6 +54,8 @@ public class UtilisateurService implements IService<Utilisateur> {
                 // Exécuter la requête
                 pst.executeUpdate();
                 System.out.println("Utilisateur ajouté avec succès !");
+                utilisateurService.EnvoyerEmail(utilisateur);  // 🔥 Appel de la méthode d'envoi d'email
+
             } catch (SQLException e) {
                 System.out.println("Erreur : " + e.getMessage());
             }

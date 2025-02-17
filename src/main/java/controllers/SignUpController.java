@@ -113,6 +113,7 @@ public class SignUpController {
         Utilisateur utilisateur = new Utilisateur(txtNom.getText(), txtPrenom.getText(), email, selectedRole, sqlDate, password);
         utilisateurService.addEntity(utilisateur);
 
+
         // Affichage de succès et redirection
         showAlertAndRedirect("Succès", "Compte créé avec succès !", Alert.AlertType.INFORMATION);
     }
