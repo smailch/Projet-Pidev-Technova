@@ -40,6 +40,7 @@ public class UtilisateurService implements IService<Utilisateur> {
                 String req = "INSERT INTO `utilisateur`(`Nom`, `Prenom`, `Email`, `Role`, `DateInscription`, `motDePasse`) VALUES (?, ?, ?, ?, ?, ?)";
 
                 // Préparer la requête
+                PreparedStatement pst = Myconnection.getInstance().getCnx().prepareStatement(req);
                 PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);
                 pst.setString(1, utilisateur.getNom());
                 pst.setString(2, utilisateur.getPrenom());
@@ -54,6 +55,8 @@ public class UtilisateurService implements IService<Utilisateur> {
                 // Exécuter la requête
                 pst.executeUpdate();
                 System.out.println("Utilisateur ajouté avec succès !");
+                utilisateurService.EnvoyerEmail(utilisateur);  // 🔥 Appel de la méthode d'envoi d'email
+
             } catch (SQLException e) {
                 System.out.println("Erreur : " + e.getMessage());
             }

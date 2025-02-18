@@ -10,7 +10,11 @@ public class Utilisateur {
     private Role role;
     private Date dateInscription;
     private String motDePasse;
+<<<<<<< HEAD
     public Utilisateur(int id, String nom, String prenom, String email, Role role, java.sql.Date dateInscription) {
+=======
+    public Utilisateur(int id, String nom, String prenom, String email, java.sql.Date role, String dateInscription) {
+>>>>>>> origin/Utilisateur
         this.id = id;
     }
 

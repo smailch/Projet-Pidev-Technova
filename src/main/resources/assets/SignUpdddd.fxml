@@ -1,0 +1,111 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="787.0" style="-fx-background-color: #f0f0f5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignUpController">
+    <children>
+        <!-- Left panel with branding
+        <AnchorPane layoutY="-10.0" prefHeight="593.0" prefWidth="404.0" style="-fx-background-color: #6200ea;">
+            <children>
+                <ImageView fitHeight="193.0" fitWidth="250.0" layoutX="86.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@assets/images/logo.png" />
+                    </image>
+                </ImageView>
+                <Label alignment="CENTER" layoutX="79.0" layoutY="377.0" prefHeight="30.0" prefWidth="240.0" text="Gestion de la Ville Intelligente" textFill="WHITE">
+                    <font>
+                        <Font name="Roboto" size="16.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+
+        <VBox alignment="TOP_CENTER" layoutX="412.0" layoutY="14.0" prefHeight="538.0" prefWidth="361.0" spacing="10" style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 10px; -fx-border-color: #ccc; -fx-border-radius: 10px;">
+            <children>
+                <Label alignment="CENTER" prefHeight="25.0" prefWidth="250.0" text="Créer un compte" textFill="#6200ea">
+                    <font>
+                        <Font size="22.0" />
+                    </font>
+                </Label>
+
+                <VBox alignment="CENTER" spacing="8">
+   <children>
+                       <VBox spacing="3">
+                          <children>
+                              <Label fx:id="lblErrorNom" style="-fx-font-size: 11px; -fx-text-fill: red;" />
+                              <TextField fx:id="txtNom" prefHeight="35.0" prefWidth="250.0" promptText="Nom" />
+                          </children>
+                       </VBox>
+   
+                       <!-- Prénom -->
+                       <VBox spacing="3">
+      <children>
+                              <Label fx:id="lblErrorPrenom" style="-fx-font-size: 11px; -fx-text-fill: red;" />
+                              <TextField fx:id="txtPrenom" prefHeight="35.0" prefWidth="250.0" promptText="Prénom" />
+      </children>
+                       </VBox>
+   
+                       <!-- Email -->
+                       <VBox spacing="3">
+      <children>
+                              <Label fx:id="lblErrorEmail" style="-fx-font-size: 11px; -fx-text-fill: red;" />
+                              <TextField fx:id="txtEmail" prefHeight="35.0" prefWidth="250.0" promptText="Email" />
+      </children>
+                       </VBox>
+   
+                       <!-- Role -->
+                       <VBox spacing="3">
+      <children>
+                              <Label fx:id="lblErrorRole" style="-fx-font-size: 11px; -fx-text-fill: red;" />
+                              <ComboBox fx:id="comboRole" prefHeight="35.0" prefWidth="250.0">
+                                  <items>
+                                      <FXCollections fx:factory="observableArrayList">
+                                          <String fx:value="Admin" />
+                                          <String fx:value="Citoyen" />
+                                          <String fx:value="Employé" />
+                                      </FXCollections>
+                                  </items>
+                                  <value>
+                                      <String fx:value="selection Role ..." />
+                                  </value>
+                              </ComboBox>
+      </children>
+                       </VBox>
+   
+                       <!-- Password -->
+                       <VBox spacing="3">
+      <children>
+                              <Label fx:id="lblErrorPassword" style="-fx-font-size: 11px; -fx-text-fill: red;" />
+                              <PasswordField fx:id="txtPassword" prefHeight="35.0" prefWidth="250.0" promptText="Mot de passe" />
+      </children>
+                       </VBox>
+   
+                       <!-- Confirm Password -->
+                       <VBox spacing="3">
+      <children>
+                              <Label fx:id="lblErrorConfirmPassword" style="-fx-font-size: 11px; -fx-text-fill: red;" />
+                              <PasswordField fx:id="txtConfirmPassword" prefHeight="35.0" prefWidth="250.0" promptText="Confirmer" />
+      </children>
+                       </VBox>
+   
+                       <ProgressBar fx:id="passwordStrengthBar" prefHeight="10.0" prefWidth="250.0" />
+   </children>
+                </VBox>
+
+                <Button fx:id="btnSignUp" onAction="#onSignUpButtonClicked" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 20px;" text="S'inscrire" />
+
+                <Label fx:id="btnAlreadyAccount" alignment="CENTER" style="-fx-font-size: 12px; -fx-cursor: hand; -fx-text-fill: #00796b;" text="Vous avez déjà un compte ?" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane> -->

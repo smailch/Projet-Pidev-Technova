@@ -8,6 +8,10 @@ import entities.Validation;
 import services.AssistantDocumentaireService;
 import services.DocumentAdministratifService;
 import services.ValidationService;
+import entities.Utilisateur;
+import entities.Role;
+import services.UtilisateurService;
+import tools.Myconnection;
 import java.util.Calendar;
 
 public class MainClass {
@@ -15,7 +19,6 @@ public class MainClass {
         //ajout d'utilisateur
         Calendar calendar = Calendar.getInstance();
         java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
-        Utilisateur utilisateur = new Utilisateur(16,"ismail ", "chaabane", "ichaabane66@gmail.com", Role.Admin, sqlDate, "123456");
         UtilisateurService utilisateurService = new UtilisateurService();
         utilisateurService.addEntity(utilisateur);
 
