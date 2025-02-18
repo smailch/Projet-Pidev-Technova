@@ -15,7 +15,7 @@ public class DeclarationRevenuesService implements IService<DeclarationRevenues>
                 "VALUES(?,?,?,?,?,?)";
         try {
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);
-            pst.setInt(1, declarationRevenues.getIdDossier());
+            pst.setInt(1, declarationRevenues.getId());
             pst.setInt(2, declarationRevenues.getIdDossier());
             pst.setDouble(3, declarationRevenues.getMontantRevenu());
             pst.setString(4, declarationRevenues.getSourceRevenu());

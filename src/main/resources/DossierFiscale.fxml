@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.input.*?>
 
-<AnchorPane stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DossierFiscaleController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<AnchorPane stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DossierFiscaleController">
     <children>
         <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="5">
             <padding>
@@ -46,15 +54,27 @@
 
                 <HBox alignment="CENTER" spacing="10">
                     <children>
-                        <TextField fx:id="txtStatus" prefWidth="150" promptText="Statut" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
                         <Label fx:id="lblStatusError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
-
-                        <TextField fx:id="txtMoyenPaiement" prefWidth="150" promptText="Moyen Paiement" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
                         <Label fx:id="lblMoyenPaiementError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
+                    <ComboBox fx:id="comboStatus" prefWidth="150" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="actif" />
+                                <String fx:value="Inactif" />
+                                <String fx:value="Suspendu" />
+                            </FXCollections>
+                        </items>
+                  </ComboBox>
+                        <ComboBox fx:id="comboMoyenPaiement" prefWidth="150" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Virement Bancaire" />
+                                    <String fx:value="Especes" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
 
-                        <DatePicker fx:id="dpDateCreation" prefWidth="150" promptText="Date Création" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
-                        <Label fx:id="lblDateCreationError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
-                    </children>
+                        </children>
                 </HBox>
 
                 <HBox alignment="CENTER" spacing="10">
@@ -64,6 +84,9 @@
                         <Button onAction="#deleteDossier" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Supprimer" />
                         <Button onAction="#clearFields" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Réinitialiser" />
                     </children>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
                 </HBox>
             </children>
         </VBox>

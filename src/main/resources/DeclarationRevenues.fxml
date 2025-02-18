@@ -37,19 +37,14 @@
                         <TextField fx:id="txtSourceRevenu" prefWidth="150" promptText="Source Revenu" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
                         <Label fx:id="lblSourceRevenuError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
 
-                        <TextField fx:id="txtPreuveRevenu" prefWidth="150" promptText="Preuve Revenu" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <TextField fx:id="txtPreuveRevenu" editable="false" prefWidth="150" promptText="Preuve Revenu" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
                         <Label fx:id="lblPreuveRevenuError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
                         <Button onAction="#browseFile" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Parcourir" />
 
                     </children>
                 </HBox>
 
-                <HBox alignment="CENTER" spacing="10">
-                    <children>
-                        <DatePicker fx:id="dpDateDeclaration" prefWidth="150" promptText="Date Déclaration" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
-                        <Label fx:id="lblDateDeclarationError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
-                    </children>
-                </HBox>
+
 
                 <HBox alignment="CENTER" spacing="10">
                     <children>

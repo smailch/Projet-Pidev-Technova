@@ -12,7 +12,6 @@ import services.SessionManager;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
 public class DossierFiscaleController {
@@ -39,11 +38,9 @@ public class DossierFiscaleController {
     @FXML
     private TextField txtTotalImpotPaye;
     @FXML
-    private TextField txtStatus;
+    private ComboBox<String> comboStatus; // Changed from TextField to ComboBox
     @FXML
-    private DatePicker dpDateCreation;
-    @FXML
-    private TextField txtMoyenPaiement;
+    private ComboBox<String> comboMoyenPaiement; // Changed from TextField to ComboBox
     @FXML
     private TextField searchField;
 
@@ -55,34 +52,52 @@ public class DossierFiscaleController {
     public void initialize() {
         loadDossierData();
 
-        // Set up search functionality
         searchField.setOnKeyReleased(this::handleSearch);
 
-        // Handle table row selection
         tableDossiers.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                // Populate the form with the selected row's data
-                txtAnneeFiscale.setText(String.valueOf(newSelection.getAnneeFiscale()));
-                txtTotalImpot.setText(String.valueOf(newSelection.getTotalImpot()));
-                txtTotalImpotPaye.setText(String.valueOf(newSelection.getTotalImpotPaye()));
-                txtStatus.setText(newSelection.getStatus());
-                txtMoyenPaiement.setText(newSelection.getMoyenPaiement());
-
-                // Handle the DatePicker value safely
-                String dateCreation = newSelection.getDateCreation();
-                if (dateCreation != null && !dateCreation.isEmpty()) {
-                    try {
-                        dpDateCreation.setValue(LocalDate.parse(dateCreation, dateFormatter));
-                    } catch (DateTimeParseException e) {
-                        dpDateCreation.setValue(null); // Handle parsing error
-                    }
-                } else {
-                    dpDateCreation.setValue(null);
-                }
+                populateFieldsFromSelectedDossier(newSelection);
             }
         });
+
+        applyInputFilters();
+
+        // Initialize the ComboBoxes
+        comboStatus.setItems(FXCollections.observableArrayList("actif", "Inactif", "Suspendu"));
+        comboMoyenPaiement.setItems(FXCollections.observableArrayList("Virement Bancaire", "Especes"));
     }
 
+    private void applyInputFilters() {
+        // Apply filters for numeric fields
+        txtAnneeFiscale.setTextFormatter(new TextFormatter<>(change -> {
+            if (change.getControlNewText().matches("\\d*")) {
+                return change;
+            }
+            return null;
+        }));
+
+        txtTotalImpot.setTextFormatter(new TextFormatter<>(change -> {
+            if (change.getControlNewText().matches("\\d*(\\.\\d{0,2})?")) {
+                return change;
+            }
+            return null;
+        }));
+
+        txtTotalImpotPaye.setTextFormatter(new TextFormatter<>(change -> {
+            if (change.getControlNewText().matches("\\d*(\\.\\d{0,2})?")) {
+                return change;
+            }
+            return null;
+        }));
+    }
+
+    private void populateFieldsFromSelectedDossier(DossierFiscale dossier) {
+        txtAnneeFiscale.setText(String.valueOf(dossier.getAnneeFiscale()));
+        txtTotalImpot.setText(String.valueOf(dossier.getTotalImpot()));
+        txtTotalImpotPaye.setText(String.valueOf(dossier.getTotalImpotPaye()));
+        comboStatus.setValue(dossier.getStatus()); // Changed from txtStatus
+        comboMoyenPaiement.setValue(dossier.getMoyenPaiement()); // Changed from txtMoyenPaiement
+    }
 
     private void loadDossierData() {
         List<DossierFiscale> dossiers = dossierService.getAllData();
@@ -117,111 +132,55 @@ public class DossierFiscaleController {
 
     @FXML
     public void addDossier() {
-        int idUser = SessionManager.getUserId();
-        int anneeFiscale = Integer.parseInt(txtAnneeFiscale.getText().trim());
-        double totalImpot = Double.parseDouble(txtTotalImpot.getText().trim());
-        double totalImpotPaye = Double.parseDouble(txtTotalImpotPaye.getText().trim());
-        String status = txtStatus.getText().trim();
-        String moyenPaiement = txtMoyenPaiement.getText().trim();
-        String dateCreation = (dpDateCreation.getValue() != null) ? dpDateCreation.getValue().format(dateFormatter) : "";
-
-        if (status.isEmpty() || moyenPaiement.isEmpty() || dateCreation.isEmpty()) {
-            showAlert("Erreur", "Tous les champs sont requis.", Alert.AlertType.ERROR);
-            return;
+        if (validateInputs()) {
+            DossierFiscale newDossier = createDossierFromFields();
+            dossierService.addEntity(newDossier);
+            loadDossierData();
+            clearFields();
         }
-
-        DossierFiscale newDossier = new DossierFiscale(0, 16, anneeFiscale, totalImpot, totalImpotPaye, status, dateCreation, moyenPaiement);
-        dossierService.addEntity(newDossier);
-        loadDossierData();
-        clearFields();
     }
 
     @FXML
     public void updateDossier() {
         DossierFiscale selectedDossier = tableDossiers.getSelectionModel().getSelectedItem();
-        if (selectedDossier != null) {
-            try {
-                // Validate Année Fiscale
-                String anneeFiscaleStr = txtAnneeFiscale.getText().trim();
-                if (anneeFiscaleStr.isEmpty()) {
-                    showAlert("Année requise", "L'année fiscale est requise.",Alert.AlertType.ERROR);
-                    return;
-                }
-                int anneeFiscale = Integer.parseInt(anneeFiscaleStr);
-                if (anneeFiscale < 2000 || anneeFiscale > LocalDate.now().getYear()) {
-                    showAlert("Année invalide", "L'année fiscale doit être entre 2000 et l'année en cours.",Alert.AlertType.ERROR);
-                    return;
-                }
-
-                // Validate Total Impôt
-                String totalImpotStr = txtTotalImpot.getText().trim();
-                if (totalImpotStr.isEmpty()) {
-                    showAlert("Total impôt requis", "Le total de l'impôt est requis.", Alert.AlertType.ERROR);
-                    return;
-                }
-                double totalImpot = Double.parseDouble(totalImpotStr);
-                if (totalImpot < 0) {
-                    showAlert("Valeur invalide", "Le total de l'impôt ne peut pas être négatif.",Alert.AlertType.ERROR);
-                    return;
-                }
-
-                // Validate Total Impôt Payé
-                String totalImpotPayeStr = txtTotalImpotPaye.getText().trim();
-                if (totalImpotPayeStr.isEmpty()) {
-                    showAlert("Montant payé requis", "Le montant de l'impôt payé est requis.",Alert.AlertType.ERROR);
-                    return;
-                }
-                double totalImpotPaye = Double.parseDouble(totalImpotPayeStr);
-                if (totalImpotPaye < 0 || totalImpotPaye > totalImpot) {
-                    showAlert("Valeur invalide", "L'impôt payé ne peut pas être négatif ou supérieur au total.",Alert.AlertType.ERROR);
-                    return;
-                }
-
-                // Validate Statut
-                String status = txtStatus.getText().trim();
-                if (status.isEmpty()) {
-                    showAlert("Statut requis", "Le statut est requis.",Alert.AlertType.ERROR);
-                    return;
-                }
-
-                // Validate Moyen de Paiement
-                String moyenPaiement = txtMoyenPaiement.getText().trim();
-                if (moyenPaiement.isEmpty()) {
-                    showAlert("Moyen de paiement requis", "Le moyen de paiement est requis.",Alert.AlertType.ERROR);
-                    return;
-                }
-
-                // Validate Date de Création
-                String dateCreation = (dpDateCreation.getValue() != null) ? dpDateCreation.getValue().format(dateFormatter) : "";
-                if (dateCreation.isEmpty()) {
-                    showAlert("Date requise", "La date de création est requise.",Alert.AlertType.ERROR);
-                    return;
-                }
-                if (dpDateCreation.getValue().isAfter(LocalDate.now())) {
-                    showAlert("Date future", "La date de création ne peut pas être future.",Alert.AlertType.ERROR);
-                    return;
-                }
-
-                // Set validated values to the object
-                selectedDossier.setAnneeFiscale(anneeFiscale);
-                selectedDossier.setTotalImpot(totalImpot);
-                selectedDossier.setTotalImpotPaye(totalImpotPaye);
-                selectedDossier.setStatus(status);
-                selectedDossier.setMoyenPaiement(moyenPaiement);
-                selectedDossier.setDateCreation(dateCreation);
-
-                // Update entity
-                dossierService.updateEntity(selectedDossier);
-                loadDossierData();
-                clearFields();
-            } catch (NumberFormatException e) {
-                showAlert("Erreur de format","Veuillez saisir des valeurs numériques valides pour les champs numériques.",Alert.AlertType.ERROR);
-            }
+        if (selectedDossier != null && validateInputs()) {
+            updateSelectedDossier(selectedDossier);
+            dossierService.updateEntity(selectedDossier);
+            loadDossierData();
+            clearFields();
         } else {
-            showAlert("Sélection requise", "Veuillez sélectionner un dossier à mettre à jour.",Alert.AlertType.ERROR);
+            showAlert("Sélectionnez un dossier", "Veuillez sélectionner un dossier à mettre à jour.", Alert.AlertType.ERROR);
         }
     }
 
+    private boolean validateInputs() {
+        if (txtAnneeFiscale.getText().isEmpty() || txtTotalImpot.getText().isEmpty() || txtTotalImpotPaye.getText().isEmpty() ||
+                comboStatus.getValue() == null || comboMoyenPaiement.getValue() == null) { // Changed validation for ComboBox
+            showAlert("Erreur", "Tous les champs sont requis.", Alert.AlertType.ERROR);
+            return false;
+        }
+        return true;
+    }
+
+    private DossierFiscale createDossierFromFields() {
+        int anneeFiscale = Integer.parseInt(txtAnneeFiscale.getText().trim());
+        double totalImpot = Double.parseDouble(txtTotalImpot.getText().trim());
+        double totalImpotPaye = Double.parseDouble(txtTotalImpotPaye.getText().trim());
+        String status = comboStatus.getValue().trim(); // Changed to get value from ComboBox
+        String moyenPaiement = comboMoyenPaiement.getValue().trim(); // Changed to get value from ComboBox
+        String dateCreation = LocalDate.now().format(dateFormatter);
+
+        return new DossierFiscale(0, 16, anneeFiscale, totalImpot, totalImpotPaye, status, dateCreation, moyenPaiement);
+    }
+
+    private void updateSelectedDossier(DossierFiscale selectedDossier) {
+        selectedDossier.setAnneeFiscale(Integer.parseInt(txtAnneeFiscale.getText().trim()));
+        selectedDossier.setTotalImpot(Double.parseDouble(txtTotalImpot.getText().trim()));
+        selectedDossier.setTotalImpotPaye(Double.parseDouble(txtTotalImpotPaye.getText().trim()));
+        selectedDossier.setStatus(comboStatus.getValue().trim()); // Changed to get value from ComboBox
+        selectedDossier.setMoyenPaiement(comboMoyenPaiement.getValue().trim()); // Changed to get value from ComboBox
+        selectedDossier.setDateCreation(LocalDate.now().format(dateFormatter));
+    }
 
     @FXML
     public void deleteDossier() {
@@ -229,13 +188,17 @@ public class DossierFiscaleController {
         if (selectedDossier != null) {
             dossierService.deleteEntity(selectedDossier);
             loadDossierData();
-            clearFields();
+        } else {
+            showAlert("Sélectionnez un dossier", "Veuillez sélectionner un dossier à supprimer.", Alert.AlertType.ERROR);
         }
     }
-    public void searchButton() {
-        searchField.clear();
-        loadDossierData();
-        clearFields();
+
+    private void showAlert(String title, String content, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     @FXML
@@ -243,16 +206,14 @@ public class DossierFiscaleController {
         txtAnneeFiscale.clear();
         txtTotalImpot.clear();
         txtTotalImpotPaye.clear();
-        txtStatus.clear();
-        dpDateCreation.setValue(null);
-        txtMoyenPaiement.clear();
+        comboStatus.setValue(null); // Clear ComboBox
+        comboMoyenPaiement.setValue(null); // Clear ComboBox
     }
 
-    private void showAlert(String title, String message, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    @FXML
+    public void searchButton() {
+        searchField.clear();
+        loadDossierData();
+        clearFields();
     }
 }

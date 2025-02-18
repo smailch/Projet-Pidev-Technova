@@ -15,7 +15,6 @@ import services.SessionManager;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 
 public class DeclarationRevenuesController {
@@ -38,40 +37,53 @@ public class DeclarationRevenuesController {
     @FXML
     private TextField txtPreuveRevenu;
     @FXML
-    private DatePicker dpDateDeclaration;
-    @FXML
     private TextField searchField;
 
     private final DeclarationRevenuesService declarationRevenuesService = new DeclarationRevenuesService();
     private final ObservableList<DeclarationRevenues> allDeclarations = FXCollections.observableArrayList();
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+
     @FXML
     public void initialize() {
         loadDeclarationData();
 
-        // Set up search functionality
+        // Handle search field input
         searchField.setOnKeyReleased(this::handleSearch);
 
-        // Handle table row selection
+        // Handle table selection changes
         tableDeclarations.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                // Populate the form with the selected row's data
-                txtMontantRevenu.setText(String.valueOf(newSelection.getMontantRevenu()));
-                txtSourceRevenu.setText(newSelection.getSourceRevenu());
-                txtPreuveRevenu.setText(newSelection.getPreuveRevenu());
+                // Ensure MontantRevenu is properly formatted and only contains numbers and dots
+                Double montantRevenu = newSelection.getMontantRevenu();
+                txtMontantRevenu.setText(montantRevenu != null
+                        ? String.valueOf(montantRevenu)
+                        : ""); // Default to empty if null
 
-                // Handle the DatePicker value safely
-                String dateDeclaration = newSelection.getDateDeclaration();
-                if (dateDeclaration != null && !dateDeclaration.isEmpty()) {
-                    try {
-                        dpDateDeclaration.setValue(LocalDate.parse(dateDeclaration, dateFormatter));
-                    } catch (DateTimeParseException e) {
-                        dpDateDeclaration.setValue(null); // Handle parsing error
-                    }
-                } else {
-                    dpDateDeclaration.setValue(null);
-                }
+
+                // Ensure SourceRevenu contains only alphabetic characters
+                txtSourceRevenu.setText(newSelection.getSourceRevenu() != null
+                        ? newSelection.getSourceRevenu().replaceAll("[^a-zA-Z ]", "")
+                        : "");
+
+                // Display the proof document path
+                txtPreuveRevenu.setText(newSelection.getPreuveRevenu() != null
+                        ? newSelection.getPreuveRevenu()
+                        : "");
+            }
+        });
+
+        // Add input validation for MontantRevenu (only numbers and dots allowed)
+        txtMontantRevenu.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                txtMontantRevenu.setText(oldValue);
+            }
+        });
+
+        // Add input validation for SourceRevenu (only alphabetic characters allowed)
+        txtSourceRevenu.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (!newValue.matches("[a-zA-Z ]*")) {
+                txtSourceRevenu.setText(oldValue);
             }
         });
     }
@@ -110,15 +122,15 @@ public class DeclarationRevenuesController {
         int idUser = SessionManager.getUserId();
         double montantRevenu = Double.parseDouble(txtMontantRevenu.getText().trim());
         String sourceRevenu = txtSourceRevenu.getText().trim();
-        String dateDeclaration = (dpDateDeclaration.getValue() != null) ? dpDateDeclaration.getValue().format(dateFormatter) : "";
+        String dateDeclaration = LocalDate.now().format(dateFormatter);
         String preuveRevenu = txtPreuveRevenu.getText().trim();
 
-        if (sourceRevenu.isEmpty() || dateDeclaration.isEmpty() || preuveRevenu.isEmpty()) {
+        if (sourceRevenu.isEmpty() || preuveRevenu.isEmpty()) {
             showAlert("Erreur", "Tous les champs sont requis.", Alert.AlertType.ERROR);
             return;
         }
 
-        DeclarationRevenues newDeclaration = new DeclarationRevenues(0, 4, montantRevenu, sourceRevenu, dateDeclaration, preuveRevenu);
+        DeclarationRevenues newDeclaration = new DeclarationRevenues(0, 1, montantRevenu, sourceRevenu, dateDeclaration, preuveRevenu);
         declarationRevenuesService.addEntity(newDeclaration);
         loadDeclarationData();
         clearFields();
@@ -170,20 +182,11 @@ public class DeclarationRevenuesController {
                 }
 
                 // Validate Date de Déclaration
-                String dateDeclaration = (dpDateDeclaration.getValue() != null) ? dpDateDeclaration.getValue().format(dateFormatter) : "";
-                if (dateDeclaration.isEmpty()) {
-                    showAlert("Date requise", "La date de déclaration est requise.", Alert.AlertType.ERROR);
-                    return;
-                }
-                if (dpDateDeclaration.getValue().isAfter(LocalDate.now())) {
-                    showAlert("Date future", "La date de déclaration ne peut pas être future.", Alert.AlertType.ERROR);
-                    return;
-                }
+
 
                 selectedDeclaration.setMontantRevenu(montantRevenu);
                 selectedDeclaration.setSourceRevenu(sourceRevenu);
-                selectedDeclaration.setPreuveRevenu(preuveRevenu); // Update with the file path
-                selectedDeclaration.setDateDeclaration(dateDeclaration);
+                selectedDeclaration.setPreuveRevenu(preuveRevenu);
 
                 // Update entity
                 declarationRevenuesService.updateEntity(selectedDeclaration);
@@ -219,7 +222,6 @@ public class DeclarationRevenuesController {
         txtMontantRevenu.clear();
         txtSourceRevenu.clear();
         txtPreuveRevenu.clear();
-        dpDateDeclaration.setValue(null);
     }
 
     private void showAlert(String title, String message, Alert.AlertType alertType) {
