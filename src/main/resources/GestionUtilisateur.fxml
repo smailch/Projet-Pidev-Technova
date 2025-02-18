@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.gestionutilisateursController">
+    <children>
+        <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="5">
+            <padding>
+                <Insets bottom="5" left="5" right="5" top="5" />
+            </padding>
+            <children>
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Gestion des Utilisateurs" />
+
+                <HBox alignment="CENTER" spacing="5">
+                    <children>
+                        <TextField fx:id="searchField" onKeyReleased="#handleSearch" prefWidth="200" promptText="Rechercher..." style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Button onAction="#SearchButton" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Effacer" />
+                    </children>
+                </HBox>
+
+                <TableView fx:id="tableUsers" prefHeight="300" prefWidth="500">
+                    <columns>
+                        <TableColumn fx:id="colNom" prefWidth="145.0" text="Nom" />
+                        <TableColumn fx:id="colPrenom" prefWidth="147.0" text="Prénom" />
+                        <TableColumn fx:id="colEmail" prefWidth="183.0" text="Email" />
+                        <TableColumn fx:id="colRole" prefWidth="127.0" text="Rôle" />
+                        <TableColumn fx:id="colDateInscription" prefWidth="420.0" text="Date d'Inscription" />
+                    </columns>
+                </TableView>
+
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <Label fx:id="lblNomError" textFill="red" visible="false" />
+                        <TextField fx:id="txtNom" prefWidth="200" promptText="Nom" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+
+                        <Label fx:id="lblPrenomError" textFill="red" visible="false" />
+                        <TextField fx:id="txtPrenom" prefWidth="200" promptText="Prénom" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+
+                        <Label fx:id="lblEmailError" textFill="red" visible="false" />
+                        <TextField fx:id="txtEmail" prefWidth="200" promptText="Email" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+
+                        <Label fx:id="lblRoleError" textFill="red" visible="false" />
+                        <ComboBox fx:id="comboRole" prefWidth="200" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                    </children>
+                </HBox>
+
+                <HBox alignment="CENTER" spacing="10">
+                    <padding>
+                        <Insets bottom="5" left="5" right="5" top="5" />
+                    </padding>
+                    <children>
+                        <Button onAction="#saveUser" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Modifier" />
+                        <Button onAction="#deleteUser" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Supprimer" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

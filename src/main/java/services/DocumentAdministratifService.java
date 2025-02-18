@@ -82,5 +82,41 @@ public class DocumentAdministratifService implements IService<DocumentAdministra
 
         return result;
     }
+    public List<String> getAllNomDocuments() {
+        List<String> nomDocuments = new ArrayList<>();
+        String req = "SELECT nomDocument FROM DocumentAdministratif";
+
+        try {
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
+            ResultSet rs = st.executeQuery(req);
+
+            while (rs.next()) {
+                String nomDocument = rs.getString("nomDocument");
+                nomDocuments.add(nomDocument);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return nomDocuments;
+    }
+    public int getIdByNomDocument(String nomDocument) {
+        int id = -1; // Default value if no match is found
+        String req = "SELECT id FROM DocumentAdministratif WHERE nomDocument = ?";
+
+        try {
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);
+            pst.setString(1, nomDocument);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                id = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return id;
+    }
 
 }

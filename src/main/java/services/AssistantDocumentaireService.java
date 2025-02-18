@@ -18,7 +18,7 @@ public class AssistantDocumentaireService implements IService<AssistantDocumenta
             pst.setInt(2, assistant.getIdUtilisateur());
             pst.setInt(3, assistant.getIdDocument());
             pst.setString(4, assistant.getTypeAssistance());
-            pst.setTimestamp(5, Timestamp.valueOf(assistant.getDateDemande()));
+            pst.setString(5, assistant.getDateDemande());
             pst.setString(6, assistant.getStatus());
             pst.setString(7, assistant.getRemarque());
             pst.setBoolean(8, assistant.isRappelAutomatique());
@@ -90,4 +90,5 @@ public class AssistantDocumentaireService implements IService<AssistantDocumenta
         }
         return result;
     }
+
 }

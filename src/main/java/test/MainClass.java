@@ -29,6 +29,7 @@ public class MainClass {
         DeclarationRevenues dr1= new DeclarationRevenues(1,1,500000,"saraya","2025-06-04","/fichier");
         // 🗑️ Suppression d'un document
         // Document Administratif
+
         DocumentAdministratifService docService = new DocumentAdministratifService();
 
         // 🔹 Service de gestion des validations
@@ -133,10 +134,10 @@ public class MainClass {
 //        System.out.println(ps.getAllData());
 //        System.out.println(qs.getAllData());
         // 📄 Génération du PDF
-        //PDFGenerator.generatePDF(doc2);
+        PDFGenerator.generatePDF(doc2);
 
         // 📄 Génération du fichier Excel
-        //ExcelGenerator.exportToExcel("documents_admin");
+        ExcelGenerator.exportToExcel("documents_admin");
 
     }
 }
