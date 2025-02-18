@@ -12,7 +12,9 @@ import services.AssistantDocumentaireService;
 import services.DocumentAdministratifService;
 import services.SessionManager;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -156,18 +158,66 @@ public class AssistantDocumentaireController {
     public void updateAssistant() {
         AssistantDocumentaire selectedAssistant = tableAssistants.getSelectionModel().getSelectedItem();
         if (selectedAssistant != null) {
-            selectedAssistant.setTypeAssistance(txtTypeAssistance.getText().trim());
-            LocalDate dateDemandeValue = dpDateDemande.getValue();
-            selectedAssistant.setDateDemande((dateDemandeValue != null) ? dateDemandeValue.format(dateFormatter) : "");
-            selectedAssistant.setStatus(txtStatus.getText().trim());
-            selectedAssistant.setRemarque(txtRemarque.getText().trim());
-            selectedAssistant.setRappelAutomatique(chkRappelAutomatique.isSelected());
+            // Validate Type d'Assistance
+            String typeAssistance = txtTypeAssistance.getText().trim();
+            if (typeAssistance.isEmpty()) {
+                showAlert("Type d'assistance requis", "Le type d'assistance est requis.",Alert.AlertType.ERROR);
+                return;
+            }
+            if (typeAssistance.length() > 255) {
+                showAlert("Type trop long", "Le type d'assistance ne peut pas dépasser 255 caractères.",Alert.AlertType.ERROR);
+                return;
+            }
 
+            // Validate Date de Demande
+            String dateDemande = "";
+            if (dpDateDemande.getValue() != null) {
+                // Convert to LocalDateTime and then to Timestamp
+                LocalDateTime localDateTime = dpDateDemande.getValue().atStartOfDay();  // start of the day
+                dateDemande = Timestamp.valueOf(localDateTime).toString();  // Converts to correct format
+                if (dpDateDemande.getValue().isAfter(LocalDate.now())) {
+                    showAlert("Date future", "La date de demande ne peut pas être dans le futur.", Alert.AlertType.ERROR);
+                    return;
+                }
+            } else {
+                showAlert("Date requise", "La date de demande est requise.", Alert.AlertType.ERROR);
+                return;
+            }
+
+
+            // Validate Statut
+            String status = txtStatus.getText().trim();
+            if (status.isEmpty()) {
+                showAlert("Statut requis", "Le statut est requis.", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validate Remarque (optional, but length limit)
+            String remarque = txtRemarque.getText().trim();
+            if (remarque.length() > 500) {
+                showAlert("Remarque trop longue", "La remarque ne peut pas dépasser 500 caractères.",Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Validate Rappel Automatique (checkbox is boolean, no need for extra validation)
+            boolean rappelAutomatique = chkRappelAutomatique.isSelected();
+
+            // Set validated values to the object
+            selectedAssistant.setTypeAssistance(typeAssistance);
+            selectedAssistant.setDateDemande(dateDemande);
+            selectedAssistant.setStatus(status);
+            selectedAssistant.setRemarque(remarque);
+            selectedAssistant.setRappelAutomatique(rappelAutomatique);
+
+            // Update entity
             assistantService.updateEntity(selectedAssistant);
             loadAssistantData();
             clearFields();
+        } else {
+            showAlert("Sélection requise", "Veuillez sélectionner un assistant à mettre à jour.", Alert.AlertType.ERROR);
         }
     }
+
 
     @FXML
     public void deleteAssistant() {

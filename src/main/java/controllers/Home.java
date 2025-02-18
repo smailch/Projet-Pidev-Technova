@@ -17,7 +17,7 @@ public class Home extends Application {
     public void start(Stage stage) {
         try {
             // Load the first page (Login)
-            Parent root = FXMLLoader.load(getClass().getResource("/DocumentAdministratif.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/DeclarationRevenues.fxml"));
 
             // Create the content pane and set it as a container for switching pages
             contentPane = new StackPane();
