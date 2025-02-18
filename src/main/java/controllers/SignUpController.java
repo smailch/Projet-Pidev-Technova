@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import services.UtilisateurService;
 import entities.Utilisateur;
@@ -21,31 +22,21 @@ public class SignUpController {
 
     @FXML
     private TextField txtNom;
-    @FXML
-    private Label lblErrorNom;
 
     @FXML
     private TextField txtPrenom;
-    @FXML
-    private Label lblErrorPrenom;
 
     @FXML
     private TextField txtEmail;
-    @FXML
-    private Label lblErrorEmail;
 
     @FXML
     private ComboBox<Role> comboRole;
 
     @FXML
     private PasswordField txtPassword;
-    @FXML
-    private Label lblErrorPassword;
 
     @FXML
     private PasswordField txtConfirmPassword;
-    @FXML
-    private Label lblErrorConfirmPassword;
 
     @FXML
     private ProgressBar passwordStrengthBar;
@@ -60,59 +51,40 @@ public class SignUpController {
 
     @FXML
     public void onSignUpButtonClicked() {
-        boolean isValid = true;
+        String errorMessage = null;
 
-        // Vérification des champs
         if (txtNom.getText().trim().isEmpty()) {
-            lblErrorNom.setText("Veuillez entrer un nom.");
-            isValid = false;
+            errorMessage = "Veuillez entrer un nom.";
+        } else if (txtPrenom.getText().trim().isEmpty()) {
+            errorMessage = "Veuillez entrer un prénom.";
         } else {
-            lblErrorNom.setText("");
+            String email = txtEmail.getText();
+            if (!isValidEmail(email)) {
+                errorMessage = "Email invalide.";
+            } else if (utilisateurService.emailExists(email)) {
+                errorMessage = "Cet email est déjà utilisé.";
+            } else {
+                String password = txtPassword.getText();
+                String confirmPassword = txtConfirmPassword.getText();
+                if (!password.equals(confirmPassword)) {
+                    errorMessage = "Les mots de passe ne correspondent pas.";
+                } else if (passwordStrengthBar.getProgress() < 0.5) {
+                    errorMessage = "Mot de passe trop faible.";
+                }
+            }
         }
 
-        if (txtPrenom.getText().trim().isEmpty()) {
-            lblErrorPrenom.setText("Veuillez entrer un prénom.");
-            isValid = false;
-        } else {
-            lblErrorPrenom.setText("");
+        if (errorMessage != null) {
+            showAlert("Erreur", errorMessage, Alert.AlertType.ERROR);
+            return;
         }
-
-        String email = txtEmail.getText();
-        if (!isValidEmail(email)) {
-            lblErrorEmail.setText("Email invalide.");
-            isValid = false;
-        } else if (utilisateurService.emailExists(email)) {
-            lblErrorEmail.setText("Cet email est déjà utilisé.");
-            isValid = false;
-        } else {
-            lblErrorEmail.setText("");
-        }
-
-        String password = txtPassword.getText();
-        String confirmPassword = txtConfirmPassword.getText();
-        if (!password.equals(confirmPassword)) {
-            lblErrorConfirmPassword.setText("Les mots de passe ne correspondent pas.");
-            isValid = false;
-        } else {
-            lblErrorConfirmPassword.setText("");
-        }
-
-        if (passwordStrengthBar.getProgress() < 0.5) {
-            lblErrorPassword.setText("Mot de passe trop faible.");
-            isValid = false;
-        } else {
-            lblErrorPassword.setText("");
-        }
-
-        if (!isValid) return;
 
         // Création de l'utilisateur
         Calendar calendar = Calendar.getInstance();
         java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
         Role selectedRole = comboRole.getValue();
-        Utilisateur utilisateur = new Utilisateur(txtNom.getText(), txtPrenom.getText(), email, selectedRole, sqlDate, password);
+        Utilisateur utilisateur = new Utilisateur(txtNom.getText(), txtPrenom.getText(), txtEmail.getText(), selectedRole, sqlDate, txtPassword.getText());
         utilisateurService.addEntity(utilisateur);
-
 
         // Affichage de succès et redirection
         showAlertAndRedirect("Succès", "Compte créé avec succès !", Alert.AlertType.INFORMATION);
@@ -125,20 +97,19 @@ public class SignUpController {
         alert.setContentText(message);
         alert.showAndWait();
 
-        // Redirection vers la page de connexion
         redirectToLogin();
     }
+
     @FXML
     private void redirectToLogin() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml")); // Assure-toi que le chemin est correct
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Login");
             stage.setScene(new Scene(root));
             stage.show();
 
-            // Fermer la fenêtre actuelle (inscription)
             Stage currentStage = (Stage) btnSignUp.getScene().getWindow();
             currentStage.close();
         } catch (IOException e) {
@@ -184,25 +155,46 @@ public class SignUpController {
         return score / 5.0;
     }
 
-    @FXML
-    public void onEmailKeyReleased() {
-        String email = txtEmail.getText();
-        if (!isValidEmail(email)) {
-            lblErrorEmail.setText("Email invalide.");
-        } else if (utilisateurService.emailExists(email)) {
-            lblErrorEmail.setText("Cet email est déjà utilisé.");
-        } else {
-            lblErrorEmail.setText("");
-        }
-    }
-
-    private void showAlert(String title, String message, Alert.AlertType type) {
+    public static void showAlert(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setStyle(
+                "-fx-background-color: #87CEEB;" + // 🌟 Bleu ciel
+                        "-fx-border-color: #0073e6;" + // Bordure bleu foncé
+                        "-fx-border-width: 2px;" +
+                        "-fx-border-radius: 12px;" +
+                        "-fx-background-radius: 12px;" +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5);" // Ombre
+        );
+
+        // Appliquer un style au titre
+        if (dialogPane.lookup(".header-panel") != null) {
+            dialogPane.lookup(".header-panel").setStyle(
+                    "-fx-background-color: #0073e6;" + // Bleu profond
+                            "-fx-text-fill: white;" +
+                            "-fx-font-size: 18px;" +
+                            "-fx-font-weight: bold;" +
+                            "-fx-padding: 10px;"
+            );
+        }
+
+        // Appliquer un style au texte du message
+        if (dialogPane.lookup(".content.label") != null) {
+            dialogPane.lookup(".content.label").setStyle(
+                    "-fx-text-fill: #ffffff;" + // Texte blanc
+                            "-fx-font-size: 15px;" +
+                            "-fx-font-family: 'Arial';" +
+                            "-fx-padding: 10px;"
+            );
+        }
+
+        // Charger une police personnalisée
+
         alert.showAndWait();
     }
-
 
 }

@@ -1,9 +1,14 @@
 package controllers;
 
+import entities.Utilisateur;
+
 public class SharedDataController {
 
+    public static SharedDataController getInstance;
     private static SharedDataController instance;
     private String userEmail;
+    private Utilisateur utilisateurConnecte; // Ajouter un champ utilisateur
+
 
     private SharedDataController() {}
 
@@ -21,4 +26,14 @@ public class SharedDataController {
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateurConnecte;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateurConnecte = utilisateur;
+    }
+
 }
+

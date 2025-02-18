@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Random;
 
 import static services.UtilisateurService.isValidEmail;
+import controllers.*;
 
 public class ForgetPasswordController {
 

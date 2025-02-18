@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import entities.Utilisateur;
 import entities.Role;
 import services.UtilisateurService;
@@ -38,18 +37,10 @@ public class gestionutilisateursController {
     @FXML
     private ComboBox<Role> comboRole;
     @FXML
-    private Label lblNomError;
-    @FXML
-    private Label lblPrenomError;
-    @FXML
-    private Label lblEmailError;
-    @FXML
-    private Label lblRoleError;
-    @FXML
     private TextField searchField;
 
-    private UtilisateurService utilisateurService = new UtilisateurService();
-    private ObservableList<Utilisateur> allUsers = FXCollections.observableArrayList();
+    private final UtilisateurService utilisateurService = new UtilisateurService();
+    private final ObservableList<Utilisateur> allUsers = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -63,7 +54,6 @@ public class gestionutilisateursController {
                 txtPrenom.setText(newSelection.getPrenom());
                 txtEmail.setText(newSelection.getEmail());
                 comboRole.setValue(newSelection.getRole());
-                clearErrorMessages();
             }
         });
     }
@@ -112,31 +102,15 @@ public class gestionutilisateursController {
     public void saveUser() {
         Utilisateur selectedUser = tableUsers.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
-            String nom = txtNom.getText();
-            String prenom = txtPrenom.getText();
-            String email = txtEmail.getText();
+            String nom = txtNom.getText().trim();
+            String prenom = txtPrenom.getText().trim();
+            String email = txtEmail.getText().trim();
             Role role = comboRole.getValue();
 
-            clearErrorMessages();
+            String errorMessage = validateInputs(nom, prenom, email, role);
 
-            if (nom.isEmpty()) {
-                lblNomError.setText("Nom requis");
-                lblNomError.setVisible(true);
-                return;
-            }
-            if (prenom.isEmpty()) {
-                lblPrenomError.setText("Prénom requis");
-                lblPrenomError.setVisible(true);
-                return;
-            }
-            if (email.isEmpty() || !isValidEmail(email)) {
-                lblEmailError.setText("Email invalide");
-                lblEmailError.setVisible(true);
-                return;
-            }
-            if (role == null) {
-                lblRoleError.setText("Rôle requis");
-                lblRoleError.setVisible(true);
+            if (errorMessage != null) {
+                showAlert("Erreur", errorMessage, Alert.AlertType.ERROR);
                 return;
             }
 
@@ -150,6 +124,14 @@ public class gestionutilisateursController {
         }
     }
 
+    private String validateInputs(String nom, String prenom, String email, Role role) {
+        if (nom.isEmpty()) return "Nom requis.";
+        if (prenom.isEmpty()) return "Prénom requis.";
+        if (email.isEmpty() || !isValidEmail(email)) return "Email invalide.";
+        if (role == null) return "Rôle requis.";
+        return null;
+    }
+
     private boolean isValidEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         return Pattern.matches(emailRegex, email);
@@ -160,18 +142,6 @@ public class gestionutilisateursController {
         txtPrenom.clear();
         txtEmail.clear();
         comboRole.setValue(null);
-        clearErrorMessages();
-    }
-
-    private void clearErrorMessages() {
-        lblNomError.setText("");
-        lblNomError.setVisible(false);
-        lblPrenomError.setText("");
-        lblPrenomError.setVisible(false);
-        lblEmailError.setText("");
-        lblEmailError.setVisible(false);
-        lblRoleError.setText("");
-        lblRoleError.setVisible(false);
     }
 
     @FXML
@@ -179,5 +149,13 @@ public class gestionutilisateursController {
         searchField.clear();
         loadUserData();
         clearFields();
+    }
+
+    private void showAlert(String title, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

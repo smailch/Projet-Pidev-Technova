@@ -2,7 +2,7 @@ package controllers;
 
 import entities.Utilisateur;
 import javafx.event.ActionEvent;
-import services.JwtService;
+import services.*;
 import services.UtilisateurService;
 import java.io.IOException;
 import java.net.URL;
@@ -51,6 +51,8 @@ public class LoginController implements Initializable {
             Utilisateur utilisateur = logIn();
             if (utilisateur != null) {
                 try {
+                    SharedDataController.getInstance().setUtilisateur(utilisateur);
+
                     System.out.println("✅ Connexion réussie : " + utilisateur.getNom());
 
                     // Générer le JWT
@@ -61,7 +63,7 @@ public class LoginController implements Initializable {
                     Stage stage = (Stage) node.getScene().getWindow();
                     stage.close();
 
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionutilisateurs.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Profil.fxml"));
                     Scene scene = new Scene(loader.load());
                     stage.setScene(scene);
                     stage.show();

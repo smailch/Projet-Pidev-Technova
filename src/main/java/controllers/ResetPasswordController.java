@@ -4,11 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import services.UtilisateurService;
 import tools.Myconnection;
@@ -115,12 +112,59 @@ public class ResetPasswordController {
 
     // Fonction pour afficher une alerte avec un type, titre et message
     private void showAlert(AlertType type, String title, String message) {
+        // Créer l'alerte avec le type spécifié
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null); // Pas d'en-tête pour l'alerte
         alert.setContentText(message);
+
+        // Personnalisation de l'apparence du DialogPane
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setStyle(
+                "-fx-background-color: #87CEEB;" + // 🌟 Bleu ciel
+                        "-fx-border-color: #0073e6;" + // Bordure bleu foncé
+                        "-fx-border-width: 2px;" +
+                        "-fx-border-radius: 12px;" +
+                        "-fx-background-radius: 12px;" +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5);" // Ombre
+        );
+
+        // Appliquer un style au titre de l'alerte
+        alert.getDialogPane().setStyle(
+                "-fx-background-color: #0073e6;" + // Bleu profond
+                        "-fx-text-fill: white;" +
+                        "-fx-font-size: 18px;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-padding: 10px;"
+        );
+
+        // Appliquer un style au message de l'alerte
+        alert.getDialogPane().setStyle(
+                "-fx-text-fill: #ffffff;" + // Texte blanc
+                        "-fx-font-size: 15px;" +
+                        "-fx-font-family: 'Arial';" +
+                        "-fx-padding: 10px;"
+        );
+
+        // Appliquer un style spécifique aux boutons (si nécessaire)
+        for (ButtonType button : alert.getButtonTypes()) {
+            Button buttonNode = (Button) dialogPane.lookupButton(button);
+            if (buttonNode != null) {
+                buttonNode.setStyle(
+                        "-fx-background-color: #0073e6;" + // Bouton bleu
+                                "-fx-text-fill: white;" +
+                                "-fx-font-weight: bold;" +
+                                "-fx-border-radius: 10px;" +
+                                "-fx-padding: 5px 15px;"
+                );
+            }
+        }
+
+        // Afficher l'alerte
         alert.showAndWait();
     }
+
+
     private void redirectToLogin() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml")); // Assure-toi que le chemin est correct
