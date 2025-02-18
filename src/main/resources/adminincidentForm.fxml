@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="644.0" prefWidth="944.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.adminIncidentController">
+    <!-- Correct placement of the stylesheets -->
+    <stylesheets>
+        <URL value="@assets/css/styles.css" />
+        <URL value="file:/C:/demo/src/main/resources/assets/css/box.css" />
+
+    </stylesheets>
+
+    <children>
+        <ComboBox fx:id="comboServices" layoutX="102.0" layoutY="461.0" promptText="selectionne un service" />
+        <Label layoutX="36.0" layoutY="554.0" text="Statut" />
+        <ComboBox fx:id="statutComboBox" layoutX="100.0" layoutY="537.0" promptText="Sélectionner un statut" />
+
+        
+
+        <!-- Table pour afficher les incidents -->
+        <TableView fx:id="incidentTable" layoutX="54.0" layoutY="141.0" prefHeight="294.0" prefWidth="876.0">
+            <columns>
+                <TableColumn fx:id="colTypeIncident" prefWidth="150" text="Type Incident" />
+                <TableColumn fx:id="colDescription" prefWidth="150" text="Description" />
+                <TableColumn fx:id="colLocalisation" prefWidth="150" text="Localisation" />
+                <TableColumn fx:id="colStatut" prefWidth="126.39996337890625" text="Statut" />
+                <TableColumn fx:id="colServiceAffecte" prefWidth="156.800048828125" text="ServiceAffecte" />
+                <TableColumn fx:id="colImage" prefWidth="137.60003662109375" text="Image" />
+            </columns>
+        </TableView>
+      <Button fx:id="btnSignin1" layoutX="301.0" layoutY="461.0" mnemonicParsing="false" onMouseClicked="#affecterService" prefHeight="34.0" prefWidth="137.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold;" text="Affecter Service" />
+      <Button fx:id="btnSignin11" layoutX="301.0" layoutY="537.0" mnemonicParsing="false" onMouseClicked="#modifierstatusIncident" prefHeight="34.0" prefWidth="137.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold;" text="Modifier status" />
+      <AnchorPane layoutX="-2.0" prefHeight="76.0" prefWidth="948.0" style="-fx-background-color: #6200ea;">
+         <children>
+            <Label layoutX="387.0" layoutY="20.0" text="gerers les incident" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Button fx:id="btnSignin111" layoutX="481.0" layoutY="495.0" mnemonicParsing="false" onMouseClicked="#supprimerIncident" prefHeight="34.0" prefWidth="137.0" style="-fx-background-color: #ff0000; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold;" text="Supprimer Incident" />
+      <Label layoutX="36.0" layoutY="469.0" text="service" />
+      <Button fx:id="btnNavigateToList" layoutX="723.0" layoutY="93.0" mnemonicParsing="false" onAction="#goToadminservicePage" prefHeight="34.0" prefWidth="186.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold;" text="service d'intervention -&gt;" />
+    </children>
+</AnchorPane>

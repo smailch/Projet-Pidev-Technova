@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane prefHeight="644.0" prefWidth="944.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.IncidentController">
+<!-- Correct placement of the stylesheets -->
+<stylesheets>
+    <URL value="@assets/css/styles.css" />
+    <URL value="file:/C:/demo/src/main/resources/assets/css/box.css" />
+
+</stylesheets>
+
+<children>
+    <ComboBox fx:id="typeIncidentComboBox" layoutX="360.0" layoutY="97.0" prefHeight="34.0" prefWidth="230.0" promptText="Sélectionner un type d'incident" />
+    <TextField fx:id="descriptionField" layoutX="360.0" layoutY="148.0" onKeyPressed="#onEnterPressed" prefHeight="26.0" prefWidth="230.0" />
+
+    <!-- WebView pour la carte (affichage de la carte) -->
+    <WebView fx:id="mapView" layoutX="278.0" layoutY="484.0" prefHeight="120.0" prefWidth="390.0" />
+
+    <!-- Bouton pour choisir l'adresse via la carte -->
+    <Button fx:id="confirmAddressButton" layoutX="711.0" layoutY="516.0" mnemonicParsing="false" onMouseClicked="#fetchAndSetAddress" prefHeight="34.0" prefWidth="138.0" style="-fx-background-color: #39df09; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold;" text="Confirmer l'adresse" visible="false" />
+    <Button fx:id="btnNavigateToList" layoutX="724.0" layoutY="97.0" mnemonicParsing="false" onAction="#goTolisterIncidentPage" prefHeight="34.0" prefWidth="186.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold;" text="Voir la liste des incidents -&gt;" />
+
+    <Text fx:id="affichemapText" fill="#4400ff" layoutX="241.0" layoutY="416.0" onMouseClicked="#showMap" text="Déplacez le marqueur sur la carte pour définir votre emplacement" wrappingWidth="484.6019287109375">
+        <font>
+            <Font size="16.0" />
+        </font></Text>
+    <!-- WebView pour l'autocomplétion d'adresse -->
+    <WebView fx:id="autocompleteView" layoutX="360.0" layoutY="272.0" prefHeight="100.0" prefWidth="230.0" />
+
+    <!-- Champ Localisation (lecture seule, mis à jour dynamiquement par le contrôleur) -->
+    <Label fx:id="localisationLabel" layoutX="358.0" layoutY="610.0" prefHeight="26.0" prefWidth="230.0" text="" />
+    <Button fx:id="chooseImageButton" layoutX="360.0" layoutY="190.0" onAction="#choisirImage" prefHeight="26.0" prefWidth="230.0" text="Choisir une image" />
+    <ImageView fx:id="imageView" fitHeight="100.0" fitWidth="174.0" layoutX="730.0" layoutY="153.0" />
+
+    <!-- Table pour afficher les incidents -->
+
+
+    <!-- Fond coloré en bas -->
+    <AnchorPane prefHeight="76.0" prefWidth="948.0" style="-fx-background-color: #6200ea;">
+        <children>
+            <Label layoutX="387.0" layoutY="20.0" text="Ajouter une incident" textFill="WHITE">
+                <font>
+                    <Font size="24.0" />
+                </font>
+            </Label>
+        </children></AnchorPane>
+    <Button fx:id="btnSignin" layoutX="404.0" layoutY="437.0" mnemonicParsing="false" onMouseClicked="#ajouterIncident" prefHeight="34.0" prefWidth="137.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold;" text="Ajouter Incident" />
+      <Label layoutX="378.0" layoutY="236.0" textFill="#4400ff">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="241.0" layoutY="114.0" text="Type d'incident :">
+         <font>
+            <Font name="Britannic Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="260.0" layoutY="153.0" text="Description :">
+         <font>
+            <Font name="Britannic Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="260.0" layoutY="314.0" text="Localisation:">
+         <font>
+            <Font name="Britannic Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="286.0" layoutY="193.0" prefHeight="20.0" prefWidth="54.0" text="Image  :">
+         <font>
+            <Font name="Britannic Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="378.0" layoutY="239.0" prefHeight="20.0" prefWidth="197.0" text="Utiliser le bar de recherche " textFill="#ff0c0c">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+</children>
+</AnchorPane>

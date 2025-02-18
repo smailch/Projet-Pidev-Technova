@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="854.0" style="-fx-background-color: #f0f0f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.LoginController">
+    <children>
+        <!-- Left panel with branding and image -->
+        <AnchorPane prefHeight="503.0" prefWidth="392.0" style="-fx-background-color: #6200ea;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <ImageView fitHeight="261.0" fitWidth="259.0" layoutX="61.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@assets/images/logo.png" />
+                    </image>
+                </ImageView>
+                <Label alignment="CENTER" layoutX="62.0" layoutY="313.0" prefHeight="30.0" prefWidth="268.0" text="Gestion de la Ville Intelligente" textFill="WHITE">
+                    <font>
+                        <Font name="Roboto" size="20.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" layoutX="89.0" layoutY="343.0" prefHeight="23.0" prefWidth="213.0" text="Gérez efficacement les services urbains" textFill="WHITE">
+                    <font>
+                        <Font name="Roboto" size="12.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+
+        <!-- Right panel with login form -->
+        <Pane layoutX="498.0" layoutY="35.0" prefHeight="423.0" prefWidth="283.0" AnchorPane.bottomAnchor="45.0" AnchorPane.topAnchor="35.0">
+            <children>
+
+                <!-- Welcome back label -->
+                <Label alignment="CENTER" layoutX="4.0" layoutY="14.0" prefHeight="23.0" prefWidth="275.0" text="Bienvenue de nouveau" textFill="#6200ea">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+
+                <!-- Sign in to continue label -->
+                <Label alignment="CENTER" layoutX="7.0" layoutY="49.0" prefHeight="23.0" prefWidth="275.0" text="Connectez-vous pour continuer" textFill="#5b5a5a">
+                    <font>
+                        <Font name="Roboto" size="12.0" />
+                    </font>
+                </Label>
+
+                <!-- Username Field -->
+                <TextField fx:id="txtUsername" layoutX="3.0" layoutY="101.0" prefHeight="34.0" prefWidth="275.0" promptText="Nom d'utilisateur ou Email" style="-fx-background-color: #f0f0f5; -fx-border-radius: 25px; -fx-border-color: #ccc; -fx-padding: 5px;" />
+
+                <!-- Password Field -->
+                <PasswordField fx:id="txtPassword" layoutX="7.0" layoutY="142.0" prefHeight="34.0" prefWidth="275.0" promptText="Mot de passe" style="-fx-background-color: #f0f0f5; -fx-border-radius: 25px; -fx-border-color: #ccc; -fx-padding: 5px;" />
+
+                <!-- Sign In Button -->
+                <Button fx:id="btnSignin" layoutX="143.0" layoutY="188.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="34.0" prefWidth="137.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold;" text="Se connecter" />
+
+                <!-- Forgot Password Link -->
+                <Label fx:id="btnForgot" alignment="CENTER" layoutX="8.0" layoutY="194.0" onMouseClicked="#redirectToForgotPassword" prefHeight="23.0" prefWidth="109.0" style="-fx-font-size: 12px; -fx-cursor: hand;" text="Mot de passe oublié ?" textFill="#5383ff">
+                    <font>
+                        <Font name="Roboto" size="12.0" />
+                    </font>
+                </Label>
+
+                <!-- Sign in with Facebook Button -->
+                <Button fx:id="btnFB" layoutX="3.0" layoutY="258.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="275.0" style="-fx-background-color: #3b5998; -fx-background-radius: 25px; -fx-text-fill: white;" text="Se connecter avec Facebook">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@assets/images/icons8_Facebook_F_48px.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <!-- Sign in with Google Button -->
+                <Button fx:id="btnGoogle" layoutX="3.0" layoutY="300.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="275.0" style="-fx-background-color: #4285F4; -fx-background-radius: 25px; -fx-text-fill: white;" text="Se connecter avec Google">
+                    <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@assets/images/icons8_Google_48px.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <!-- Sign up Button -->
+                <Button fx:id="btnSignup" layoutX="5.0" layoutY="368.0" mnemonicParsing="false" onMouseClicked="#redirectToSignUp" prefHeight="34.0" prefWidth="275.0" style="-fx-background-color: #ff5722; -fx-background-radius: 25px; -fx-text-fill: white;" text="S'inscrire" />
+
+                <!-- Separator -->
+                <Separator layoutX="6.0" layoutY="239.0" prefHeight="7.0" prefWidth="275.0" style="-fx-opacity: 0.5;" />
+
+                <!-- Or Text -->
+                <Label alignment="CENTER" layoutX="124.0" layoutY="228.0" prefHeight="23.0" prefWidth="31.0" style="-fx-background-color: f0f0f5;" text="Ou" textFill="#5b5a5a">
+                    <font>
+                        <Font name="Roboto" size="12.0" />
+                    </font>
+                </Label>
+
+
+
+                <!-- Error Message Label -->
+                <Label fx:id="lblErrors" alignment="CENTER" layoutX="6.0" layoutY="70.0" prefHeight="23.0" prefWidth="275.0" style="-fx-font-size: 10px; -fx-font-weight: bold;" textFill="#ff6354">
+                    <font>
+                        <Font name="Roboto" size="10.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+
+        <!-- Footer Texts -->
+        <Label alignment="CENTER" layoutX="394.0" layoutY="466.0" prefHeight="23.0" prefWidth="213.0" text="© 2025 TechNova. Tous droits réservés." textFill="#5b5a5a" AnchorPane.bottomAnchor="14.0">
+            <font>
+                <Font name="Roboto" size="12.0" />
+            </font>
+        </Label>
+
+        <Label alignment="CENTER" layoutX="721.0" layoutY="466.0" prefHeight="23.0" prefWidth="119.0" text="Design par TechNova" textFill="#a6b1cc" AnchorPane.bottomAnchor="14.0">
+            <font>
+                <Font name="Roboto" size="12.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
