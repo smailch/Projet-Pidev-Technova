@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.DatePicker?>
+<AnchorPane stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DocumentAdministratifController">
+    <children>
+        <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="5">
+            <padding>
+                <Insets bottom="5" left="5" right="5" top="5" />
+            </padding>
+            <children>
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Gestion des Documents Administratifs" />
+
+                <HBox alignment="CENTER" spacing="5">
+                    <children>
+                        <TextField fx:id="searchField" onKeyReleased="#handleSearch" prefWidth="200" promptText="Rechercher..." style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Button onAction="#searchButton" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Réinitialiser" />
+                    </children>
+                </HBox>
+
+                <TableView fx:id="tableDocuments" prefHeight="300" prefWidth="800">
+                    <columns>
+                        <TableColumn fx:id="colNomDocument" prefWidth="145.0" text="Nom Document" />
+                        <TableColumn fx:id="colCheminFichier" prefWidth="200.0" text="Chemin Fichier" />
+                        <TableColumn fx:id="colDateEmission" prefWidth="183.0" text="Date Emission" />
+                        <TableColumn fx:id="colStatus" prefWidth="127.0" text="Status" />
+                        <TableColumn fx:id="colRemarque" prefWidth="420.0" text="Remarque" />
+                    </columns>
+                </TableView>
+
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <Label fx:id="lblNomDocumentError" textFill="red" visible="false" />
+                        <TextField fx:id="txtNomDocument" prefWidth="200" promptText="Nom Document" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+
+                        <HBox alignment="CENTER" spacing="5">
+                            <children>
+                                <TextField fx:id="txtCheminFichier" editable="false" prefWidth="200" promptText="Chemin Fichier" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                                <Button onAction="#browseFile" text="Parcourir..." style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;"/>
+                            </children>
+                        </HBox>
+
+                        <Label fx:id="lblDateEmissionError" textFill="red" visible="false" />
+                        <DatePicker fx:id="datePickerDateEmission" prefWidth="200" promptText="Date Emission" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+
+                        <Label fx:id="lblStatusError" textFill="red" visible="false" />
+                        <TextField fx:id="txtStatus" prefWidth="200" promptText="Status" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+
+                        <Label fx:id="lblRemarqueError" textFill="red" visible="false" />
+                        <TextField fx:id="txtRemarque" prefWidth="200" promptText="Remarque" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                    </children>
+                </HBox>
+
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <Button onAction="#addDocument" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Ajouter" />
+                        <Button onAction="#updateDocument" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Modifier" />
+                        <Button onAction="#deleteDocument" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Supprimer" />
+                        <Button onAction="#clearFields" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Réinitialiser" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
