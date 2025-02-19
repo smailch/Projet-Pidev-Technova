@@ -1,41 +1,43 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 public class Quartier {
     private int id;
+    private String nom;
     private int nbLamp;
-    private double consom_tot;
-    private List<Lampadaire> lampadaires;
+    private double consomTot;
 
-    // Constructeurs
+    // Default constructor
     public Quartier() {
-        this.lampadaires = new ArrayList<>();
     }
 
-    public Quartier(int id, int nbLamp, double consom_tot) {
-        this.id = id;
-        this.nbLamp = nbLamp;
-        this.consom_tot = consom_tot;
-        this.lampadaires = new ArrayList<>();
-
-    }
-
+    // Constructor with id only
     public Quartier(int id) {
         this.id = id;
-        this.lampadaires = new ArrayList<>();
-
     }
 
-    // Getters et Setters
+    // Parameterized constructor
+    public Quartier(int id, String nom, int nbLamp, double consomTot) {
+        this.id = id;
+        this.nom = nom;
+        this.nbLamp = nbLamp;
+        this.consomTot = consomTot;
+    }
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     public int getNbLamp() {
@@ -46,35 +48,24 @@ public class Quartier {
         this.nbLamp = nbLamp;
     }
 
-    public double getConsom_tot() {
-        return consom_tot;
+    public double getConsomTot() {
+        return consomTot;
     }
 
-    public void setConsom_tot(double consom_tot) {
-        this.consom_tot = consom_tot;
+    public void setConsomTot(double consomTot) {
+        this.consomTot = consomTot;
     }
 
-    public List<Lampadaire> getLampadaires() {
-        return lampadaires;
-    }
-
-    public void setLampadaires(List<Lampadaire> lampadaires) {
-        this.lampadaires = lampadaires;
-    }
-
-    // Méthode pour ajouter un lampadaire au quartier
-    public void addLampadaire(Lampadaire lampadaire) {
-        this.lampadaires.add(lampadaire);
-        lampadaire.setQuartier(this); // Définir le quartier du lampadaire
-    }
-
-    // Méthode toString pour afficher les informations du quartier
     @Override
     public String toString() {
         return "Quartier{" +
                 "id=" + id +
-                ", nombreLampadaires=" + nbLamp +
-                ", consommationTotale=" + consom_tot +
+                ", nom='" + nom + '\'' +
+                ", nbLamp=" + nbLamp +
+                ", consomTot=" + consomTot +
                 '}';
+    }
+
+    public void addLampadaire(Lampadaire p) {
     }
 }

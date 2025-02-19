@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8.0"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.DetailsLampadaireController">
+
+   <children>
+      <Label layoutX="105.0" layoutY="78.0" text="Id" />
+      <Label layoutX="101.0" layoutY="140.0" text="Localisation" />
+      <Label layoutX="110.0" layoutY="207.0" prefHeight="18.0" prefWidth="26.0" text="Etat" />
+      <Label layoutX="105.0" layoutY="274.0" text="Consommation" />
+      <Text layoutX="95.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0"
+            text="nom du quartier" wrappingWidth="108.5445556640625" />
+
+      <TextField fx:id="lbid" layoutX="204.0" layoutY="74.0" />
+      <TextField fx:id="lblocalisation" layoutX="205.0" layoutY="145.0" />
+      <TextField fx:id="lbetat" layoutX="205.0" layoutY="204.0" />
+      <TextField fx:id="lbconsommation" layoutX="232.0" layoutY="270.0" />
+      <TextField fx:id="lbnomq" layoutX="226.0" layoutY="336.0" />
+   </children>
+</AnchorPane>

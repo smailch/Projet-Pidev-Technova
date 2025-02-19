@@ -3,17 +3,15 @@ package entities;
 public class Lampadaire {
     private int id;
     private String localisation;
-    private boolean etat; // true pour allumé, false pour éteint
+    private boolean etat;
     private double consommation;
-    private Quartier quartier; // Relation Many-to-One
+    private Quartier quartier;
 
-    // Constructeurs
-    public Lampadaire() {}
-    public Lampadaire(int id, Quartier quartier) {
-        this.id = id;
-        this.quartier = quartier;
+    // Default constructor
+    public Lampadaire() {
     }
 
+    // Parameterized constructor
     public Lampadaire(int id, String localisation, boolean etat, double consommation, Quartier quartier) {
         this.id = id;
         this.localisation = localisation;
@@ -22,7 +20,7 @@ public class Lampadaire {
         this.quartier = quartier;
     }
 
-    // Getters et Setters
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -63,7 +61,6 @@ public class Lampadaire {
         this.quartier = quartier;
     }
 
-    // Méthode toString
     @Override
     public String toString() {
         return "Lampadaire{" +

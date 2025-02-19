@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="520.0" prefWidth="888.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ListeQuartierController">
+  <children>
+    <TableView fx:id="tableQuartier" layoutX="50" layoutY="50" prefHeight="400.0" prefWidth="600.0">
+      <columns>
+        <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
+        <TableColumn fx:id="colNom" prefWidth="100.0" text="Nom" />
+        <TableColumn fx:id="colNbLamp" prefWidth="160.0" text="Nombre de Lampadaires" />
+        <TableColumn fx:id="colConsomTot" prefWidth="143.0" text="Consommation Totale" />
+      </columns>
+    </TableView>
+
+    <Button fx:id="btnModify" layoutX="670" layoutY="200" text="Modifier" onAction="#modifySelectedQuartier" />
+    <Button fx:id="btnDelete" layoutX="670" layoutY="250" text="Supprimer" onAction="#deleteSelectedQuartier" />
+  </children>
+</AnchorPane>

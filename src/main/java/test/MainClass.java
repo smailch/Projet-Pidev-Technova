@@ -13,19 +13,21 @@ public class MainClass {
         MyConnection mc = MyConnection.getInstance();
 
         // Créer un quartier
-        Quartier q = new Quartier(3, 1, 100.0);
+        Quartier q = new Quartier(2);
         QuartierService qs = new QuartierService();
 
         // Ajouter le quartier à la base de données
-        //qs.updateEntity(q);
+        //qs.deleteEntity(q);
         System.out.println(qs.getAllData());
 
+
+
         // Créer un lampadaire associé au quartier
-        Lampadaire p = new Lampadaire(7, q);
+        Lampadaire p = new Lampadaire(17, "Rue de bourguiba, côté nord", true, 150.5, q);
         LampadaireService ps = new LampadaireService();
 
         // Ajouter le lampadaire à la base de données
-        ps.deleteEntity(p);
+       ps.updateEntity(p);
         System.out.println(ps.getAllData());
 
 

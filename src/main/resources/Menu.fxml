@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuController">
+   <children>
+      <Text layoutX="196.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestion des Lampadaires Intelligentes" />
+      <Button fx:id="buttQuart" layoutX="52.0" layoutY="174.0" mnemonicParsing="false" onAction="#goToAjouterQuartier" text="Ajouter quartier" />
+      <Button fx:id="buttLamp" layoutX="406.0" layoutY="174.0" mnemonicParsing="false" onAction="#goToAjouterLampadaire" text="Ajouter lampadaire" />
+      <Button fx:id="buttLISTLamp" layoutX="406.0" layoutY="259.0" mnemonicParsing="false" onAction="#goToListeLampadaire" text="liste des lampadaires" />
+      <Button fx:id="buttLISTQuart" layoutX="47.0" layoutY="259.0" mnemonicParsing="false" onAction="#goToListeQuartier" text="liste des quartiers" />
+   </children>
+</AnchorPane>
