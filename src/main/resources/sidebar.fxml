@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:controller="controllers.SideBarController" xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" prefHeight="675.0" prefWidth="298.0">
+    <VBox fx:id="sidebar" alignment="TOP_CENTER" maxWidth="298.0" prefHeight="675.0" prefWidth="298.0" spacing="13.5"
+          style="-fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #512da8, #673ab7);-fx-padding: 9 18 9 18;-fx-pref-width: 250;-fx-max-width: 250; -fx-min-width: 250;"
+          AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+
+        <!-- Logo Section (Centered) -->
+        <VBox alignment="CENTER" prefHeight="133.0" prefWidth="214.0" spacing="9" style="-fx-padding: 9; -fx-grow: true;">
+            <ImageView fx:id="logo" fitHeight="90.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@assets/images/logo2.png" />
+                </image>
+            </ImageView>
+        </VBox>
+
+        <!-- Sidebar Buttons (Gestion) -->
+        <VBox alignment="TOP_CENTER" spacing="13.5" style="-fx-padding: 0 0 9 0;">
+            <!-- Dashboard -->
+            <HBox spacing="9" style="-fx-padding: 4 0;">
+                <ImageView fx:id="dashboardIcon" fitHeight="18" fitWidth="18" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@assets/images/icons8-disposition-du-tableau-de-bord-48.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="dashboardLabel" style="-fx-font-size: 17; -fx-text-fill: white; -fx-font-family: 'Berlin Sans FB';" text="Dashboard" onMouseClicked="#onDashboardClick"/>
+            </HBox>
+
+            <!-- Gestions Label (No icon) with color change -->
+            <Label prefHeight="20.0" prefWidth="237.0" style="-fx-font-size: 19; -fx-text-fill: #ff9800; -fx-font-family: 'Berlin Sans FB'; -fx-padding: 0 0 0 18;" text="Gestions" />
+
+            <!-- Actual Gestion Sections (Utilisateur, Finances, etc.) -->
+            <HBox spacing="9" style="-fx-padding: 4 0;">
+                <ImageView fx:id="utilisateurIcon" fitHeight="18" fitWidth="18" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@assets/images/account.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="utilisateurLabel" style="-fx-font-size: 17; -fx-text-fill: white; -fx-font-family: 'Berlin Sans FB';" text="Utilisateurs" onMouseClicked="#onUtilisateurClick"/>
+            </HBox>
+            <HBox spacing="9" style="-fx-padding: 4 0;">
+                <ImageView fx:id="financesIcon" fitHeight="18" fitWidth="18" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@assets/images/asset-management.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="financesLabel" style="-fx-font-size: 17; -fx-text-fill: white; -fx-font-family: 'Berlin Sans FB';" text="Finances" onMouseClicked="#onFinancesClick"/>
+            </HBox>
+            <HBox spacing="9" style="-fx-padding: 4 0;">
+                <ImageView fx:id="dechetIcon" fitHeight="18" fitWidth="18" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@assets/images/recycle-bin.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="dechetLabel" style="-fx-font-size: 17; -fx-text-fill: white; -fx-font-family: 'Berlin Sans FB';" text="Dechets" onMouseClicked="#onDechetClick"/>
+            </HBox>
+            <HBox spacing="9" style="-fx-padding: 4 0;">
+                <ImageView fx:id="lampadairesIcon" fitHeight="18" fitWidth="18" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@assets/images/light-bulb.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="lampadairesLabel" style="-fx-font-size: 17; -fx-text-fill: white; -fx-font-family: 'Berlin Sans FB';" text="Lampadaires" onMouseClicked="#onLampadairesClick"/>
+            </HBox>
+            <HBox spacing="9" style="-fx-padding: 4 0;">
+                <ImageView fx:id="incidentsIcon" fitHeight="18" fitWidth="18" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@assets/images/alarm.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="incidentsLabel" style="-fx-font-size: 17; -fx-text-fill: white; -fx-font-family: 'Berlin Sans FB';" text="Incidents" onMouseClicked="#onIncidentsClick"/>
+            </HBox>
+            <HBox spacing="9" style="-fx-padding: 4 0;">
+                <ImageView fx:id="paperassesIcon" fitHeight="18" fitWidth="18" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@assets/images/paper.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="paperassesLabel" style="-fx-font-size: 17; -fx-text-fill: white; -fx-font-family: 'Berlin Sans FB';" text="Paperasses" onMouseClicked="#onPaperassesClick"/>
+            </HBox>
+        </VBox>
+
+        <HBox spacing="9" style="-fx-padding: 9; -fx-alignment: CENTER;">
+            <Label style="-fx-font-size: 17; -fx-text-fill: white; -fx-font-family: 'Berlin Sans FB';" text="Profile" />
+            <Button fx:id="profileButton" style="-fx-background-color: transparent; -fx-padding: 9;" onAction="#onLampadairesClick">
+                <graphic>
+                    <ImageView fx:id="profilePic" fitHeight="36" fitWidth="36" pickOnBounds="true" preserveRatio="true" onMouseClicked="#onLampadairesClick">
+                        <image>
+                            <Image url="@assets/images/profile.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </HBox>
+
+        <!-- Logout Button -->
+        <Button alignment="CENTER_LEFT" onAction="#Logout" style="-fx-background-color: linear-gradient(to right, #e53935, #f44336); -fx-text-fill: white; -fx-font-size: 17; -fx-padding: 9; -fx-font-family: 'Segoe UI'; -fx-background-radius: 23; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 4, 0.0, 0, 2);" text="Logout" />
+    </VBox>
+</AnchorPane>

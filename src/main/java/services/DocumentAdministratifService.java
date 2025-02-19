@@ -82,6 +82,12 @@ public class DocumentAdministratifService implements IService<DocumentAdministra
 
         return result;
     }
+
+    @Override
+    public boolean emailExists(String email) {
+        return false;
+    }
+
     public List<String> getAllNomDocuments() {
         List<String> nomDocuments = new ArrayList<>();
         String req = "SELECT nomDocument FROM DocumentAdministratif";

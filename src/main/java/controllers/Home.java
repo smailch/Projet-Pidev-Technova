@@ -15,7 +15,7 @@ public class Home extends Application {
     public void start(Stage stage) {
         try {
 
-            Parent root = FXMLLoader.load(getClass().getResource("/DossierFiscale.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
 
             contentPane = new StackPane();
             contentPane.getChildren().add(root); // Initialize with Login page

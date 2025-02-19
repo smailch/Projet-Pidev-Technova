@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import services.UtilisateurService;
-import tools.Myconnection;
+import tools.MyConnection;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -93,7 +93,7 @@ public class ResetPasswordController {
             String req = "UPDATE `utilisateur` SET `motDePasse`='" + hashedPassword + "' WHERE `email` = '" + email + "'";
 
             // Création de la requête et exécution
-            Statement st = Myconnection.getInstance().getCnx().createStatement();
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
             int rowsUpdated = st.executeUpdate(req); // Exécution de la mise à jour
 
             if (rowsUpdated > 0) {

@@ -89,7 +89,7 @@ public class ForgetPasswordController {
         String host = "smtp.gmail.com"; // Serveur SMTP Gmail
 
         // Chemin du logo (⚠️ Vérifiez que l'image existe)
-        String imagePath = "C:\\Users\\chemlali smail\\OneDrive\\Bureau\\ProjetPI\\ProjetPiDev\\Images\\logo.png";
+        String imagePath = "C:\\Users\\ichaa\\Downloads\\dossier\\Projet-Pidev-Technova-Impot\\src\\main\\resources\\assets\\images\\logo.png";
 
         // Configuration SMTP
         Properties props = new Properties();

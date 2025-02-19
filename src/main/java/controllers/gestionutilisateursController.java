@@ -3,15 +3,20 @@ package controllers;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import entities.Utilisateur;
 import entities.Role;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import services.UtilisateurService;
 
 import java.util.List;
 import java.util.regex.Pattern;
+
+import static controllers.SignUpController.isValidEmail;
 
 public class gestionutilisateursController {
 
@@ -127,15 +132,14 @@ public class gestionutilisateursController {
     private String validateInputs(String nom, String prenom, String email, Role role) {
         if (nom.isEmpty()) return "Nom requis.";
         if (prenom.isEmpty()) return "Prénom requis.";
-        if (email.isEmpty() || !isValidEmail(email)) return "Email invalide.";
+        if (nom.matches(".*\\d.*")) return "Le nom ne peut pas contenir de chiffres.";
+        if (prenom.matches(".*\\d.*")) return "Le prénom ne peut pas contenir de chiffres.";
+        if (email.isEmpty()) return "Email vide.";
+        if (!isValidEmail(email)) return "Email invalide.";
         if (role == null) return "Rôle requis.";
         return null;
     }
 
-    private boolean isValidEmail(String email) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-        return Pattern.matches(emailRegex, email);
-    }
 
     private void clearFields() {
         txtNom.clear();
@@ -157,5 +161,13 @@ public class gestionutilisateursController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    @FXML
+    public void Logout(Event event){
+        Utilisateur utilisateur = SharedDataController.getInstance().getUtilisateur();
+        utilisateurService.deconnexion(utilisateur);
+        Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
+        NavigationUtils.switchPage("/Login.fxml", currentStage, titleBar);
     }
 }

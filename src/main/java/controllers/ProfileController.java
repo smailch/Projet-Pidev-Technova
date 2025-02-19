@@ -1,7 +1,9 @@
 package controllers;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -62,16 +64,10 @@ public class ProfileController {
     }
 
     @FXML
-    private void handleRetour() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionutilisateurs.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnRetour.getScene().getWindow();
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du changement de scène : " + e.getMessage());
-        }
+    private void handleRetour(Event event) {
+        Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
+        NavigationUtils.switchPage("/gestionutilisateurs.fxml", currentStage, titleBar);
     }
 
     @FXML

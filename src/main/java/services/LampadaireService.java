@@ -97,4 +97,9 @@ public class LampadaireService implements IService<Lampadaire> {
         }
         return result;
     }
+
+    @Override
+    public boolean emailExists(String email) {
+        return false;
+    }
 }

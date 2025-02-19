@@ -11,7 +11,7 @@ import services.ValidationService;
 import entities.Utilisateur;
 import entities.Role;
 import services.UtilisateurService;
-import tools.Myconnection;
+import tools.MyConnection;
 import java.util.Calendar;
 
 public class MainClass {
@@ -20,6 +20,7 @@ public class MainClass {
         Calendar calendar = Calendar.getInstance();
         java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
         UtilisateurService utilisateurService = new UtilisateurService();
+        Utilisateur utilisateur=new Utilisateur();
         utilisateurService.addEntity(utilisateur);
 
         // Ajouter un utilisateur avec la méthode addEntity (utilisant PreparedStatement)

@@ -2,6 +2,7 @@ package controllers;
 
 import entities.Utilisateur;
 import javafx.event.ActionEvent;
+import javafx.scene.layout.HBox;
 import services.*;
 import services.UtilisateurService;
 import java.io.IOException;
@@ -22,7 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import tools.Myconnection;
+import tools.MyConnection;
 
 public class LoginController implements Initializable {
 
@@ -63,7 +64,7 @@ public class LoginController implements Initializable {
                     Stage stage = (Stage) node.getScene().getWindow();
                     stage.close();
 
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Profil.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Sample.fxml"));
                     Scene scene = new Scene(loader.load());
                     stage.setScene(scene);
                     stage.show();
@@ -78,24 +79,19 @@ public class LoginController implements Initializable {
 
     @FXML
     public void redirectToForgotPassword(MouseEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ForgetPassword.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.setScene(scene);
-            currentStage.setTitle("Mot de passe oublié");
-            currentStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            setLblError(Color.TOMATO, "Erreur lors du chargement de l'écran de réinitialisation du mot de passe.");
-        }
+        Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
+        // Create custom title bar
+        HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
+        // Switch to the login page
+        NavigationUtils.switchPage("/ForgetPassword.fxml", currentStage, titleBar);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         utilisateurService = new UtilisateurService();
         jwtService = new JwtService();
-        con = Myconnection.getInstance().getCnx();
+        con = MyConnection.getInstance().getCnx();
 
         if (con == null) {
             lblErrors.setTextFill(Color.TOMATO);
@@ -121,6 +117,7 @@ public class LoginController implements Initializable {
             setLblError(Color.TOMATO, "❌ Email ou mot de passe incorrect.");
         } else {
             setLblError(Color.GREEN, "✅ Connexion réussie !");
+            SessionManager.setUserId(utilisateur.getId());
         }
 
         return utilisateur;
@@ -133,17 +130,9 @@ public class LoginController implements Initializable {
     }
     @FXML
     public void redirectToSignUp(MouseEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/SignUp.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.setScene(scene);
-            currentStage.setTitle("SignUp");
-            currentStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            setLblError(Color.TOMATO, "Erreur lors du chargement de l'écran de réinitialisation du SignUp.");
-        }
+        Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
+        NavigationUtils.switchPage("/SignUp.fxml", currentStage, titleBar);
     }
 
 

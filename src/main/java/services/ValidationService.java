@@ -79,4 +79,9 @@ public class ValidationService implements IService<Validation> {
 
         return result;
     }
+
+    @Override
+    public boolean emailExists(String email) {
+        return false;
+    }
 }

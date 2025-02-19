@@ -170,7 +170,7 @@ public class DossierFiscaleController {
         String moyenPaiement = comboMoyenPaiement.getValue().trim(); // Changed to get value from ComboBox
         String dateCreation = LocalDate.now().format(dateFormatter);
 
-        return new DossierFiscale(0, 16, anneeFiscale, totalImpot, totalImpotPaye, status, dateCreation, moyenPaiement);
+        return new DossierFiscale(0, SessionManager.getUserId(), anneeFiscale, totalImpot, totalImpotPaye, status, dateCreation, moyenPaiement);
     }
 
     private void updateSelectedDossier(DossierFiscale selectedDossier) {

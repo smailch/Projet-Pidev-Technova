@@ -97,5 +97,10 @@ public class DeclarationRevenuesService implements IService<DeclarationRevenues>
         return result;
     }
 
+    @Override
+    public boolean emailExists(String email) {
+        return false;
+    }
+
 
 }

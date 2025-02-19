@@ -4,10 +4,14 @@ import entities.DeclarationRevenues;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import services.DeclarationRevenuesService;
 import services.SessionManager;
@@ -130,7 +134,7 @@ public class DeclarationRevenuesController {
             return;
         }
 
-        DeclarationRevenues newDeclaration = new DeclarationRevenues(0, 1, montantRevenu, sourceRevenu, dateDeclaration, preuveRevenu);
+        DeclarationRevenues newDeclaration = new DeclarationRevenues(0, 12, montantRevenu, sourceRevenu, dateDeclaration, preuveRevenu);
         declarationRevenuesService.addEntity(newDeclaration);
         loadDeclarationData();
         clearFields();
@@ -245,5 +249,11 @@ public class DeclarationRevenuesController {
         if (selectedFile != null) {
             txtPreuveRevenu.setText(selectedFile.getAbsolutePath());
         }
+    }
+    @FXML
+    public void redirectToFiscale(Event event){
+        Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
+        NavigationUtils.switchPage("/DossierFiscale.fxml", currentStage, titleBar);
     }
 }

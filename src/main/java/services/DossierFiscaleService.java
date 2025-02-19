@@ -100,6 +100,11 @@ public class DossierFiscaleService implements IService<DossierFiscale> {
         return result;
     }
 
+    @Override
+    public boolean emailExists(String email) {
+        return false;
+    }
+
     public double getResteImpot(DossierFiscale dossier) {
         return dossier.getTotalImpot()-dossier.getTotalImpotPaye() ;
     }
