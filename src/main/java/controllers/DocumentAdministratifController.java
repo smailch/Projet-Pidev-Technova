@@ -3,15 +3,20 @@ package controllers;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import entities.DocumentAdministratif;
 import services.DocumentAdministratifService;
+import services.OcrService;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -39,8 +44,6 @@ public class DocumentAdministratifController {
     private TextField txtNomDocument;
     @FXML
     private TextField txtCheminFichier;
-    @FXML
-    private DatePicker datePickerDateEmission;
 
     @FXML
     private TextField txtStatus;
@@ -52,8 +55,6 @@ public class DocumentAdministratifController {
     @FXML
     private Label lblNomDocumentError;
     @FXML
-    private Label lblCheminFichierError;
-    @FXML
     private Label lblDateEmissionError;
     @FXML
     private Label lblStatusError;
@@ -63,6 +64,10 @@ public class DocumentAdministratifController {
     private DocumentAdministratifService documentService = new DocumentAdministratifService();
     private ObservableList<DocumentAdministratif> allDocuments = FXCollections.observableArrayList();
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    @FXML
+    private SideBarController nullController;
+    @FXML
+    private Button btnOcrExtract;
 
     @FXML
     public void initialize() {
@@ -77,16 +82,6 @@ public class DocumentAdministratifController {
             if (newSelection != null) {
                 txtNomDocument.setText(newSelection.getNomDocument());
                 txtCheminFichier.setText(newSelection.getCheminFichier());
-                String dateDemande = newSelection.getDateEmission();
-                if (dateDemande != null && !dateDemande.isEmpty()) {
-                    try {
-                        datePickerDateEmission.setValue(LocalDate.parse(dateDemande, dateFormatter));
-                    } catch (DateTimeParseException e) {
-                        datePickerDateEmission.setValue(null);
-                    }
-                } else {
-                    datePickerDateEmission.setValue(null);
-                }
                 txtStatus.setText(newSelection.getStatus());
                 txtRemarque.setText(newSelection.getRemarque());
                 clearErrorMessages();
@@ -96,7 +91,7 @@ public class DocumentAdministratifController {
         // Set cell value factories for columns
         colNomDocument.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNomDocument()));
         colCheminFichier.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCheminFichier()));
-        colDateEmission.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDateEmission()));
+        colDateEmission.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDateEmission().toString()));
         colStatus.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus()));
         colRemarque.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRemarque()));
 
@@ -162,7 +157,7 @@ public class DocumentAdministratifController {
         for (DocumentAdministratif doc : allDocuments) {
             if (doc.getNomDocument().toLowerCase().contains(query) ||
                     doc.getCheminFichier().toLowerCase().contains(query) ||
-                    doc.getDateEmission().toLowerCase().contains(query)) {
+                    doc.getDateEmission().toString().toLowerCase().contains(query)) {
                 filteredList.add(doc);
             }
         }
@@ -177,10 +172,6 @@ public class DocumentAdministratifController {
         String remarque = txtRemarque.getText();
 
         // Format the date from DatePicker to string (yyyy-MM-dd)
-        String dateEmission = null;
-        if (datePickerDateEmission.getValue() != null) {
-            dateEmission = datePickerDateEmission.getValue().format(dateFormatter);
-        }
 
         // Validation for all fields
         if (nomDocument.isEmpty()) {
@@ -202,25 +193,27 @@ public class DocumentAdministratifController {
             return;
         }
 
-        if (dateEmission == null || dateEmission.isEmpty()) {
-            showAlert("Date requise", "La date d'émission est requise.");
-            return;
-        }
-        if (datePickerDateEmission.getValue() != null && datePickerDateEmission.getValue().isAfter(LocalDate.now())) {
-            showAlert("Date future", "La date ne peut pas être future.");
-            return;
-        }
 
         if (status.isEmpty()) {
             showAlert("Statut requis", "Le statut est requis.");
             return;
         }
-
-        DocumentAdministratif newDocument = new DocumentAdministratif(0, nomDocument, cheminFichier, dateEmission, status, remarque);
+        // --------------------------------------------
+        List<DocumentAdministratif> allDocs = documentService.getAllData();
+        for (DocumentAdministratif existing : allDocs) {
+            if (existing.getNomDocument().equalsIgnoreCase(nomDocument)) {
+                showErrorAlert("Erreur", "Un document avec ce nom existe déjà!");
+                return; // Stop creation if duplicate
+            }
+        }
+        DocumentAdministratif newDocument = new DocumentAdministratif(0, nomDocument, cheminFichier, status, remarque);
         documentService.addEntity(newDocument);
 
         loadDocumentData();
         clearFields();
+
+        // Show success alert
+        showInfoAlert("Succès", "Le document a été ajouté avec succès !");
     }
 
     @FXML
@@ -232,10 +225,7 @@ public class DocumentAdministratifController {
             String status = txtStatus.getText();
             String remarque = txtRemarque.getText();
 
-            String dateEmission = null;
-            if (datePickerDateEmission.getValue() != null) {
-                dateEmission = datePickerDateEmission.getValue().format(dateFormatter);
-            }
+
 
             // Validation for all fields
             if (nomDocument.isEmpty()) {
@@ -257,29 +247,23 @@ public class DocumentAdministratifController {
                 return;
             }
 
-            if (dateEmission == null || dateEmission.isEmpty()) {
-                showAlert("Date requise", "La date d'émission est requise.");
-                return;
-            }
-            if (datePickerDateEmission.getValue() != null && datePickerDateEmission.getValue().isAfter(LocalDate.now())) {
-                showAlert("Date future", "La date ne peut pas être future.");
-                return;
-            }
 
             if (status.isEmpty()) {
-                showAlert("Statut requis", "Le statut est requis.");
+                showErrorAlert("Statut requis", "Le statut est requis.");
                 return;
             }
 
             selectedDocument.setNomDocument(nomDocument);
             selectedDocument.setCheminFichier(cheminFichier);
-            selectedDocument.setDateEmission(dateEmission);
             selectedDocument.setStatus(status);
             selectedDocument.setRemarque(remarque);
 
             documentService.updateEntity(selectedDocument);
             loadDocumentData();
             clearFields();
+
+            // Show success alert
+            showInfoAlert("Succès", "Le document a été modifié avec succès !");
         }
     }
 
@@ -291,7 +275,13 @@ public class DocumentAdministratifController {
         alert.showAndWait();
     }
 
-
+    private void showonAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     @FXML
     public void deleteDocument() {
@@ -300,6 +290,9 @@ public class DocumentAdministratifController {
             documentService.deleteEntity(selectedDocument);
             loadDocumentData();
             clearFields();
+
+            // Show success alert
+            showInfoAlert("Succès", "Le document a été supprimé avec succès !");
         }
     }
 
@@ -307,7 +300,6 @@ public class DocumentAdministratifController {
     private void clearFields() {
         txtNomDocument.clear();
         txtCheminFichier.clear();
-        datePickerDateEmission.setValue(null);
         txtStatus.clear();
         txtRemarque.clear();
         clearErrorMessages();
@@ -318,14 +310,8 @@ public class DocumentAdministratifController {
             lblNomDocumentError.setText("");
             lblNomDocumentError.setVisible(false);
         }
-        if (lblCheminFichierError != null) {
-            lblCheminFichierError.setText("");
-            lblCheminFichierError.setVisible(false);
-        }
-        if (lblDateEmissionError != null) {
-            lblDateEmissionError.setText("");
-            lblDateEmissionError.setVisible(false);
-        }
+
+
         if (lblStatusError != null) {
             lblStatusError.setText("");
             lblStatusError.setVisible(false);
@@ -336,7 +322,23 @@ public class DocumentAdministratifController {
         }
     }
 
+    // For error messages
+    private void showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
+    // For success/info messages
+    private void showInfoAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     @FXML
     public void searchButton() {
         searchField.clear();
@@ -358,4 +360,135 @@ public class DocumentAdministratifController {
             txtCheminFichier.setText(selectedFile.getAbsolutePath());
         }
     }
+
+    @FXML
+    public void next_entity(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
+        HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
+        NavigationUtils.switchPage("/AssistantDocumentaire.fxml", currentStage, titleBar);
+    }
+
+    @FXML
+    public void PDFSELECTOR(ActionEvent actionEvent) {
+        DocumentAdministratif selectedDocument = tableDocuments.getSelectionModel().getSelectedItem();
+        if (selectedDocument != null) {
+            documentService.ExportPDF(selectedDocument);
+            loadDocumentData();
+            clearFields();
+
+            // Show success alert
+            showInfoAlert("Succès", "Le document a été extracter !");
+        }
+    }
+
+    @FXML
+    public void handleOcrExtraction(ActionEvent actionEvent) {
+
+        // 1) Let the user pick an image file (photo or scanned doc).
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Sélectionnez une image du document");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.tif", "*.tiff")
+        );
+        Window stage = btnOcrExtract.getScene().getWindow();
+        File selectedFile = fileChooser.showOpenDialog(stage);
+
+        if (selectedFile != null) {
+            try {
+                // 2) Perform OCR on the chosen file (Tess4J, or external API).
+                String extractedText = OcrService.performOcr(selectedFile);
+
+                // 3) Parse the text for relevant fields
+                //    Adjust these labels to match your PDF EXACTLY:
+                String typeAssistance = parseTypeAssistance(extractedText);  // from "Dossier No:"
+                String status          = parseStatus(extractedText);         // from "Status du dossier"
+                String remarque        = parseRemarque(extractedText);       // from "Moyen du paiment"
+                System.out.println(status);
+                System.out.println("ena houni");
+                System.out.println(remarque);
+                // 4) Fill the form fields
+                txtCheminFichier.setText(selectedFile.toString());
+                txtNomDocument.setText(typeAssistance);
+                txtStatus.setText(status);
+                txtRemarque.setText(remarque);
+
+                // Optional: show the raw text to confirm
+                showonAlert("OCR Extraction Réussie",
+                        "Texte détecté:\n\n" + extractedText,
+                        Alert.AlertType.INFORMATION);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                showonAlert("Erreur OCR",
+                        "Impossible d’extraire le texte depuis l’image.",
+                        Alert.AlertType.ERROR);
+            }
+        }
+
+    }
+    // --------------------------------------------
+    // Updated parse methods to match your PDF
+    // --------------------------------------------
+    private String parseTypeAssistance(String text) {
+        // e.g. "Dossier No: 1"
+        String label = "Nom de document";
+        return extractAfterLabel(text, label);
+    }
+
+
+
+    private String parseStatus(String text) {
+        // e.g. "Status du dossier" on one line, and "En cours" on the next line
+        String label = "Status du document";
+        return extractAfterLabel(text, label);
+    }
+
+    private String parseRemarque(String text) {
+        // e.g. "Moyen du paiment" then "Carte bancaire" on next line
+        // If your PDF spells it "paiement," be sure to match that exact string
+        String label = "Remarque";
+        return extractAfterLabel(text, label);
+    }
+    private String extractNextLineAfterLabel(String fullText, String label) {
+        // 1) Find where "Status du dossier" (or any label) appears.
+        int labelIndex = fullText.indexOf(label);
+        if (labelIndex == -1) {
+            return ""; // label not found
+        }
+
+        // 2) Find the end of that line (the newline character).
+        int labelLineEnd = fullText.indexOf("\n", labelIndex);
+        if (labelLineEnd == -1) {
+            return ""; // no newline found; might be end of text
+        }
+
+        // 3) The "next line" starts right after that newline.
+        int nextLineStart = labelLineEnd + 1;
+
+        // 4) Find where the next line ends (the next newline or end of text).
+        int nextLineEnd = fullText.indexOf("\n", nextLineStart);
+        if (nextLineEnd == -1) {
+            nextLineEnd = fullText.length();
+        }
+
+        // 5) Extract the substring of that "next line" and trim.
+        return fullText.substring(nextLineStart, nextLineEnd).trim();
+    }
+
+
+    /**
+     * Extracts the substring after label until the next newline (or end of text).
+     */
+    private String extractAfterLabel(String fullText, String label) {
+        int idx = fullText.indexOf(label);
+        if (idx != -1) {
+            int start = idx + label.length();
+            int end = fullText.indexOf("\n", start);
+            if (end == -1) end = fullText.length();
+            return fullText.substring(start, end).trim();
+        }
+        return "";
+    }
+
+
 }

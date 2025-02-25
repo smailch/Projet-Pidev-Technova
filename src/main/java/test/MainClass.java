@@ -8,6 +8,10 @@ import entities.Validation;
 import services.AssistantDocumentaireService;
 import services.DocumentAdministratifService;
 import services.ValidationService;
+import entities.Utilisateur;
+import entities.Role;
+import services.UtilisateurService;
+import tools.MyConnection;
 import java.util.Calendar;
 
 public class MainClass {
@@ -15,8 +19,8 @@ public class MainClass {
         //ajout d'utilisateur
         Calendar calendar = Calendar.getInstance();
         java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
-        Utilisateur utilisateur = new Utilisateur(16,"ismail ", "chaabane", "ichaabane66@gmail.com", Role.Admin, sqlDate, "123456");
         UtilisateurService utilisateurService = new UtilisateurService();
+        Utilisateur utilisateur=new Utilisateur();
         utilisateurService.addEntity(utilisateur);
 
         // Ajouter un utilisateur avec la méthode addEntity (utilisant PreparedStatement)
@@ -39,8 +43,8 @@ public class MainClass {
         AssistantDocumentaireService assistantService = new AssistantDocumentaireService();
 
         // 📌 Création de documents administratifs
-        DocumentAdministratif doc1 = new DocumentAdministratif(1,  "Justificatif de domicile", "/projet/docs", "2025-01-03", "Validé", "Aucune remarque");
-        DocumentAdministratif doc2 = new DocumentAdministratif(2, "Permis de travail", "/projet/docs", "2025-02-10", "En attente", "Vérification en cours");
+        DocumentAdministratif doc1 = new DocumentAdministratif(1,  "Justificatif de domicile", "/projet/docs",  "Validé", "Aucune remarque");
+        DocumentAdministratif doc2 = new DocumentAdministratif(2, "Permis de travail", "/projet/docs",  "En attente", "Vérification en cours");
 
         // ✅ Ajout des documents
         docService.addEntity(doc1);

@@ -66,9 +66,9 @@
 
                 <!-- Sign In Button -->
                 <Button fx:id="btnSignin" layoutX="209.0" layoutY="236.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="40.0" prefWidth="137.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold;" text="Se connecter">
-               <font>
-                  <Font size="14.0" />
-               </font></Button>
+                    <font>
+                        <Font size="14.0" />
+                    </font></Button>
 
                 <!-- Forgot Password Link -->
                 <Label fx:id="btnForgot" alignment="CENTER" layoutX="31.0" layoutY="244.0" onMouseClicked="#redirectToForgotPassword" prefHeight="23.0" prefWidth="137.0" style="-fx-font-size: 14px; -fx-cursor: hand;" text="Mot de passe oublié ?" textFill="#5383ff">
@@ -86,9 +86,9 @@
                             </image>
                         </ImageView>
                     </graphic>
-               <font>
-                  <Font size="14.0" />
-               </font>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
                 </Button>
 
                 <!-- Sign in with Google Button -->
@@ -100,9 +100,9 @@
                             </image>
                         </ImageView>
                     </graphic>
-               <font>
-                  <Font size="14.0" />
-               </font>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
                 </Button>
 
                 <!-- Separator -->

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="584.0" prefWidth="730.0" style="-fx-background-color: #f0f0f5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ProfileController">
+
+    <children>
+
+        <!-- Left panel with branding -->
+        <AnchorPane layoutY="-10.0" prefHeight="594.0" prefWidth="754.0" style="-fx-background-color: #6200ea;">
+         <children>
+      
+              <!-- Right panel with profile info -->
+              <VBox alignment="TOP_CENTER" layoutX="131.0" layoutY="14.0" prefHeight="567.0" prefWidth="505.0" spacing="20" style="-fx-background-color: white; -fx-padding: 20px; -fx-background-radius: 10px; -fx-border-color: #ccc; -fx-border-radius: 10px;">
+                  <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="100.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/images/logo.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </ImageView>
+                            <!-- Title -->
+                            <Label alignment="CENTER" prefHeight="85.0" prefWidth="292.0" style="-fx-font-size: 22px; -fx-font-weight: bold;" text="Profil Utilisateur" textFill="#6200ea">
+                           <HBox.margin>
+                              <Insets left="100.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets top="30.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+                      <ImageView fitHeight="155.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
+                          <image>
+                              <Image url="@assets/images/Profil.png" />
+                          </image>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                      </ImageView>
+      
+                      <!-- Profile Fields -->
+                      <VBox alignment="CENTER" spacing="12" style="-fx-padding: 10px;">
+                          <children>
+                              <!-- Nom -->
+                              <HBox spacing="10">
+                                  <children>
+                                      <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Nom :" textFill="#333" />
+                                      <Label fx:id="lblNom" style="-fx-font-size: 14px; -fx-background-color: #f0f0f5; -fx-padding: 5px 10px; -fx-background-radius: 5px;" text="-" textFill="#444" />
+                                  </children>
+                              </HBox>
+      
+                              <!-- Prénom -->
+                              <HBox spacing="10">
+                                  <children>
+                                      <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Prénom :" textFill="#333" />
+                                      <Label fx:id="lblPrenom" style="-fx-font-size: 14px; -fx-background-color: #f0f0f5; -fx-padding: 5px 10px; -fx-background-radius: 5px;" text="-" textFill="#444" />
+                                  </children>
+                              </HBox>
+      
+                              <!-- Email -->
+                              <HBox spacing="10">
+                                  <children>
+                                      <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Email :" textFill="#333" />
+                                      <Label fx:id="lblEmail" style="-fx-font-size: 14px; -fx-background-color: #f0f0f5; -fx-padding: 5px 10px; -fx-background-radius: 5px;" text="-" textFill="#444" />
+                                  </children>
+                              </HBox>
+      
+                              <!-- Role -->
+                              <HBox spacing="10">
+                                  <children>
+                                      <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Rôle :" textFill="#333" />
+                                      <Label fx:id="lblRole" style="-fx-font-size: 14px; -fx-background-color: #f0f0f5; -fx-padding: 5px 10px; -fx-background-radius: 5px;" text="-" textFill="#444" />
+                                  </children>
+                              </HBox>
+      
+                              <!-- Date d'inscription -->
+                              <HBox spacing="10">
+                                  <children>
+                                      <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Date d'inscription :" textFill="#333" />
+                                      <Label fx:id="lblDateInscription" style="-fx-font-size: 14px; -fx-background-color: #f0f0f5; -fx-padding: 5px 10px; -fx-background-radius: 5px;" text="-" textFill="#444" />
+                                  </children>
+                              </HBox>
+                          </children>
+                     <VBox.margin>
+                        <Insets left="40.0" />
+                     </VBox.margin>
+                      </VBox>
+      
+                      <!-- Retour Button -->
+                      <Button fx:id="btnDownloadPDF" onAction="#handleDownloadPDF" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold; -fx-font-size: 14px;" text="Télécharger Attestation PDF" />
+
+                      <Button fx:id="btnRetour" onAction="#handleRetour" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold; -fx-font-size: 14px;" text="Retour" />
+                  </children>
+              </VBox>
+         </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

@@ -2,20 +2,21 @@ package controllers;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import services.UtilisateurService;
+import entities.Utilisateur;
+import entities.Role;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Calendar;
 
 public class SignUpController {
 
@@ -29,10 +30,7 @@ public class SignUpController {
     private TextField txtEmail;
 
     @FXML
-    private ComboBox<String> comboRole;
-
-    @FXML
-    private DatePicker dateInscription;
+    private ComboBox<Role> comboRole;
 
     @FXML
     private PasswordField txtPassword;
@@ -46,43 +44,81 @@ public class SignUpController {
     @FXML
     private Button btnSignUp;
 
-    @FXML
-    private Label lblErrors;
-
-    // Expression régulière pour valider l'email
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
 
-    // Méthode qui s'exécute lors du clic sur le bouton "S'inscrire"
+    private final UtilisateurService utilisateurService = new UtilisateurService();
+
     @FXML
     public void onSignUpButtonClicked() {
-        // Vérification des champs
-        String email = txtEmail.getText();
-        if (!isValidEmail(email)) {
-            lblErrors.setText("Email invalide. Veuillez entrer un email valide.");
+        String errorMessage = null;
+
+        if (txtNom.getText().trim().isEmpty()) {
+            errorMessage = "Veuillez entrer un nom.";
+        } else if (txtPrenom.getText().trim().isEmpty()) {
+            errorMessage = "Veuillez entrer un prénom.";
+        } else {
+            String email = txtEmail.getText();
+            if (!isValidEmail(email)) {
+                errorMessage = "Email invalide.";
+            } else if (utilisateurService.emailExists(email)) {
+                errorMessage = "Cet email est déjà utilisé.";
+            } else {
+                String password = txtPassword.getText();
+                String confirmPassword = txtConfirmPassword.getText();
+                if (!password.equals(confirmPassword)) {
+                    errorMessage = "Les mots de passe ne correspondent pas.";
+                } else if (passwordStrengthBar.getProgress() < 0.5) {
+                    errorMessage = "Mot de passe trop faible.";
+                }
+            }
+        }
+
+        if (errorMessage != null) {
+            showAlert("Erreur", errorMessage, Alert.AlertType.ERROR);
             return;
         }
 
-        String password = txtPassword.getText();
-        String confirmPassword = txtConfirmPassword.getText();
-        if (!password.equals(confirmPassword)) {
-            lblErrors.setText("Les mots de passe ne correspondent pas.");
-            return;
-        }
+        // Création de l'utilisateur
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
+        Role selectedRole = comboRole.getValue();
+        Utilisateur utilisateur = new Utilisateur(txtNom.getText(), txtPrenom.getText(), txtEmail.getText(), selectedRole, sqlDate, txtPassword.getText());
+        utilisateurService.addEntity(utilisateur);
 
-        if (passwordStrengthBar.getProgress() < 0.5) {
-            lblErrors.setText("Le mot de passe est trop faible. Veuillez choisir un mot de passe plus fort.");
-            return;
-        }
-
-        // Si tout est valide, procéder à l'inscription
-        lblErrors.setText(""); // Effacer les erreurs
-        // Ajouter la logique d'inscription ici
-        // signUpUser();
+        // Affichage de succès et redirection
+        showAlertAndRedirect("Succès", "Compte créé avec succès !", Alert.AlertType.INFORMATION);
     }
 
-    // Fonction de validation de l'email
-    private boolean isValidEmail(String email) {
+    private void showAlertAndRedirect(String title, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+
+        redirectToLogin();
+    }
+
+    @FXML
+    private void redirectToLogin() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Login");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+            Stage currentStage = (Stage) btnSignUp.getScene().getWindow();
+            currentStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible d'ouvrir la page de connexion.", Alert.AlertType.ERROR);
+        }
+    }
+
+    public static boolean isValidEmail(String email) {
         if (email == null || email.isEmpty()) {
             return false;
         }
@@ -90,9 +126,10 @@ public class SignUpController {
         return matcher.matches();
     }
 
-    // Suivi de la force du mot de passe
     @FXML
     public void initialize() {
+        comboRole.getItems().setAll(Role.values());
+
         txtPassword.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -101,62 +138,63 @@ public class SignUpController {
         });
     }
 
-    // Mise à jour de la barre de force du mot de passe
     private void updatePasswordStrength(String password) {
         double strength = calculatePasswordStrength(password);
         passwordStrengthBar.setProgress(strength);
-
-        // Changer la couleur de la barre en fonction de la force
-        String color;
-        if (strength < 0.3) {
-            color = "red";  // Faible
-        } else if (strength < 0.7) {
-            color = "orange";  // Moyen
-        } else {
-            color = "green";  // Fort
-        }
+        String color = strength < 0.3 ? "red" : strength < 0.7 ? "orange" : "green";
         passwordStrengthBar.setStyle("-fx-accent: " + color + ";");
     }
 
-    // Calcul de la force du mot de passe
     private double calculatePasswordStrength(String password) {
-        int length = password.length();
-        boolean hasUpper = !password.equals(password.toLowerCase());
-        boolean hasLower = !password.equals(password.toUpperCase());
-        boolean hasDigit = password.matches(".*\\d.*");
-        boolean hasSpecial = password.matches(".*[!@#$%^&*()-+=].*");
-
         int score = 0;
-        if (length >= 8) score++;
-        if (hasUpper) score++;
-        if (hasLower) score++;
-        if (hasDigit) score++;
-        if (hasSpecial) score++;
-
-        return score / 5.0; // Normaliser sur une échelle de 0 à 1
+        if (password.length() >= 8) score++;
+        if (!password.equals(password.toLowerCase())) score++;
+        if (!password.equals(password.toUpperCase())) score++;
+        if (password.matches(".*\\d.*")) score++;
+        if (password.matches(".*[!@#$%^&*()-+=].*")) score++;
+        return score / 5.0;
     }
-    @FXML
-    public void onEmailKeyReleased() {
-        String email = txtEmail.getText();
-        if (isValidEmail(email)) {
-            lblErrors.setText(""); // Effacer le message d'erreur si l'email est valide
-        } else {
-            lblErrors.setText("Email invalide. Veuillez entrer un email valide.");
+
+    public static void showAlert(String title, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setStyle(
+                "-fx-background-color: #87CEEB;" + // 🌟 Bleu ciel
+                        "-fx-border-color: #0073e6;" + // Bordure bleu foncé
+                        "-fx-border-width: 2px;" +
+                        "-fx-border-radius: 12px;" +
+                        "-fx-background-radius: 12px;" +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 10, 0, 0, 5);" // Ombre
+        );
+
+        // Appliquer un style au titre
+        if (dialogPane.lookup(".header-panel") != null) {
+            dialogPane.lookup(".header-panel").setStyle(
+                    "-fx-background-color: #0073e6;" + // Bleu profond
+                            "-fx-text-fill: white;" +
+                            "-fx-font-size: 18px;" +
+                            "-fx-font-weight: bold;" +
+                            "-fx-padding: 10px;"
+            );
         }
+
+        // Appliquer un style au texte du message
+        if (dialogPane.lookup(".content.label") != null) {
+            dialogPane.lookup(".content.label").setStyle(
+                    "-fx-text-fill: #ffffff;" + // Texte blanc
+                            "-fx-font-size: 15px;" +
+                            "-fx-font-family: 'Arial';" +
+                            "-fx-padding: 10px;"
+            );
+        }
+
+        // Charger une police personnalisée
+
+        alert.showAndWait();
     }
-    @FXML
-    private void handleReturnToLogin(Event event) {
-        // Get the current stage
-        Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-        // Create custom title bar
-        HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
-
-        // Switch to the login page
-        NavigationUtils.switchPage("/Login.fxml", currentStage, titleBar);
-    }
-
-
-
 
 }

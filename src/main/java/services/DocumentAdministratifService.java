@@ -10,16 +10,16 @@ public class DocumentAdministratifService implements IService<DocumentAdministra
 
     @Override
     public void addEntity(DocumentAdministratif documentAdministratif) {
-        String req ="INSERT INTO DocumentAdministratif(id,nomDocument, cheminFichier, dateEmission, status, remarque) " +
-                "VALUES(?,?,?,?,?,?)";
+        String req ="INSERT INTO DocumentAdministratif(id,nomDocument, cheminFichier, status, remarque) " +
+                "VALUES(?,?,?,?,?)";
         try {
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);
             pst.setInt(1, documentAdministratif.getId());
             pst.setString(2, documentAdministratif.getNomDocument());
             pst.setString(3, documentAdministratif.getCheminFichier());
-            pst.setString(4, documentAdministratif.getDateEmission());
-            pst.setString(5, documentAdministratif.getStatus());
-            pst.setString(6, documentAdministratif.getRemarque());
+
+            pst.setString(4, documentAdministratif.getStatus());
+            pst.setString(5, documentAdministratif.getRemarque());
             pst.executeUpdate();
             System.out.println("Document Administratif Ajouté");
         } catch (SQLException e) {
@@ -48,7 +48,7 @@ public class DocumentAdministratifService implements IService<DocumentAdministra
             PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);
             pst.setString(1, documentAdministratif.getNomDocument());
             pst.setString(2, documentAdministratif.getCheminFichier());
-            pst.setString(3, documentAdministratif.getDateEmission());
+            pst.setString(3, documentAdministratif.getDateEmission().toString());
             pst.setString(4, documentAdministratif.getStatus());
             pst.setString(5, documentAdministratif.getRemarque());
             pst.setInt(6, documentAdministratif.getId());
@@ -71,7 +71,8 @@ public class DocumentAdministratifService implements IService<DocumentAdministra
                 doc.setId(rs.getInt(1));
                 doc.setNomDocument(rs.getString(2));
                 doc.setCheminFichier(rs.getString(3));
-                doc.setDateEmission(rs.getString(4));
+                doc.setDateEmission(rs.getDate(4).toLocalDate());
+
                 doc.setStatus(rs.getString(5));
                 doc.setRemarque(rs.getString(6));
                 result.add(doc);
@@ -82,6 +83,36 @@ public class DocumentAdministratifService implements IService<DocumentAdministra
 
         return result;
     }
+    
+    public List<DocumentAdministratif> getdataorderbystatus() {
+        List<DocumentAdministratif> result = new ArrayList<>();
+        String req = "SELECT * FROM DocumentAdministratif ORDER BY status DESC";
+        try {
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                DocumentAdministratif doc = new DocumentAdministratif();
+                doc.setId(rs.getInt(1));
+                doc.setNomDocument(rs.getString(2));
+                doc.setCheminFichier(rs.getString(3));
+                doc.setDateEmission(rs.getDate(4).toLocalDate());
+
+                doc.setStatus(rs.getString(5));
+                doc.setRemarque(rs.getString(6));
+                result.add(doc);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean emailExists(String email) {
+        return false;
+    }
+
     public List<String> getAllNomDocuments() {
         List<String> nomDocuments = new ArrayList<>();
         String req = "SELECT nomDocument FROM DocumentAdministratif";
@@ -117,6 +148,9 @@ public class DocumentAdministratifService implements IService<DocumentAdministra
         }
 
         return id;
+    }
+    public void ExportPDF(DocumentAdministratif dossier){
+        DOCADPDF.GeneratePDFDoc(dossier);
     }
 
 }

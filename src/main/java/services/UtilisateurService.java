@@ -3,6 +3,7 @@ package services;
 import entities.Role;
 import entities.Utilisateur;
 import interfaces.IService;
+import javafx.fxml.FXML;
 import tools.MyConnection;
 
 import java.sql.*;
@@ -54,6 +55,8 @@ public class UtilisateurService implements IService<Utilisateur> {
                 // Exécuter la requête
                 pst.executeUpdate();
                 System.out.println("Utilisateur ajouté avec succès !");
+                utilisateurService.EnvoyerEmail(utilisateur);  // 🔥 Appel de la méthode d'envoi d'email
+
             } catch (SQLException e) {
                 System.out.println("Erreur : " + e.getMessage());
             }
@@ -154,7 +157,7 @@ public class UtilisateurService implements IService<Utilisateur> {
         String host = "smtp.gmail.com"; // Serveur SMTP Gmail
 
         // 🖼 Chemin du logo (⚠️ Vérifiez que l'image existe)
-        String imagePath = "C:\\Users\\chemlali smail\\OneDrive\\Bureau\\ProjetPI\\ProjetPiDev\\Images\\logo.png";
+        String imagePath = "C:\\Users\\ichaa\\Downloads\\dossier\\Projet-Pidev-Technova-Impot\\src\\main\\resources\\assets\\images\\logo.png";
 
         // Configuration SMTP
         Properties props = new Properties();
@@ -170,7 +173,6 @@ public class UtilisateurService implements IService<Utilisateur> {
                 return new PasswordAuthentication(username, password);
             }
         });
-
         try {
             // Lecture du logo en Base64 pour intégration dans l'email
             String base64Image = "";

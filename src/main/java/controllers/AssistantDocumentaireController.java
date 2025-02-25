@@ -5,9 +5,13 @@ import entities.DocumentAdministratif;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import services.AssistantDocumentaireService;
 import services.DocumentAdministratifService;
 import services.SessionManager;
@@ -54,6 +58,22 @@ public class AssistantDocumentaireController {
     private final ObservableList<AssistantDocumentaire> allAssistants = FXCollections.observableArrayList();
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private DocumentAdministratifService documentService = new DocumentAdministratifService();
+    @FXML
+    private Label lblTypeAssistanceError;
+    @FXML
+    private VBox rightPanel;
+    @FXML
+    private Label lblStatusError;
+    @FXML
+    private SideBarController nullController;
+    @FXML
+    private Label lblDateDemandeError;
+    @FXML
+    private Label lblRemarqueError;
+    @FXML
+    private Label lblDocumentError;
+    @FXML
+    private Button btnOcrExtract;
 
     @FXML
     public void initialize() {
@@ -146,12 +166,22 @@ public class AssistantDocumentaireController {
             showAlert("Erreur", "Statut requis", Alert.AlertType.ERROR);
             return;
         }
-
+        // Check for duplicates (based on typeAssistance).
+        List<AssistantDocumentaire> allAssistantsInDb = assistantService.getAllData();
+        for (AssistantDocumentaire existing : allAssistantsInDb) {
+            if (existing.getTypeAssistance().equalsIgnoreCase(typeAssistance)) {
+                showAlert("Erreur", "Un assistant avec ce type existe déjà!", Alert.AlertType.ERROR);
+                return; // Stop creation if duplicate found
+            }
+        }
         // Pass documentId to the AssistantDocumentaire constructor
         AssistantDocumentaire newAssistant = new AssistantDocumentaire(0, 16, documentId, typeAssistance, dateDemande, status, remarque, rappelAutomatique);
         assistantService.addEntity(newAssistant);
         loadAssistantData();
         clearFields();
+        // Show success alert
+        showAlert("Succès", "L'assistant documentaire a été créé avec succès !", Alert.AlertType.INFORMATION);
+
     }
 
     @FXML
@@ -213,6 +243,8 @@ public class AssistantDocumentaireController {
             assistantService.updateEntity(selectedAssistant);
             loadAssistantData();
             clearFields();
+            // Show success alert
+            showAlert("Succès", "L'assistant documentaire a été mis à jour avec succès !", Alert.AlertType.INFORMATION);
         } else {
             showAlert("Sélection requise", "Veuillez sélectionner un assistant à mettre à jour.", Alert.AlertType.ERROR);
         }
@@ -226,7 +258,13 @@ public class AssistantDocumentaireController {
             assistantService.deleteEntity(selectedAssistant);
             loadAssistantData();
             clearFields();
+
+            // Show success alert
+            showAlert("Succès", "L'assistant documentaire a été supprimé avec succès !", Alert.AlertType.INFORMATION);
+        } else {
+            showAlert("Sélection requise", "Veuillez sélectionner un assistant à supprimer.", Alert.AlertType.ERROR);
         }
+
     }
 
     @FXML
@@ -246,11 +284,14 @@ public class AssistantDocumentaireController {
         alert.showAndWait();
     }
 
+    @FXML
     public void searchButton() {
         searchField.clear();
         loadAssistantData();
         clearFields();
     }
+
+
 
     private void populateComboBox() {
         // Clear existing items in the ComboBox
@@ -267,4 +308,13 @@ public class AssistantDocumentaireController {
             comboDocument.setPromptText("Aucun document disponible");
         }
     }
+
+    @FXML
+    public void retour(ActionEvent actionEvent) {
+        Stage currentStage = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
+        HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
+        NavigationUtils.switchPage("/DocumentAdministratif.fxml", currentStage, titleBar);
+    }
+
 }
+

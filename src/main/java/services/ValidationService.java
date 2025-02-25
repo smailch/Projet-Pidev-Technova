@@ -1,5 +1,6 @@
 package services;
 
+import entities.DocumentAdministratif;
 import entities.Validation;
 import interfaces.IService;
 import tools.MyConnection;
@@ -78,5 +79,12 @@ public class ValidationService implements IService<Validation> {
         }
 
         return result;
+    }
+
+
+
+    @Override
+    public boolean emailExists(String email) {
+        return false;
     }
 }

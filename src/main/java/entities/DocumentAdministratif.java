@@ -1,19 +1,32 @@
 package entities;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class DocumentAdministratif {
 
     private int id;
     private String nomDocument;
     private String cheminFichier;
-    private String dateEmission;
+    private LocalDate dateEmission;  // Changed from String to LocalDateTime
     private String status;
     private String remarque;
 
     public DocumentAdministratif() {
     }
 
+    // Constructor without dateEmission (database fills it automatically)
+    public DocumentAdministratif(int id, String nomDocument, String cheminFichier, String status, String remarque) {
+        this.id = id;
+        this.nomDocument = nomDocument;
+        this.cheminFichier = cheminFichier;
+        this.status = status;
+        this.remarque = remarque;
+    }
+
+    // Constructor including dateEmission (used when retrieving from DB)
     public DocumentAdministratif(int id, String nomDocument, String cheminFichier,
-                                 String dateEmission, String status, String remarque) {
+                                 LocalDate dateEmission, String status, String remarque) {
         this.id = id;
         this.nomDocument = nomDocument;
         this.cheminFichier = cheminFichier;
@@ -22,7 +35,7 @@ public class DocumentAdministratif {
         this.remarque = remarque;
     }
 
-    // Getters et setters
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -30,7 +43,6 @@ public class DocumentAdministratif {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public String getNomDocument() {
         return nomDocument;
@@ -48,11 +60,11 @@ public class DocumentAdministratif {
         this.cheminFichier = cheminFichier;
     }
 
-    public String getDateEmission() {
+    public LocalDate getDateEmission() {
         return dateEmission;
     }
 
-    public void setDateEmission(String dateEmission) {
+    public void setDateEmission(LocalDate dateEmission) {
         this.dateEmission = dateEmission;
     }
 
@@ -75,10 +87,8 @@ public class DocumentAdministratif {
     @Override
     public String toString() {
         return "id: " + id + ", nomDocument: " + nomDocument +
-                ", cheminFichier: " + cheminFichier + ", dateEmission: " + dateEmission +
+                ", cheminFichier: " + cheminFichier +
+                ", dateEmission: " + (dateEmission != null ? dateEmission.toString() : "Non défini") +
                 ", status: " + status + ", remarque: " + remarque + "\n";
     }
-
-
-
 }

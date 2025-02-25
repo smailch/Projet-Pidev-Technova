@@ -83,4 +83,9 @@ public class QuartierService implements IService<Quartier> {
         }
         return result;
     }
+
+    @Override
+    public boolean emailExists(String email) {
+        return false;
+    }
 }
