@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.LampadaireListController" spacing="10">
+    <TableView fx:id="lampadaireTable">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID"/>
+            <TableColumn fx:id="localisationColumn" text="Localisation"/>
+            <TableColumn fx:id="etatColumn" text="Etat"/>
+            <TableColumn fx:id="consommationColumn" text="Consommation"/>
+            <TableColumn fx:id="quartierNameColumn" text="Quartier Name"/>
+            <TableColumn fx:id="dateInstallationColumn" text="Date Installation"/>
+        </columns>
+    </TableView>
+    <Button text="Refresh" onAction="#handleRefresh" />
+    <Button fx:id="deleteButton" text="Delete" onAction="#handleDelete" />
+    <Button fx:id="updateButton" text="Update" onAction="#handleUpdate" />
+</VBox>

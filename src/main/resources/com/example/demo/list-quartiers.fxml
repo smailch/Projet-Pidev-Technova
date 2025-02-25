@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+
+<?import javafx.scene.control.TextField?>
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.ListQuartiersController" spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Title -->
+    <Label text="List of Quartiers" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+    <!-- Table to display Quartiers -->
+    <TableView fx:id="quartierTable">
+        <columns>
+            <TableColumn text="ID" prefWidth="50">
+                <cellValueFactory>
+                    <PropertyValueFactory property="id"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Nom" prefWidth="150">
+                <cellValueFactory>
+                    <PropertyValueFactory property="nom"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Number of Lamps" prefWidth="100">
+                <cellValueFactory>
+                    <PropertyValueFactory property="nbLamp"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Total Consumption" prefWidth="150">
+                <cellValueFactory>
+                    <PropertyValueFactory property="consomTot"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+
+    <!-- Filtering UI -->
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Min Consumption:"/>
+        <TextField fx:id="minConsomField" prefWidth="100"/>
+        <Label text="Max Consumption:"/>
+        <TextField fx:id="maxConsomField" prefWidth="100"/>
+        <Button text="Filter" onAction="#handleFilter" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <!-- Buttons -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Refresh" onAction="#handleRefresh" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Button text="Delete" onAction="#handleDelete" style="-fx-background-color: #FF0000; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Button text="Update" onAction="#handleUpdate" style="-fx-background-color: #FFA500; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+</VBox>
