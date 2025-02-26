@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo1.controllers.MainController" spacing="10" alignment="center" style="-fx-background-color: #f0f0f0; -fx-padding: 20;">
+    <Button fx:id="button1" text="Go to Add Zone" onAction="#goToAddZone"/>
+    <Button fx:id="button2" text="Go to Add Camion" onAction="#goToAddCamion"/>
+    <Button fx:id="button3" text="Go to View All Camion" onAction="#goToViewAllCamion"/>
+    <Button fx:id="button4" text="Go to Add Poubelle" onAction="#goToAddPoubelle"/> <!-- Updated button -->
+    <Button fx:id="button5" text="Go to List Poubelle" onAction="#goToListPoubelle"/>
+</VBox>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20" alignment="CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.demo1.controllers.EditCamionController">
+    <!-- Title Label -->
+    <Label text="Edit Camion" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+    <!-- Form Grid -->
+    <GridPane hgap="15" vgap="15" alignment="CENTER">
+        <!-- Capacite Max Field -->
+        <Label text="Capacite Max:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="capaciteMaxField" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                   promptText="Enter maximum capacity" />
+
+        <!-- Statut Field -->
+        <Label text="Statut:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <ComboBox fx:id="statutComboBox" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                  promptText="Select status" />
+
+        <!-- Zone ComboBox -->
+        <Label text="Zone:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <ComboBox fx:id="zoneComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                  promptText="Select zone" />
+    </GridPane>
+
+    <!-- Buttons -->
+    <HBox spacing="20" alignment="CENTER">
+        <Button text="Save" onAction="#handleSave"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" />
+        <Button text="Cancel" onAction="#handleCancel"
+                style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold;" />
+    </HBox>
+
+    <!-- Padding -->
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30" />
+    </padding>
+</VBox>

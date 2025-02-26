@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.demo1.controllers.CamionCollecteController">
+    <center>
+        <TableView fx:id="camionTable" prefWidth="600" prefHeight="400">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" prefWidth="100" />
+                <TableColumn fx:id="capaciteMaxColumn" text="Capacité Max" prefWidth="150" />
+                <TableColumn fx:id="statutColumn" text="Statut" prefWidth="150" />
+                <TableColumn fx:id="zoneNameColumn" text="Zone Name" prefWidth="150" />
+                <TableColumn fx:id="actionColumn" text="Actions" prefWidth="100" />
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.ComboBox?>
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo1.controllers.AddPoubelleController" spacing="10" alignment="CENTER">
+    <GridPane hgap="10" vgap="10">
+        <!-- Updated fields to match the new model -->
+        <Label text="Type de Déchets:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="typeDechetsField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Niveau de Remplissage:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="niveauRemplissageField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Localisation:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="localisationField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <ComboBox fx:id="zoneComboBox" promptText="Select a Zone" />
+    </GridPane>
+
+    <Button text="Add Poubelle" onAction="#handleAddPoubelle" />
+</VBox>

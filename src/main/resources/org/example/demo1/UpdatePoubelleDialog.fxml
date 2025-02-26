@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<DialogPane fx:id="editDialogPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo1.controllers.EditPoubelleController">
+    <content>
+        <GridPane hgap="10" vgap="10">
+            <Label text="Type de Déchets:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <TextField fx:id="typeDechetsField" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+            <Label text="Niveau de Remplissage:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <TextField fx:id="niveauRemplissageField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+            <Label text="Localisation:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <TextField fx:id="localisationField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+            <Label text="Zone ID:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <TextField fx:id="zoneIdField" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+        </GridPane>
+    </content>
+    <buttonTypes>
+        <!-- No ButtonType for Save, we'll use a regular Button -->
+        <ButtonType text="Cancel" buttonData="CANCEL_CLOSE" />
+    </buttonTypes>
+    <graphic>
+        <Button text="Save" onAction="#handleSave" />
+    </graphic>
+</DialogPane>
