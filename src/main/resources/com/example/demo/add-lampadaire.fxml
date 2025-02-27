@@ -9,49 +9,63 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.AddLampadaireController" spacing="10" alignment="CENTER">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.demo.controllers.AddLampadaireController"
+           styleClass="main-container">
 
-    <!-- Title -->
-    <Label text="Add New Lampadaire" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+    <VBox spacing="20" alignment="CENTER" styleClass="content-container">
+        <padding>
+            <Insets top="30" right="40" bottom="30" left="40"/>
+        </padding>
 
-    <!-- Localisation Field -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Localisation:" style="-fx-min-width: 100;"/>
-        <TextField fx:id="localisationField" promptText="Click on the map to select location" editable="false"/>
-        <Button text="Open Map" onAction="#openMapWindow" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"/>
-    </HBox>
 
-    <!-- Etat Field -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Etat:" style="-fx-min-width: 100;"/>
-        <CheckBox fx:id="etatField" text="On/Off"/>
-    </HBox>
 
-    <!-- Consommation Field -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Consommation:" style="-fx-min-width: 100;"/>
-        <TextField fx:id="consommationField" promptText="Enter Consommation"/>
-    </HBox>
+        <!-- Form Container -->
+        <VBox spacing="15" styleClass="form-container">
+            <!-- Localisation Field -->
+            <VBox spacing="5" styleClass="field-container">
+                <Label text="Location" styleClass="field-label"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="localisationField" promptText="Click on the map to select location"
+                               editable="false" styleClass="text-field" HBox.hgrow="ALWAYS"/>
+                    <Button text="Open Map" onAction="#openMapWindow" styleClass="map-button"/>
+                </HBox>
+            </VBox>
 
-    <!-- Quartier ID Field -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Quartier ID:" style="-fx-min-width: 100;"/>
-        <ComboBox fx:id="quartierComboBox" promptText="Select Quartier"/>
-    </HBox>
+            <!-- Etat Field -->
+            <VBox spacing="5" styleClass="field-container">
+                <Label text="Status" styleClass="field-label"/>
+                <CheckBox fx:id="etatField" text="Active" styleClass="status-checkbox"/>
+            </VBox>
 
-    <!-- Date Installation Field -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Date Installation:" style="-fx-min-width: 100;"/>
-        <DatePicker fx:id="dateInstallationField"/>
-    </HBox>
+            <!-- Consommation Field -->
+            <VBox spacing="5" styleClass="field-container">
+                <Label text="Power Consumption (W)" styleClass="field-label"/>
+                <TextField fx:id="consommationField" promptText="Enter power consumption" styleClass="text-field"/>
+            </VBox>
 
-    <!-- Buttons -->
-    <HBox spacing="10" alignment="CENTER">
-        <Button text="Save" onAction="#handleSave" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
-        <Button text="Cancel" onAction="#handleCancel" style="-fx-background-color: #FF0000; -fx-text-fill: white; -fx-font-weight: bold;"/>
-    </HBox>
-</VBox>
+            <!-- Quartier ID Field -->
+            <VBox spacing="5" styleClass="field-container">
+                <Label text="District" styleClass="field-label"/>
+                <ComboBox fx:id="quartierComboBox" promptText="Select district" styleClass="combo-box"/>
+            </VBox>
+
+            <!-- Date Installation Field -->
+            <VBox spacing="5" styleClass="field-container">
+                <Label text="Installation Date" styleClass="field-label"/>
+                <DatePicker fx:id="dateInstallationField" styleClass="date-picker"/>
+            </VBox>
+        </VBox>
+
+        <!-- Action Buttons -->
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="Save" onAction="#handleSave" styleClass="save-button"/>
+            <Button text="Cancel" onAction="#handleCancel" styleClass="cancel-button"/>
+        </HBox>
+    </VBox>
+</StackPane>

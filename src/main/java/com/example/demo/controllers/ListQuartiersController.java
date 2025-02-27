@@ -65,6 +65,17 @@ public class ListQuartiersController {
             maxRangeLabel.setText(String.format("Max: %.0f", maxValue));
         });
     }
+    @FXML
+    private void switchToLightTheme() {
+        quartierTable.getScene().getStylesheets().clear();
+        quartierTable.getScene().getStylesheets().add(getClass().getResource("/com/example/demo/light-theme.css").toExternalForm());
+    }
+
+    @FXML
+    private void switchToDarkTheme() {
+        quartierTable.getScene().getStylesheets().clear();
+        quartierTable.getScene().getStylesheets().add(getClass().getResource("/com/example/demo/dark-theme.css").toExternalForm());
+    }
 
     @FXML
     private void handleRefresh() {
@@ -176,6 +187,7 @@ public class ListQuartiersController {
             showAlert(AlertType.ERROR, "Error", "Failed to load the update window: " + e.getMessage());
         }
     }
+
     @FXML
     private void handleGenerateQuartierPDF() {
         try {
@@ -187,6 +199,7 @@ public class ListQuartiersController {
             showAlert(AlertType.ERROR, "Error", "Failed to generate PDF: " + e.getMessage());
         }
     }
+
     private void showAlert(AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

@@ -2,11 +2,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.MainController" spacing="10" alignment="CENTER">
-    <Button text=" Ajouter Quartier" onAction="#goToPage1" />
-    <Button text="Consulter list des quartiers" onAction="#goToPage2" />
-    <Button text=" Ajouter lamp" onAction="#goToPage3" />
-    <Button text="lampadaire-list" onAction="#goToPage4" />
-    <Button text="Page 5" onAction="#goToPage5" />
-    <Button text="Page 6" onAction="#goToPage6" />
+<VBox fx:id="rootContainer" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.MainController" spacing="10" alignment="CENTER">
+    <Button text="Ajouter Quartier" onAction="#goToPage1" id="page1Button" />
+    <Button text="Consulter list des quartiers" onAction="#goToPage2" id="page2Button" />
+    <Button text="Ajouter lamp" onAction="#goToPage3" id="page3Button" />
+    <Button text="lampadaire-list" onAction="#goToPage4" id="page4Button" />
+    <Button text="Toggle Theme" onAction="#toggleTheme" />
 </VBox>

@@ -19,8 +19,20 @@
     <!-- Title -->
     <Label text="List of Quartiers" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
 
+    <!-- Search and Filter Section (moved to top) -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Search by Name:"/>
+        <TextField fx:id="searchField" prefWidth="200" promptText="Enter quartier name..."/>
+        <Label text="Consumption Range:"/>
+        <Label fx:id="minRangeLabel" text="Min: 0"/>
+        <Slider fx:id="minRangeSlider" min="0" max="100" blockIncrement="10" value="0" style="-fx-pref-width: 120;"/>
+        <Label fx:id="maxRangeLabel" text="Max: 500"/>
+        <Slider fx:id="maxRangeSlider" min="0" max="500" blockIncrement="10" value="500" style="-fx-pref-width: 120;"/>
+        <Button text="Apply Filters" onAction="#handleFilter" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+    </HBox>
+
     <!-- Table to display Quartiers -->
-    <TableView fx:id="quartierTable">
+    <TableView fx:id="quartierTable" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn text="ID" prefWidth="50">
                 <cellValueFactory>
@@ -45,25 +57,15 @@
         </columns>
     </TableView>
 
-    <!-- Filtering UI -->
-    <HBox spacing="10" alignment="CENTER">
-        <Label fx:id="minRangeLabel" text="Min: 0"/>
-        <Slider fx:id="minRangeSlider" min="0" max="100" blockIncrement="10" value="0" style="-fx-pref-width: 150;"/>
-        <Label fx:id="maxRangeLabel" text="Max: 500"/>
-        <Slider fx:id="maxRangeSlider" min="0" max="500" blockIncrement="10" value="500" style="-fx-pref-width: 150;"/>
-        <Button text="Filter" onAction="#handleFilter" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
-    </HBox>
-
-    <!-- Buttons -->
-    <HBox spacing="10" alignment="CENTER">
-        <Button text="Refresh" onAction="#handleRefresh" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"/>
-        <Button text="Delete" onAction="#handleDelete" style="-fx-background-color: #FF0000; -fx-text-fill: white; -fx-font-weight: bold;"/>
-        <Button text="Update" onAction="#handleUpdate" style="-fx-background-color: #FFA500; -fx-text-fill: white; -fx-font-weight: bold;"/>
-        <Button text="Generate PDF" onAction="#handleGenerateQuartierPDF" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
-    </HBox>
-
-    <HBox spacing="10" alignment="CENTER">
-        <Label text="Search by Name:"/>
-        <TextField fx:id="searchField" prefWidth="200" promptText="Enter quartier name..."/>
+    <!-- Action Buttons -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button text="Refresh" onAction="#handleRefresh" style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+        <Button text="Update" onAction="#handleUpdate" style="-fx-background-color: #FFA500; -fx-text-fill: white;"/>
+        <Button text="Delete" onAction="#handleDelete" style="-fx-background-color: #FF0000; -fx-text-fill: white;"/>
+        <Button text="Generate PDF" onAction="#handleGenerateQuartierPDF" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <HBox spacing="10" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+            <Button text="Light Theme" onAction="#switchToLightTheme" style="-fx-background-color: #E0E0E0; -fx-text-fill: #212121;"/>
+            <Button text="Dark Theme" onAction="#switchToDarkTheme" style="-fx-background-color: #212121; -fx-text-fill: white;"/>
+        </HBox>
     </HBox>
 </VBox>

@@ -1,0 +1,234 @@
+/* Dark Theme */
+.root {
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-base: #1e1e1e;
+    -fx-background-color: #121212;
+
+    /* Theme Colors */
+    -primary-color: #4267B2;
+    -secondary-color: #27ae60;
+    -danger-color: #c0392b;
+    -text-color: #ecf0f1;
+    -background-color: #121212;
+    -card-background: #2c2c2c;
+    -border-color: #3c3c3c;
+    -field-background: #1e1e1e;
+}
+
+/* Main Container */
+.main-container {
+    -fx-background-color: -background-color;
+}
+
+.content-container {
+    -fx-max-width: 600px;
+    -fx-background-color: -card-background;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 5);
+}
+
+/* Header Styles */
+.header-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+}
+
+.theme-toggle {
+    -fx-background-radius: 100px;
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-background-color: transparent;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 100px;
+}
+
+.theme-toggle:hover {
+    -fx-background-color: derive(-background-color, 20%);
+}
+
+/* Form Container */
+.form-container {
+    -fx-spacing: 15;
+    -fx-background-color: -card-background;
+    -fx-padding: 10;
+    -fx-background-radius: 5px;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+}
+
+/* Field Styles */
+.field-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-color;
+}
+
+.text-field, .combo-box, .date-picker {
+    -fx-background-color: -field-background;
+    -fx-text-fill: -text-color;
+    -fx-prompt-text-fill: derive(-text-color, -30%);
+    -fx-border-color: -border-color;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 8 12;
+}
+
+.text-field:focused, .combo-box:focused, .date-picker:focused {
+    -fx-border-color: -primary-color;
+}
+
+.status-checkbox {
+    -fx-text-fill: -text-color;
+}
+
+.status-checkbox .box {
+    -fx-background-color: -field-background;
+    -fx-border-color: -border-color;
+    -fx-border-radius: 3px;
+}
+
+.status-checkbox:selected .box {
+    -fx-background-color: -secondary-color;
+    -fx-border-color: -secondary-color;
+}
+
+.status-checkbox:selected .mark {
+    -fx-background-color: white;
+}
+
+/* Button Styles */
+.button {
+    -fx-background-radius: 5px;
+    -fx-padding: 10 25;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.save-button {
+    -fx-background-color: -secondary-color;
+    -fx-text-fill: white;
+}
+
+.save-button:hover {
+    -fx-background-color: derive(-secondary-color, -15%);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);
+}
+
+.cancel-button {
+    -fx-background-color: -danger-color;
+    -fx-text-fill: white;
+}
+
+.cancel-button:hover {
+    -fx-background-color: derive(-danger-color, -15%);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);
+}
+
+.map-button {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-graphic-text-gap: 8;
+}
+
+.map-button:hover {
+    -fx-background-color: derive(-primary-color, -15%);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);
+}
+
+/* Date Picker specific styles */
+.date-picker > .arrow-button {
+    -fx-background-color: -primary-color;
+    -fx-background-radius: 0 4 4 0;
+}
+
+.date-picker > .arrow-button > .arrow {
+    -fx-background-color: white;
+}
+
+.date-picker > .text-field {
+    -fx-background-radius: 4 0 0 4;
+}
+
+/* Combo Box specific styles */
+.combo-box .arrow {
+    -fx-background-color: -text-color;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+/* Popup/List styles */
+.combo-box-popup .list-view {
+    -fx-background-color: #1e1e1e;
+    -fx-border-color: -border-color;
+}
+
+.combo-box-popup .list-cell {
+    -fx-background-color: #1e1e1e;
+    -fx-text-fill: -text-color;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #333333;
+}
+
+.combo-box-popup .list-cell:filled:selected {
+    -fx-background-color: #3c3c3c;
+}
+
+/* Calendar popup styles */
+.date-picker-popup {
+    -fx-background-color: #1e1e1e;
+    -fx-border-color: -border-color;
+}
+
+.date-picker-popup .month-year-pane {
+    -fx-background-color: -primary-color;
+}
+
+.date-picker-popup .month-year-pane .label {
+    -fx-text-fill: white;
+}
+
+.date-picker-popup .day-cell {
+    -fx-background-color: #1e1e1e;
+    -fx-text-fill: -text-color;
+}
+
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #333333;
+}
+
+.date-picker-popup .selected {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+}
+
+.table-view {
+    -fx-base: #3c3f41;
+    -fx-control-inner-background: #3c3f41;
+    -fx-background-color: #3c3f41;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #4c4c4c;
+}
+
+.table-row-cell:even {
+    -fx-background-color: #3c3f41;
+}
+
+.slider .thumb {
+    -fx-background-color: #4CAF50;
+}
+
+.slider .track {
+    -fx-background-color: #555555;
+}
