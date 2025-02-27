@@ -97,4 +97,15 @@ public class LampadaireService {
             preparedStatement.executeUpdate();
         }
     }
+
+    // Update the state (etat) of a Lampadaire by ID
+    public void updateLampadaireEtat(int id, boolean newEtat) throws SQLException {
+        String query = "UPDATE lampadaire SET etat = ? WHERE id = ?";
+        try (Connection connection = databaseService.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setBoolean(1, newEtat);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        }
+    }
 }

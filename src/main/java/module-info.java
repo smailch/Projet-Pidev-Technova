@@ -3,6 +3,8 @@ module com.example.demo {
     requires javafx.fxml;
     requires javafx.web;
     requires java.sql;
+    requires org.apache.pdfbox; // Add this line for PDFBox
+    requires java.desktop;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
@@ -11,6 +13,7 @@ module com.example.demo {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires jdk.jsobject;
 
     opens com.example.demo to javafx.fxml;
     opens com.example.demo.controllers to javafx.fxml;

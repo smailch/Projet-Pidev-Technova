@@ -2,15 +2,15 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.ListQuartiersController" spacing="10" alignment="CENTER">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
@@ -47,10 +47,10 @@
 
     <!-- Filtering UI -->
     <HBox spacing="10" alignment="CENTER">
-        <Label text="Min Consumption:"/>
-        <TextField fx:id="minConsomField" prefWidth="100"/>
-        <Label text="Max Consumption:"/>
-        <TextField fx:id="maxConsomField" prefWidth="100"/>
+        <Label fx:id="minRangeLabel" text="Min: 0"/>
+        <Slider fx:id="minRangeSlider" min="0" max="100" blockIncrement="10" value="0" style="-fx-pref-width: 150;"/>
+        <Label fx:id="maxRangeLabel" text="Max: 500"/>
+        <Slider fx:id="maxRangeSlider" min="0" max="500" blockIncrement="10" value="500" style="-fx-pref-width: 150;"/>
         <Button text="Filter" onAction="#handleFilter" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
     </HBox>
 
@@ -59,5 +59,11 @@
         <Button text="Refresh" onAction="#handleRefresh" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;"/>
         <Button text="Delete" onAction="#handleDelete" style="-fx-background-color: #FF0000; -fx-text-fill: white; -fx-font-weight: bold;"/>
         <Button text="Update" onAction="#handleUpdate" style="-fx-background-color: #FFA500; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Button text="Generate PDF" onAction="#handleGenerateQuartierPDF" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Search by Name:"/>
+        <TextField fx:id="searchField" prefWidth="200" promptText="Enter quartier name..."/>
     </HBox>
 </VBox>

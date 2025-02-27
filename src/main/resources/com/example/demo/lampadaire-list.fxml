@@ -21,4 +21,5 @@
     <Button text="Refresh" onAction="#handleRefresh" />
     <Button fx:id="deleteButton" text="Delete" onAction="#handleDelete" />
     <Button fx:id="updateButton" text="Update" onAction="#handleUpdate" />
+    <Button text="Generate PDF" onAction="#handleGeneratePDF" />
 </VBox>

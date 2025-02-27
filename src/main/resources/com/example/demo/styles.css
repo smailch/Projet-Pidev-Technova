@@ -1,0 +1,21 @@
+.map-container {
+    -fx-pref-height: 400px;
+    -fx-pref-width: 800px;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+}
+
+.save-button {
+    -fx-font-weight: bold;
+    -fx-pref-width: 150px;
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+    -fx-padding: 8px;
+}
+
+.save-button:hover {
+    -fx-background-color: #45a049;
+}

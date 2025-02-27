@@ -4,6 +4,7 @@ import com.example.demo.models.Lampadaire;
 import com.example.demo.models.Quartier;
 import com.example.demo.services.LampadaireService;
 import com.example.demo.services.QuartierService;
+import com.example.demo.utils.PDFGenerator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -130,6 +131,25 @@ public class LampadaireListController {
             }
         } else {
             showAlert("No Selection", "Please select a lampadaire to update.");
+        }
+    }
+
+    @FXML
+    private void handleGeneratePDF() {
+        try {
+            // Récupérer la liste des lampadaires
+            List<Lampadaire> lampadaires = lampadaireService.getAllLampadaires();
+
+            // Chemin de sortie du fichier PDF
+            String filePath = "lampadaires_list.pdf";
+
+            // Générer le PDF
+            PDFGenerator.generateLampadairePDF(lampadaires, filePath);
+
+            // Afficher un message de succès
+            showAlert("Success", "PDF generated successfully at: " + filePath);
+        } catch (Exception e) {
+            showAlert("Error", "An error occurred while generating the PDF: " + e.getMessage());
         }
     }
 

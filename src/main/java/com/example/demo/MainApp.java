@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.services.LampadaireScheduler;
+import com.example.demo.utils.DatabaseService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +20,13 @@ public class MainApp extends Application {
         primaryStage.setTitle("Add Quartier");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        // Start the scheduler
+        DatabaseService databaseService = new DatabaseService(); // Assuming you have a DatabaseService class
+        LampadaireScheduler scheduler = new LampadaireScheduler(databaseService);
+        scheduler.startScheduler();
     }
+
 
     public static void main(String[] args) {
         launch(args);
