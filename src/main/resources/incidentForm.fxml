@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
-<AnchorPane prefHeight="644.0" prefWidth="944.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.IncidentController">
+<AnchorPane prefHeight="644.0" prefWidth="944.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.IncidentController">
     <!-- Correct placement of the stylesheets -->
     <stylesheets>
         <URL value="@assets/css/styles.css" />

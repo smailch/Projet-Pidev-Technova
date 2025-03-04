@@ -1,4 +1,4 @@
-module com.example.demo {
+module java {
     requires org.json;
     requires javafx.fxml;
     requires java.sql;
@@ -8,7 +8,10 @@ module com.example.demo {
     requires spring.security.crypto;
     requires jjwt;
     requires java.desktop;
+    requires kernel;
+    requires layout;
 
-    opens com.example.demo to javafx.fxml;
-    exports com.example.demo;
+
+    exports controllers;
+    opens controllers to javafx.fxml;
 }
