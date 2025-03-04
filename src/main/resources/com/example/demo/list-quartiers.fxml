@@ -11,28 +11,32 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.ListQuartiersController" spacing="10" alignment="CENTER">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.demo.controllers.ListQuartiersController"
+      spacing="10" alignment="CENTER" styleClass="root">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <!-- Title -->
-    <Label text="List of Quartiers" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+    <!-- Titre -->
+    <Label text="Liste des Quartiers" styleClass="title-label"/>
 
-    <!-- Search and Filter Section (moved to top) -->
-    <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Search by Name:"/>
-        <TextField fx:id="searchField" prefWidth="200" promptText="Enter quartier name..."/>
-        <Label text="Consumption Range:"/>
-        <Label fx:id="minRangeLabel" text="Min: 0"/>
-        <Slider fx:id="minRangeSlider" min="0" max="100" blockIncrement="10" value="0" style="-fx-pref-width: 120;"/>
-        <Label fx:id="maxRangeLabel" text="Max: 500"/>
-        <Slider fx:id="maxRangeSlider" min="0" max="500" blockIncrement="10" value="500" style="-fx-pref-width: 120;"/>
-        <Button text="Apply Filters" onAction="#handleFilter" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+    <!-- Section Recherche et Filtres -->
+    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="container">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+        <Label text="Rechercher par Nom :" styleClass="sub-title"/>
+        <TextField fx:id="searchField" prefWidth="200" promptText="Entrez le nom du quartier..."/>
+        <Label text="Plage de Consommation :" styleClass="sub-title"/>
+        <Label fx:id="minRangeLabel" text="Min : 0"/>
+        <Slider fx:id="minRangeSlider" min="0" max="100" blockIncrement="10" value="0" prefWidth="120"/>
+        <Label fx:id="maxRangeLabel" text="Max : 500"/>
+        <Slider fx:id="maxRangeSlider" min="0" max="500" blockIncrement="10" value="500" prefWidth="120"/>
     </HBox>
 
-    <!-- Table to display Quartiers -->
-    <TableView fx:id="quartierTable" VBox.vgrow="ALWAYS">
+    <!-- Tableau pour afficher les Quartiers -->
+    <TableView fx:id="quartierTable" VBox.vgrow="ALWAYS" styleClass="table-view">
         <columns>
             <TableColumn text="ID" prefWidth="50">
                 <cellValueFactory>
@@ -44,12 +48,12 @@
                     <PropertyValueFactory property="nom"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text="Number of Lamps" prefWidth="100">
+            <TableColumn text="Nombre de Lampadaires" prefWidth="100">
                 <cellValueFactory>
                     <PropertyValueFactory property="nbLamp"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text="Total Consumption" prefWidth="150">
+            <TableColumn text="Consommation Totale" prefWidth="150">
                 <cellValueFactory>
                     <PropertyValueFactory property="consomTot"/>
                 </cellValueFactory>
@@ -57,15 +61,16 @@
         </columns>
     </TableView>
 
-    <!-- Action Buttons -->
+    <!-- Boutons d'Action -->
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <Button text="Refresh" onAction="#handleRefresh" style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
-        <Button text="Update" onAction="#handleUpdate" style="-fx-background-color: #FFA500; -fx-text-fill: white;"/>
-        <Button text="Delete" onAction="#handleDelete" style="-fx-background-color: #FF0000; -fx-text-fill: white;"/>
-        <Button text="Generate PDF" onAction="#handleGenerateQuartierPDF" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="Actualiser" onAction="#handleRefresh" styleClass="button"/>
+        <Button text="Modifier" onAction="#handleUpdate" styleClass="button-accent"/>
+        <Button text="Supprimer" onAction="#handleDelete" styleClass="button-danger"/>
+        <Button text="Générer PDF" onAction="#handleGenerateQuartierPDF" styleClass="button-secondary"/>
         <HBox spacing="10" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
-            <Button text="Light Theme" onAction="#switchToLightTheme" style="-fx-background-color: #E0E0E0; -fx-text-fill: #212121;"/>
-            <Button text="Dark Theme" onAction="#switchToDarkTheme" style="-fx-background-color: #212121; -fx-text-fill: white;"/>
+            <Button text="Thème Clair" onAction="#switchToLightTheme" styleClass="button-light"/>
+            <Button text="Thème Sombre" onAction="#switchToDarkTheme" styleClass="button-light"/>
+            <Button text="Retour au Menu" onAction="#handleBackToMenu" styleClass="button-light"/>
         </HBox>
     </HBox>
 </VBox>

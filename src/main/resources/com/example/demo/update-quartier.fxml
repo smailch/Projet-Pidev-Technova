@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.UpdateQuartierController" spacing="10" alignment="CENTER">
@@ -13,7 +14,12 @@
     </padding>
 
     <!-- Title -->
-    <Label text="Update Quartier" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+    <HBox alignment="CENTER" spacing="15">
+        <HBox HBox.hgrow="ALWAYS">
+            <Label text="Add New District" styleClass="title-label"/>
+        </HBox>
+        <ToggleButton text="Dark Mode" fx:id="themeToggle" onAction="#toggleTheme" styleClass="button-light"/>
+    </HBox>
 
     <!-- Nom Field -->
     <HBox spacing="10" alignment="CENTER_LEFT">

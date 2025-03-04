@@ -16,7 +16,7 @@ public class MainApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/main.fxml"));
 
         // Set up the scene and stage
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(root, 1200, 800); // Increased aspect ratio
         primaryStage.setTitle("Add Quartier");
         primaryStage.setScene(scene);
         primaryStage.show();

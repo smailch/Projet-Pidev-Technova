@@ -16,10 +16,12 @@ public class MapWindowController {
     private AddLampadaireController mainController;
     private double selectedLat;
     private double selectedLng;
+    private String selectedPlaceName = "";
 
     @FXML
     public void initialize() {
         webEngine = mapView.getEngine();
+        saveButton.setDisable(true); // Disable save button until location is selected
 
         // Set up error and exception handlers for debugging
         webEngine.setOnError(event -> System.err.println("WebEngine Error: " + event.getMessage()));
@@ -40,7 +42,7 @@ public class MapWindowController {
     }
 
     private void loadMap() {
-        // HTML content with Leaflet map and JavaScript logic
+        // HTML content with Leaflet map and JavaScript for reverse geocoding
         String htmlContent = """
         <!DOCTYPE html>
         <html>
@@ -59,7 +61,7 @@ public class MapWindowController {
                     height: 100%;
                     width: 100%;
                 }
-                #debugPanel {
+                #statusPanel {
                     position: absolute;
                     bottom: 10px;
                     left: 10px;
@@ -73,27 +75,24 @@ public class MapWindowController {
         </head>
         <body>
             <div id="map"></div>
-            <div id="debugPanel"></div>
+            <div id="statusPanel">Click on the map to select a location</div>
             <script>
                 // Global variables for coordinates - can be accessed from Java
                 window.selectedLatitude = 0;
                 window.selectedLongitude = 0;
+                window.selectedPlaceName = "";
+                window.locationSelected = false;
                 
                 var map;
                 var marker;
-                var debugPanel = document.getElementById('debugPanel');
+                var statusPanel = document.getElementById('statusPanel');
                 
-                function updateDebug(message) {
-                    debugPanel.innerHTML += message + '<br>';
-                    // Keep only the last 5 messages
-                    if (debugPanel.innerHTML.split('<br>').length > 5) {
-                        var lines = debugPanel.innerHTML.split('<br>');
-                        debugPanel.innerHTML = lines.slice(lines.length - 5).join('<br>');
-                    }
+                function updateStatus(message) {
+                    statusPanel.innerHTML = message;
                 }
                 
                 function initMap() {
-                    map = L.map('map').setView([36.8625, 10.1956], 16);
+                    map = L.map('map').setView([36.8625, 10.1956], 13);
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '© OpenStreetMap contributors'
                     }).addTo(map);
@@ -102,86 +101,101 @@ public class MapWindowController {
                         if (marker) {
                             map.removeLayer(marker);
                         }
-                        marker = L.marker(e.latlng)
-                            .bindPopup(`Lat: ${e.latlng.lat.toFixed(5)}<br>Lng: ${e.latlng.lng.toFixed(5)}`)
-                            .addTo(map)
-                            .openPopup();
+                        
+                        var lat = e.latlng.lat;
+                        var lng = e.latlng.lng;
                         
                         // Store coordinates globally for Java to access
-                        window.selectedLatitude = e.latlng.lat;
-                        window.selectedLongitude = e.latlng.lng;
+                        window.selectedLatitude = lat;
+                        window.selectedLongitude = lng;
                         
-                        updateDebug("Map clicked: " + e.latlng.lat.toFixed(5) + ", " + e.latlng.lng.toFixed(5));
+                        updateStatus("Getting location name...");
                         
-                        // Try multiple approaches to call Java
-                        try {
-                            // Method 1: Direct call via window.javaApp
-                            if (window.javaApp) {
-                                updateDebug("Calling Java using window.javaApp...");
-                                window.javaApp.locationSelected(e.latlng.lat, e.latlng.lng);
-                                updateDebug("Direct call succeeded");
-                            } else {
-                                updateDebug("ERROR: javaApp not defined");
-                            }
-                        } catch (err) {
-                            updateDebug("ERROR calling Java: " + err.message);
-                            
-                            // Method 2: Try global callback if direct call failed
-                            try {
-                                if (typeof javaCallback === 'function') {
-                                    updateDebug("Trying javaCallback function...");
-                                    javaCallback(e.latlng.lat, e.latlng.lng);
-                                    updateDebug("Callback call succeeded");
+                        // Create a marker at the clicked position
+                        marker = L.marker(e.latlng).addTo(map);
+                        
+                        // Use Nominatim for reverse geocoding
+                        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`)
+                            .then(response => response.json())
+                            .then(data => {
+                                // Extract a meaningful location name
+                                var placeName = "";
+                                
+                                if (data.address) {
+                                    // Try to create a meaningful description
+                                    var parts = [];
+                                    
+                                    // Add road/street name if available
+                                    if (data.address.road) {
+                                        parts.push(data.address.road);
+                                    } else if (data.address.pedestrian) {
+                                        parts.push(data.address.pedestrian);
+                                    }
+                                    
+                                    // Add neighborhood/suburb if available
+                                    if (data.address.suburb) {
+                                        parts.push(data.address.suburb);
+                                    } else if (data.address.neighbourhood) {
+                                        parts.push(data.address.neighbourhood);
+                                    }
+                                    
+                                    // Add city/town
+                                    if (data.address.city) {
+                                        parts.push(data.address.city);
+                                    } else if (data.address.town) {
+                                        parts.push(data.address.town);
+                                    }
+                                    
+                                    placeName = parts.join(", ");
+                                    
+                                    // If we couldn't build a good name, use the display_name
+                                    if (!placeName) {
+                                        placeName = data.display_name;
+                                    }
+                                } else {
+                                    // Fallback if no address data
+                                    placeName = `Location (${lat.toFixed(5)}, ${lng.toFixed(5)})`;
                                 }
-                            } catch (err2) {
-                                updateDebug("ERROR using callback: " + err2.message);
-                            }
-                        }
+                                
+                                window.selectedPlaceName = placeName;
+                                marker.bindPopup(placeName).openPopup();
+                                
+                                updateStatus("Location selected: " + placeName);
+                                
+                                // Set flag for Java to know location is selected
+                                window.locationSelected = true;
+                                
+                                // Try to call Java directly
+                                try {
+                                    if (window.javaApp) {
+                                        window.javaApp.locationSelectedWithName(lat, lng, placeName);
+                                    }
+                                } catch (err) {
+                                    console.error("Error calling Java:", err);
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Geocoding error:", error);
+                                window.selectedPlaceName = `Location (${lat.toFixed(5)}, ${lng.toFixed(5)})`;
+                                marker.bindPopup(window.selectedPlaceName).openPopup();
+                                updateStatus("Error getting location name. Using coordinates.");
+                                
+                                // Still set the flag and try to call Java
+                                window.locationSelected = true;
+                                try {
+                                    if (window.javaApp) {
+                                        window.javaApp.locationSelectedWithName(lat, lng, window.selectedPlaceName);
+                                    }
+                                } catch (err) {
+                                    console.error("Error calling Java:", err);
+                                }
+                            });
                     });
                 }
                 
-                // Wait for the page to fully load before setting up the bridge
+                // Initialize when the page loads
                 window.onload = function() {
-                    // Initialize the map
                     initMap();
-                    
-                    // Test if javaApp is accessible
-                    updateDebug("javaApp available: " + (typeof javaApp !== 'undefined'));
-                    
-                    // Test button for debugging
-                    var testButton = document.createElement('button');
-                    testButton.innerHTML = 'Test Java Bridge';
-                    testButton.style.position = 'absolute';
-                    testButton.style.top = '10px';
-                    testButton.style.right = '10px';
-                    testButton.style.zIndex = '1000';
-                    testButton.onclick = function() {
-                        try {
-                            if (window.javaApp) {
-                                window.javaApp.locationSelected(36.8625, 10.1956);
-                                updateDebug("Test call successful");
-                            } else {
-                                updateDebug("ERROR: javaApp not defined");
-                            }
-                        } catch (e) {
-                            updateDebug("Test call failed: " + e.message);
-                        }
-                    };
-                    document.body.appendChild(testButton);
-                    
-                    // Create a backup "notify Java" button 
-                    var notifyButton = document.createElement('button');
-                    notifyButton.innerHTML = 'Notify Java';
-                    notifyButton.style.position = 'absolute';
-                    notifyButton.style.top = '40px';
-                    notifyButton.style.right = '10px';
-                    notifyButton.style.zIndex = '1000';
-                    notifyButton.onclick = function() {
-                        // This will set a flag Java can poll for
-                        window.locationUpdated = true;
-                        updateDebug("Notification flag set");
-                    };
-                    document.body.appendChild(notifyButton);
                 };
             </script>
         </body>
@@ -201,33 +215,7 @@ public class MapWindowController {
                     JSObject window = (JSObject) webEngine.executeScript("window");
                     window.setMember("javaApp", this);
 
-                    // Set up a global callback function
-                    webEngine.executeScript(
-                            "var javaCallback = function(lat, lng) { window.javaApp.locationSelected(lat, lng); };"
-                    );
-
-                    // Verify that javaApp is set correctly
-                    webEngine.executeScript(
-                            "console.log('javaApp is set:', typeof javaApp !== 'undefined');" +
-                                    "console.log('locationSelected method exists:', typeof javaApp.locationSelected === 'function');"
-                    );
-
-                    // Try a test call
-                    webEngine.executeScript(
-                            "try { " +
-                                    "  console.log('Testing Java bridge...');" +
-                                    "  if(window.javaApp) { " +
-                                    "    window.javaApp.locationSelected(0, 0); " +
-                                    "    console.log('Test call successful'); " +
-                                    "  } else { " +
-                                    "    console.error('javaApp not defined in window'); " +
-                                    "  }" +
-                                    "} catch(e) { " +
-                                    "  console.error('Test call failed:', e.message); " +
-                                    "}"
-                    );
-
-                    // Set up a polling mechanism as a backup approach
+                    // Set up a polling mechanism to check for location selection
                     setupPollingMechanism();
 
                 } catch (Exception e) {
@@ -242,7 +230,7 @@ public class MapWindowController {
         // Create a polling timer that checks for location updates
         javafx.animation.Timeline timeline = new javafx.animation.Timeline(
                 new javafx.animation.KeyFrame(
-                        javafx.util.Duration.seconds(1),
+                        javafx.util.Duration.seconds(0.5),
                         event -> checkForLocationUpdates()
                 )
         );
@@ -252,50 +240,51 @@ public class MapWindowController {
 
     private void checkForLocationUpdates() {
         try {
-            // Check if the locationUpdated flag is set
+            // Check if the locationSelected flag is set
             JSObject window = (JSObject) webEngine.executeScript("window");
-            Object locationUpdated = window.getMember("locationUpdated");
+            Object locationSelected = window.getMember("locationSelected");
 
-            if (locationUpdated instanceof Boolean && (Boolean) locationUpdated) {
-                // Get the latitude and longitude from the global variables
+            if (locationSelected instanceof Boolean && (Boolean) locationSelected) {
+                // Get the latitude, longitude, and place name from the global variables
                 double lat = (Double) window.getMember("selectedLatitude");
                 double lng = (Double) window.getMember("selectedLongitude");
+                String placeName = (String) window.getMember("selectedPlaceName");
 
                 // Process the location
-                System.out.println("Location updated through polling: Lat = " + lat + ", Lng = " + lng);
-                locationSelected(lat, lng);
+                System.out.println("Location updated through polling: " + placeName);
+                locationSelectedWithName(lat, lng, placeName);
 
                 // Reset the flag
-                webEngine.executeScript("window.locationUpdated = false;");
+                webEngine.executeScript("window.locationSelected = false;");
             }
         } catch (Exception e) {
             System.err.println("Error in polling: " + e.getMessage());
         }
     }
 
-    // This method is called from JavaScript when a location is selected
-    // Added public keyword to ensure it's accessible from JavaScript
-    public void locationSelected(double lat, double lng) {
-        System.out.println("Location selected in Java: Lat = " + lat + ", Lng = " + lng);
+    // Method for JavaScript to call with coordinates and place name
+    public void locationSelectedWithName(double lat, double lng, String placeName) {
+        System.out.println("Location selected in Java: " + placeName);
         this.selectedLat = lat;
         this.selectedLng = lng;
+        this.selectedPlaceName = placeName;
 
         // Update UI on JavaFX thread
         javafx.application.Platform.runLater(() -> {
-            saveButton.setVisible(true);
+            saveButton.setDisable(false);
         });
     }
 
     @FXML
     private void handleSave() {
         if (mainController != null) {
-            // Pass the selected location back to the main controller
-            mainController.setLocation(selectedLat, selectedLng);
+            // Pass the selected location name back to the main controller
+            mainController.setLocation(selectedLat, selectedLng, selectedPlaceName);
         }
 
-        // Print the selected latitude and longitude to the terminal
-        System.out.println("Saving - Selected Latitude: " + selectedLat);
-        System.out.println("Saving - Selected Longitude: " + selectedLng);
+        // Print the selected information to the terminal
+        System.out.println("Saving - Selected Location: " + selectedPlaceName);
+        System.out.println("Saving - Coordinates: " + selectedLat + ", " + selectedLng);
 
         // Close the window
         Stage stage = (Stage) saveButton.getScene().getWindow();

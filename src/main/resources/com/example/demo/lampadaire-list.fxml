@@ -2,24 +2,90 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.LampadaireListController" spacing="10">
-    <TableView fx:id="lampadaireTable">
+<VBox alignment="CENTER" spacing="15" styleClass="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.LampadaireListController">
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
+
+    <!-- Titre -->
+    <Label styleClass="title-label" text="Gestion des Lampadaires" />
+
+    <!-- Section Filtres -->
+    <VBox spacing="12" styleClass="container">
+        <HBox alignment="CENTER_LEFT" spacing="15">
+            <Label styleClass="sub-title" text="Filtrer par Date :" />
+            <DatePicker fx:id="filterDatePicker" promptText="Sélectionnez une date" />
+            <ComboBox fx:id="dateFilterTypeComboBox" prefWidth="150" />
+            <Button onAction="#handleResetFilters" styleClass="button-light" text="Réinitialiser les Filtres" />
+
+            <HBox alignment="CENTER_RIGHT" spacing="15" HBox.hgrow="ALWAYS">
+                <Button onAction="#handleUpdateLampStatusByTime" styleClass="button-secondary" text="Mettre à jour l'État par Heure">
+                    <graphic>
+                        <Circle fill="white" radius="4" />
+                    </graphic>
+                </Button>
+            </HBox>
+        </HBox>
+
+        <!-- Section Vérification de Localisation -->
+
+    </VBox>
+
+    <!-- Tableau pour afficher les Lampadaires -->
+    <TableView fx:id="lampadaireTable" styleClass="table-view" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="idColumn" text="ID"/>
-            <TableColumn fx:id="localisationColumn" text="Localisation"/>
-            <TableColumn fx:id="etatColumn" text="Etat"/>
-            <TableColumn fx:id="consommationColumn" text="Consommation"/>
-            <TableColumn fx:id="quartierNameColumn" text="Quartier Name"/>
-            <TableColumn fx:id="dateInstallationColumn" text="Date Installation"/>
+            <TableColumn fx:id="idColumn" prefWidth="50" text="ID" />
+            <TableColumn fx:id="localisationColumn" prefWidth="150" text="Localisation" />
+            <TableColumn fx:id="etatColumn" prefWidth="135.0" text="État" />
+            <TableColumn fx:id="consommationColumn" prefWidth="120.0" text="Consommation (W)" />
+            <TableColumn fx:id="quartierNameColumn" prefWidth="88.0" text="Quartier" />
+            <TableColumn fx:id="dateInstallationColumn" prefWidth="115.0" text="Date d'Installation" />
         </columns>
+        <placeholder>
+            <Label text="Aucun lampadaire trouvé" />
+        </placeholder>
     </TableView>
-    <Button text="Refresh" onAction="#handleRefresh" />
-    <Button fx:id="deleteButton" text="Delete" onAction="#handleDelete" />
-    <Button fx:id="updateButton" text="Update" onAction="#handleUpdate" />
-    <Button text="Generate PDF" onAction="#handleGeneratePDF" />
+
+    <!-- Boutons d'Action -->
+    <HBox alignment="CENTER_LEFT" spacing="15">
+        <Button onAction="#handleRefresh" styleClass="button" text="Actualiser">
+            <graphic>
+                <Circle fill="white" radius="4" />
+            </graphic>
+        </Button>
+        <Button fx:id="updateButton" onAction="#handleUpdate" styleClass="button-accent" text="Modifier">
+            <graphic>
+                <Rectangle fill="white" height="8" width="8" />
+            </graphic>
+        </Button>
+        <Button fx:id="deleteButton" onAction="#handleDelete" styleClass="button-danger" text="Supprimer">
+            <graphic>
+                <Rectangle fill="white" height="8" width="8" />
+            </graphic>
+        </Button>
+        <Button onAction="#handleGeneratePDF" styleClass="button-secondary" text="Générer PDF">
+            <graphic>
+                <Rectangle fill="white" height="8" width="8" />
+            </graphic>
+        </Button>
+        <HBox alignment="CENTER_RIGHT" spacing="15" HBox.hgrow="ALWAYS">
+            <Button onAction="#handleBackToMenu" styleClass="button-light" text="Retour au Menu">
+                <!-- Utiliser un caractère flèche simple -->
+                <graphic>
+                    <Label style="-fx-text-fill: #5c38b0; -fx-font-weight: bold; -fx-font-size: 16px;" text="←" />
+                </graphic>
+            </Button>
+        </HBox>
+    </HBox>
 </VBox>

@@ -30,6 +30,7 @@ public class LampadaireService {
         }
     }
 
+
     // Get all Lampadaires
     public List<Lampadaire> getAllLampadaires() throws SQLException {
         List<Lampadaire> lampadaires = new ArrayList<>();

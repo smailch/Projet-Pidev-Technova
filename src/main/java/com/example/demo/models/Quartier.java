@@ -58,12 +58,7 @@ public class Quartier {
 
     @Override
     public String toString() {
-        return "Quartier{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", nbLamp=" + nbLamp +
-                ", consomTot=" + consomTot +
-                '}';
+        return  nom ;
     }
 
 

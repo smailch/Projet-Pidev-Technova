@@ -11,10 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 
-<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.example.demo.controllers.AddLampadaireController"
            styleClass="main-container">
 
@@ -23,49 +21,54 @@
             <Insets top="30" right="40" bottom="30" left="40"/>
         </padding>
 
+        <!-- Titre -->
+        <Label text="Ajouter un Nouveau Lampadaire" styleClass="title-label"/>
 
-
-        <!-- Form Container -->
+        <!-- Conteneur du formulaire -->
         <VBox spacing="15" styleClass="form-container">
-            <!-- Localisation Field -->
+            <!-- Champ Localisation -->
             <VBox spacing="5" styleClass="field-container">
-                <Label text="Location" styleClass="field-label"/>
+                <Label text="Localisation" styleClass="field-label"/>
                 <HBox spacing="10" alignment="CENTER_LEFT">
-                    <TextField fx:id="localisationField" promptText="Click on the map to select location"
+                    <TextField fx:id="localisationField" promptText="Cliquez sur la carte pour sélectionner l'emplacement"
                                editable="false" styleClass="text-field" HBox.hgrow="ALWAYS"/>
-                    <Button text="Open Map" onAction="#openMapWindow" styleClass="map-button"/>
+                    <Button text="Ouvrir la Carte" onAction="#openMapWindow" styleClass="button-light"/>
                 </HBox>
             </VBox>
 
-            <!-- Etat Field -->
+            <!-- Champ État -->
             <VBox spacing="5" styleClass="field-container">
-                <Label text="Status" styleClass="field-label"/>
-                <CheckBox fx:id="etatField" text="Active" styleClass="status-checkbox"/>
+                <Label text="État" styleClass="field-label"/>
+                <CheckBox fx:id="etatField" text="Actif" styleClass="status-checkbox"/>
             </VBox>
 
-            <!-- Consommation Field -->
+            <!-- Champ Consommation -->
             <VBox spacing="5" styleClass="field-container">
-                <Label text="Power Consumption (W)" styleClass="field-label"/>
-                <TextField fx:id="consommationField" promptText="Enter power consumption" styleClass="text-field"/>
+                <Label text="Consommation d'Énergie (W)" styleClass="field-label"/>
+                <TextField fx:id="consommationField" promptText="Entrez la consommation d'énergie" styleClass="text-field"/>
             </VBox>
 
-            <!-- Quartier ID Field -->
+            <!-- Champ Quartier -->
             <VBox spacing="5" styleClass="field-container">
-                <Label text="District" styleClass="field-label"/>
-                <ComboBox fx:id="quartierComboBox" promptText="Select district" styleClass="combo-box"/>
+                <Label text="Quartier" styleClass="field-label"/>
+                <ComboBox fx:id="quartierComboBox" promptText="Sélectionnez un quartier" styleClass="combo-box"/>
             </VBox>
 
-            <!-- Date Installation Field -->
+            <!-- Champ Date d'Installation -->
             <VBox spacing="5" styleClass="field-container">
-                <Label text="Installation Date" styleClass="field-label"/>
+                <Label text="Date d'Installation" styleClass="field-label"/>
                 <DatePicker fx:id="dateInstallationField" styleClass="date-picker"/>
             </VBox>
         </VBox>
 
-        <!-- Action Buttons -->
+        <!-- Boutons d'Action -->
         <HBox spacing="15" alignment="CENTER">
-            <Button text="Save" onAction="#handleSave" styleClass="save-button"/>
-            <Button text="Cancel" onAction="#handleCancel" styleClass="cancel-button"/>
+            <Button text="Enregistrer" onAction="#handleSave" styleClass="button"/>
+            <Button text="Annuler" onAction="#handleCancel" styleClass="button-danger"/>
+            <Button text="Retour au Menu" onAction="#redirectToMenu" styleClass="button-light"/>
+            <!-- Bouton pour basculer en mode sombre -->
+            <ToggleButton fx:id="darkModeToggle" text="Mode Sombre" styleClass="dark-mode-toggle"/>
         </HBox>
+
     </VBox>
 </StackPane>

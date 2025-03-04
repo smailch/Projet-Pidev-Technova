@@ -14,6 +14,11 @@ module com.example.demo {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires jdk.jsobject;
+    requires com.dlsc.gmapsfx;
+    requires javafx.swing;
+    requires jxmapviewer2;
+    requires com.sothawo.mapjfx;
+    requires org.json;
 
     opens com.example.demo to javafx.fxml;
     opens com.example.demo.controllers to javafx.fxml;

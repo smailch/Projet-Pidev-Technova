@@ -7,40 +7,65 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ToggleButton?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.UpdateLampadaireDialogController" spacing="10" alignment="CENTER">
-    <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
-    </padding>
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.demo.controllers.UpdateLampadaireDialogController"
+           styleClass="main-container">
 
-    <GridPane hgap="10" vgap="10">
-        <!-- Localisation -->
-        <Label text="Localisation:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="localisationField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+    <VBox spacing="20" alignment="CENTER" styleClass="content-container">
+        <padding>
+            <Insets top="30" right="40" bottom="30" left="40"/>
+        </padding>
 
-        <!-- État -->
-        <Label text="État:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <CheckBox fx:id="etatField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <!-- Titre -->
+        <Label text="Mettre à jour le lampadaire" styleClass="title-label"/>
 
-        <!-- Consommation -->
-        <Label text="Consommation:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <TextField fx:id="consommationField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <!-- Conteneur du formulaire -->
+        <VBox spacing="15" styleClass="form-container">
+            <!-- Champ de localisation -->
+            <VBox spacing="5" styleClass="field-container">
+                <Label text="Localisation" styleClass="field-label"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <TextField fx:id="localisationField" promptText="Localisation (lecture seule)"
+                               editable="false" disable="true" styleClass="text-field" HBox.hgrow="ALWAYS"/>
+                </HBox>
+            </VBox>
 
-        <!-- Quartier -->
-        <Label text="Quartier:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <ComboBox fx:id="quartierComboBox" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <!-- Champ État -->
+            <VBox spacing="5" styleClass="field-container">
+                <Label text="État" styleClass="field-label"/>
+                <CheckBox fx:id="etatField" text="Actif" styleClass="status-checkbox"/>
+            </VBox>
 
-        <!-- Date d'installation -->
-        <Label text="Date d'installation:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-        <DatePicker fx:id="dateInstallationField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-    </GridPane>
+            <!-- Champ Consommation -->
+            <VBox spacing="5" styleClass="field-container">
+                <Label text="Consommation électrique (W)" styleClass="field-label"/>
+                <TextField fx:id="consommationField" promptText="Entrez la consommation électrique" styleClass="text-field"/>
+            </VBox>
 
-    <!-- Buttons -->
-    <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button text="Annuler" onAction="#handleCancel"/>
-        <Button text="Enregistrer" onAction="#handleSave"/>
-    </HBox>
-</VBox>
+            <!-- Champ Quartier -->
+            <VBox spacing="5" styleClass="field-container">
+                <Label text="Quartier" styleClass="field-label"/>
+                <ComboBox fx:id="quartierComboBox" promptText="Sélectionnez un quartier" styleClass="combo-box"/>
+            </VBox>
+
+            <!-- Champ Date d'installation -->
+            <VBox spacing="5" styleClass="field-container">
+                <Label text="Date d'installation" styleClass="field-label"/>
+                <DatePicker fx:id="dateInstallationField" styleClass="date-picker"/>
+            </VBox>
+        </VBox>
+
+        <!-- Boutons d'action -->
+        <HBox spacing="15" alignment="CENTER">
+            <Button text="Enregistrer" onAction="#handleSave" styleClass="button"/>
+            <Button text="Annuler" onAction="#handleCancel" styleClass="button-danger"/>
+            <ToggleButton fx:id="darkModeToggle" text="Mode sombre" styleClass="dark-mode-toggle"/>
+        </HBox>
+
+    </VBox>
+</StackPane>

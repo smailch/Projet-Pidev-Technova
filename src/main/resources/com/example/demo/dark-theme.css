@@ -1,234 +1,328 @@
-/* Dark Theme */
+/* Root element styling with color variables */
 .root {
     -fx-font-family: 'Segoe UI', Arial, sans-serif;
-    -fx-base: #1e1e1e;
-    -fx-background-color: #121212;
+    -fx-font-size: 14px;
+    -fx-background-color: #121212; /* Dark background */
 
-    /* Theme Colors */
-    -primary-color: #4267B2;
-    -secondary-color: #27ae60;
-    -danger-color: #c0392b;
-    -text-color: #ecf0f1;
-    -background-color: #121212;
-    -card-background: #2c2c2c;
-    -border-color: #3c3c3c;
-    -field-background: #1e1e1e;
+    /* Color palette */
+    -fx-primary: #5c38b0;            /* Primary purple */
+    -fx-primary-dark: #43268a;       /* Darker shade */
+    -fx-primary-light: #8c69d3;      /* Lighter shade */
+    -fx-primary-lightest: #2c2c2c;   /* Very dark purple for backgrounds */
+    -fx-accent: #ff7843;             /* Complementary orange for accents */
+    -fx-secondary: #36b37e;          /* Success green */
+    -fx-danger: #ff5252;             /* Danger red */
+    -fx-warning: #ffab00;            /* Warning yellow/amber */
+    -fx-info: #29b6f6;               /* Info blue */
+    -fx-grey: #333333;               /* Dark grey */
+    -fx-grey-mid: #555555;           /* Mid grey */
+    -fx-grey-dark: #1e1e1e;          /* Very dark grey */
+    -fx-text: #ffffff;               /* Main text color (white) */
+    -fx-text-light: #a9a9a9;         /* Light text color */
 }
 
-/* Main Container */
-.main-container {
-    -fx-background-color: -background-color;
+/* ========== COMMON ELEMENTS ========== */
+
+/* Labels */
+.label {
+    -fx-text-fill: -fx-text;
 }
 
-.content-container {
-    -fx-max-width: 600px;
-    -fx-background-color: -card-background;
-    -fx-background-radius: 10px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 5);
-}
-
-/* Header Styles */
-.header-title {
-    -fx-font-size: 24px;
+.title-label {
+    -fx-font-size: 22px;
     -fx-font-weight: bold;
-    -fx-text-fill: -primary-color;
+    -fx-text-fill: -fx-primary;
+    -fx-padding: 15 0 15 0;
 }
 
-.theme-toggle {
-    -fx-background-radius: 100px;
-    -fx-min-width: 40px;
-    -fx-min-height: 40px;
-    -fx-background-color: transparent;
-    -fx-border-color: -border-color;
-    -fx-border-radius: 100px;
+.sub-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-primary-light;
 }
 
-.theme-toggle:hover {
-    -fx-background-color: derive(-background-color, 20%);
+/* Buttons */
+.button {
+    -fx-background-radius: 4px;
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(92,56,176,0.3), 3, 0, 0, 1);
+    -fx-border-width: 0;
 }
 
-/* Form Container */
-.form-container {
-    -fx-spacing: 15;
-    -fx-background-color: -card-background;
-    -fx-padding: 10;
-    -fx-background-radius: 5px;
-    -fx-border-color: -border-color;
-    -fx-border-radius: 5px;
+.button:hover {
+    -fx-background-color: -fx-primary-dark;
+    -fx-effect: dropshadow(three-pass-box, rgba(92,56,176,0.5), 5, 0, 0, 2);
+}
+
+.button:pressed {
+    -fx-background-color: derive(-fx-primary-dark, -10%);
+    -fx-effect: dropshadow(three-pass-box, rgba(92,56,176,0.3), 3, 0, 0, 1);
+}
+
+/* Button variants */
+.button-accent {
+    -fx-background-color: -fx-accent;
+    -fx-effect: dropshadow(three-pass-box, rgba(255,120,67,0.3), 3, 0, 0, 1);
+}
+
+.button-accent:hover {
+    -fx-background-color: derive(-fx-accent, -10%);
+    -fx-effect: dropshadow(three-pass-box, rgba(255,120,67,0.5), 5, 0, 0, 2);
+}
+
+.button-secondary {
+    -fx-background-color: -fx-secondary;
+    -fx-effect: dropshadow(three-pass-box, rgba(54,179,126,0.3), 3, 0, 0, 1);
+}
+
+.button-secondary:hover {
+    -fx-background-color: derive(-fx-secondary, -10%);
+    -fx-effect: dropshadow(three-pass-box, rgba(54,179,126,0.5), 5, 0, 0, 2);
+}
+
+.button-danger {
+    -fx-background-color: -fx-danger;
+    -fx-effect: dropshadow(three-pass-box, rgba(255,82,82,0.3), 3, 0, 0, 1);
+}
+
+.button-danger:hover {
+    -fx-background-color: derive(-fx-danger, -10%);
+    -fx-effect: dropshadow(three-pass-box, rgba(255,82,82,0.5), 5, 0, 0, 2);
+}
+
+.button-light {
+    -fx-background-color: -fx-grey-dark;
+    -fx-text-fill: -fx-primary;
+    -fx-border-color: -fx-primary;
     -fx-border-width: 1px;
+    -fx-effect: none;
 }
 
-/* Field Styles */
-.field-label {
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
-    -fx-text-fill: -text-color;
+.button-light:hover {
+    -fx-background-color: -fx-grey-mid;
 }
 
-.text-field, .combo-box, .date-picker {
-    -fx-background-color: -field-background;
-    -fx-text-fill: -text-color;
-    -fx-prompt-text-fill: derive(-text-color, -30%);
-    -fx-border-color: -border-color;
+/* Text fields */
+.text-field, .text-area {
+    -fx-background-color: -fx-grey-dark;
+    -fx-border-color: -fx-grey-mid;
     -fx-border-radius: 4px;
     -fx-background-radius: 4px;
-    -fx-padding: 8 12;
+    -fx-padding: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 3, 0, 0, 0);
+    -fx-text-fill: -fx-text;
 }
 
-.text-field:focused, .combo-box:focused, .date-picker:focused {
-    -fx-border-color: -primary-color;
+.text-field:focused, .text-area:focused {
+    -fx-border-color: -fx-primary;
+    -fx-effect: dropshadow(three-pass-box, rgba(92,56,176,0.2), 5, 0, 0, 0);
 }
 
-.status-checkbox {
-    -fx-text-fill: -text-color;
+/* ComboBox */
+.combo-box {
+    -fx-background-color: -fx-grey-dark;
+    -fx-border-color: -fx-grey-mid;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 0;
+    -fx-text-fill: -fx-text;
 }
 
-.status-checkbox .box {
-    -fx-background-color: -field-background;
-    -fx-border-color: -border-color;
-    -fx-border-radius: 3px;
-}
-
-.status-checkbox:selected .box {
-    -fx-background-color: -secondary-color;
-    -fx-border-color: -secondary-color;
-}
-
-.status-checkbox:selected .mark {
-    -fx-background-color: white;
-}
-
-/* Button Styles */
-.button {
-    -fx-background-radius: 5px;
-    -fx-padding: 10 25;
-    -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-cursor: hand;
-}
-
-.save-button {
-    -fx-background-color: -secondary-color;
-    -fx-text-fill: white;
-}
-
-.save-button:hover {
-    -fx-background-color: derive(-secondary-color, -15%);
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);
-}
-
-.cancel-button {
-    -fx-background-color: -danger-color;
-    -fx-text-fill: white;
-}
-
-.cancel-button:hover {
-    -fx-background-color: derive(-danger-color, -15%);
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);
-}
-
-.map-button {
-    -fx-background-color: -primary-color;
-    -fx-text-fill: white;
-    -fx-graphic-text-gap: 8;
-}
-
-.map-button:hover {
-    -fx-background-color: derive(-primary-color, -15%);
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);
-}
-
-/* Date Picker specific styles */
-.date-picker > .arrow-button {
-    -fx-background-color: -primary-color;
-    -fx-background-radius: 0 4 4 0;
-}
-
-.date-picker > .arrow-button > .arrow {
-    -fx-background-color: white;
-}
-
-.date-picker > .text-field {
-    -fx-background-radius: 4 0 0 4;
-}
-
-/* Combo Box specific styles */
-.combo-box .arrow {
-    -fx-background-color: -text-color;
+.combo-box:focused {
+    -fx-border-color: -fx-primary;
 }
 
 .combo-box .arrow-button {
+    -fx-background-color: -fx-primary;
+    -fx-background-radius: 0 4 4 0;
+}
+
+.combo-box .arrow {
+    -fx-background-color: white;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 8 12 8 12;
+    -fx-text-fill: -fx-text;
+    -fx-background-color: -fx-grey-dark;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: -fx-grey-mid;
+}
+
+/* Date Picker */
+.date-picker {
     -fx-background-color: transparent;
 }
 
-/* Popup/List styles */
-.combo-box-popup .list-view {
-    -fx-background-color: #1e1e1e;
-    -fx-border-color: -border-color;
+.date-picker .arrow-button {
+    -fx-background-color: -fx-primary;
+    -fx-background-radius: 0 4 4 0;
 }
 
-.combo-box-popup .list-cell {
-    -fx-background-color: #1e1e1e;
-    -fx-text-fill: -text-color;
+.date-picker .arrow-button .arrow {
+    -fx-background-color: white;
 }
 
-.combo-box-popup .list-cell:hover {
-    -fx-background-color: #333333;
+.date-picker .text-field {
+    -fx-border-radius: 4 0 0 4;
+    -fx-background-radius: 4 0 0 4;
+    -fx-background-color: -fx-grey-dark;
+    -fx-text-fill: -fx-text;
 }
 
-.combo-box-popup .list-cell:filled:selected {
-    -fx-background-color: #3c3c3c;
+/* ========== CONTAINERS ========== */
+
+/* VBox and HBox */
+.container {
+    -fx-background-color: -fx-grey-dark;
+    -fx-background-radius: 8px;
+    -fx-padding: 20;
+    -fx-spacing: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 8, 0, 0, 2);
 }
 
-/* Calendar popup styles */
-.date-picker-popup {
-    -fx-background-color: #1e1e1e;
-    -fx-border-color: -border-color;
+/* Card style */
+.card {
+    -fx-background-color: -fx-grey-dark;
+    -fx-background-radius: 8px;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+    -fx-cursor: hand;
 }
 
-.date-picker-popup .month-year-pane {
-    -fx-background-color: -primary-color;
+.card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(92,56,176,0.3), 10, 0, 0, 4);
+    -fx-background-color: -fx-grey-mid;
 }
 
-.date-picker-popup .month-year-pane .label {
-    -fx-text-fill: white;
+.card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-primary;
 }
 
-.date-picker-popup .day-cell {
-    -fx-background-color: #1e1e1e;
-    -fx-text-fill: -text-color;
+.card-subtitle {
+    -fx-text-fill: -fx-text-light;
 }
 
-.date-picker-popup .day-cell:hover {
-    -fx-background-color: #333333;
-}
-
-.date-picker-popup .selected {
-    -fx-background-color: -primary-color;
-    -fx-text-fill: white;
-}
-
+/* Table View */
 .table-view {
-    -fx-base: #3c3f41;
-    -fx-control-inner-background: #3c3f41;
-    -fx-background-color: #3c3f41;
-    -fx-table-cell-border-color: transparent;
-    -fx-table-header-border-color: transparent;
-    -fx-padding: 5;
+    -fx-background-color: transparent;
+    -fx-background-radius: 8px;
+    -fx-padding: 0;
+    -fx-border-color: -fx-grey;
+    -fx-border-radius: 8px;
 }
 
-.table-row-cell:odd {
-    -fx-background-color: #4c4c4c;
+.table-view .column-header-background {
+    -fx-background-color: -fx-primary-dark;
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-padding: 0 0 5 0;
 }
 
-.table-row-cell:even {
-    -fx-background-color: #3c3f41;
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+    -fx-border-width: 0;
 }
 
-.slider .thumb {
-    -fx-background-color: #4CAF50;
+.table-view .column-header .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-padding: 12 5 12 10;
 }
 
-.slider .track {
-    -fx-background-color: #555555;
+.table-view .table-cell {
+    -fx-padding: 10 15 10 15;
+    -fx-border-color: transparent;
+    -fx-alignment: center-left;
+    -fx-text-fill: -fx-text;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: -fx-grey-dark;
+    -fx-border-color: transparent;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: -fx-grey-mid;
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: derive(-fx-primary-dark, 30%);
+}
+
+.table-view:focused .table-row-cell:selected .table-cell {
+    -fx-text-fill: -fx-text;
+}
+
+/* Status indicators */
+.status-active {
+    -fx-text-fill: -fx-secondary;
+    -fx-font-weight: bold;
+}
+
+.status-inactive {
+    -fx-text-fill: -fx-danger;
+    -fx-font-weight: bold;
+}
+
+/* Scrollbar styling */
+.scroll-bar {
+    -fx-background-color: -fx-grey;
+    -fx-background-radius: 0;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: -fx-primary-light;
+    -fx-background-radius: 0;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: -fx-primary;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+}
+
+/* Dialog styling */
+.dialog-pane {
+    -fx-background-color: -fx-grey-dark;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: -fx-primary;
+}
+
+.dialog-pane .header-panel .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.dialog-pane .content {
+    -fx-padding: 15;
+}
+
+.dialog-pane .button-bar .button {
+    -fx-background-color: -fx-primary;
+}
+
+/* Footer text */
+.footer-text {
+    -fx-text-fill: -fx-text-light;
+    -fx-font-size: 12px;
+}
+
+/* For animated transitions */
+.animated-button {
+    -fx-transition: all 0.3s ease;
 }

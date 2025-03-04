@@ -1,11 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
 
-<VBox fx:id="rootContainer" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.controllers.MainController" spacing="10" alignment="CENTER">
-    <Button text="Ajouter Quartier" onAction="#goToPage1" id="page1Button" />
-    <Button text="Consulter list des quartiers" onAction="#goToPage2" id="page2Button" />
-    <Button text="Ajouter lamp" onAction="#goToPage3" id="page3Button" />
-    <Button text="lampadaire-list" onAction="#goToPage4" id="page4Button" />
-    <Button text="Toggle Theme" onAction="#toggleTheme" />
+<VBox fx:id="rootContainer" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.demo.controllers.MainController"
+      spacing="20" alignment="CENTER" styleClass="root">
+
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <!-- Titre -->
+    <Label text="Gestion Intelligente de l'Éclairage" styleClass="title-label"/>
+
+    <!-- Conteneur -->
+    <VBox styleClass="container" spacing="15" alignment="CENTER" maxWidth="400">
+        <Button text="Ajouter un Quartier" onAction="#goToPage1" id="page1Button" styleClass="button" maxWidth="Infinity">
+            <graphic>
+                <javafx.scene.shape.Rectangle width="10" height="10" fill="white"/>
+            </graphic>
+        </Button>
+
+        <Button text="Consulter la Liste des Quartiers" onAction="#goToPage2" id="page2Button" styleClass="button-secondary" maxWidth="Infinity">
+            <graphic>
+                <javafx.scene.shape.Circle radius="5" fill="white"/>
+            </graphic>
+        </Button>
+
+        <Button text="Ajouter un Lampadaire" onAction="#goToPage3" id="page3Button" styleClass="button-accent" maxWidth="Infinity">
+            <graphic>
+                <javafx.scene.shape.Rectangle width="10" height="10" fill="white"/>
+            </graphic>
+        </Button>
+
+        <Button text="Liste des Lampadaires" onAction="#goToPage4" id="page4Button" styleClass="button" maxWidth="Infinity">
+            <graphic>
+                <javafx.scene.shape.Circle radius="5" fill="white"/>
+            </graphic>
+        </Button>
+    </VBox>
+
+    <!-- Pied de page -->
+    <HBox alignment="CENTER" spacing="10">
+        <Button text="Changer de Thème" onAction="#toggleTheme" styleClass="button-light"/>
+    </HBox>
+
+    <Label text="© 2025 Gestion Intelligente de l'Éclairage Public" styleClass="footer-text"/>
 </VBox>

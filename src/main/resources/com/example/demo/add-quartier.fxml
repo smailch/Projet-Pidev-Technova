@@ -9,48 +9,48 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.example.demo.controllers.AddQuartierController"
-           styleClass="main-container">
+           styleClass="root">
 
-    <VBox spacing="20" alignment="CENTER" styleClass="content-container">
+    <VBox spacing="20" alignment="CENTER">
         <padding>
             <Insets top="30" right="40" bottom="30" left="40"/>
         </padding>
 
-        <!-- Title -->
+        <!-- Titre -->
         <HBox alignment="CENTER" spacing="15">
             <HBox HBox.hgrow="ALWAYS">
-                <Label text="Add New District" styleClass="title-label"/>
+                <Label text="Ajouter un Nouveau Quartier" styleClass="title-label"/>
             </HBox>
-            <ToggleButton text="Dark Mode" fx:id="themeToggle" onAction="#toggleTheme" styleClass="toggle-button"/>
+            <ToggleButton text="Mode Sombre" fx:id="themeToggle" onAction="#toggleTheme" styleClass="button-light"/>
         </HBox>
 
-        <!-- Form Container -->
-        <VBox spacing="15" styleClass="form-container">
-            <!-- Nom Field -->
-            <VBox spacing="5" styleClass="field-container">
-                <Label text="Name" styleClass="field-label"/>
-                <TextField fx:id="nomField" promptText="Enter district name"/>
+        <!-- Conteneur du Formulaire -->
+        <VBox spacing="15" styleClass="container">
+            <!-- Champ Nom -->
+            <VBox spacing="5">
+                <Label text="Nom" styleClass="sub-title"/>
+                <TextField fx:id="nomField" promptText="Entrez le nom du quartier"/>
             </VBox>
 
-            <!-- Number of Lamps Field -->
-            <VBox spacing="5" styleClass="field-container">
-                <Label text="Number of Lamps" styleClass="field-label"/>
-                <TextField fx:id="nbLampField" promptText="Enter number of lamps"/>
+            <!-- Champ Nombre de Lampadaires -->
+            <VBox spacing="5">
+                <Label text="Nombre de Lampadaires" styleClass="sub-title"/>
+                <TextField fx:id="nbLampField" promptText="Entrez le nombre de lampadaires"/>
             </VBox>
 
-            <!-- Total Consumption Field -->
-            <VBox spacing="5" styleClass="field-container">
-                <Label text="Total Consumption (W)" styleClass="field-label"/>
-                <TextField fx:id="consomTotField" promptText="Enter total power consumption"/>
+            <!-- Champ Consommation Totale -->
+            <VBox spacing="5">
+                <Label text="Consommation Totale (W)" styleClass="sub-title"/>
+                <TextField fx:id="consomTotField" promptText="Entrez la consommation totale d'énergie"/>
             </VBox>
         </VBox>
 
-        <!-- Buttons Section -->
+        <!-- Section des Boutons -->
         <HBox spacing="15" alignment="CENTER">
-            <Button text="Save quartier" onAction="#handleAddQuartier" styleClass="submit-button"/>
-            <Button text="Back to Menu" onAction="#goToMenu" styleClass="menu-button"/>
+            <Button text="Enregistrer le Quartier" onAction="#handleAddQuartier" styleClass="button"/>
+            <Button text="Retour au Menu" onAction="#goToMenu" styleClass="button-light"/>
         </HBox>
     </VBox>
 </StackPane>

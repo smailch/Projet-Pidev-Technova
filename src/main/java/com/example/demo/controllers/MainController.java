@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,8 @@ public class MainController implements Initializable {
     private VBox rootContainer; // Root container for applying themes
 
     private String currentTheme; // Track the current theme
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

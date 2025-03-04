@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.models.Quartier;
 import com.example.demo.services.QuartierService;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,6 +23,9 @@ public class AddQuartierController {
 
     @FXML
     private TextField nbLampField;
+
+    @FXML
+    private StackPane rootPane;
 
     @FXML
     private TextField consomTotField;
@@ -79,6 +84,40 @@ public class AddQuartierController {
     }
 
     @FXML
+    public void initialize() {
+        Platform.runLater(() -> {
+            Scene scene = themeToggle.getScene();
+            if (scene != null) {
+                String lightTheme = getClass().getResource("/com/example/demo/light-theme.css").toExternalForm();
+                String darkTheme = getClass().getResource("/com/example/demo/dark-theme.css").toExternalForm();
+
+                // Get current hour
+                int currentHour = java.time.LocalTime.now().getHour();
+
+                if (currentHour >= 18 || currentHour < 6) {
+                    // Enable dark mode automatically at night
+                    scene.getStylesheets().clear();
+                    scene.getStylesheets().add(darkTheme);
+                    themeToggle.setSelected(true);
+                    themeToggle.setText("Light Mode");
+                    isDarkMode = true;
+                } else {
+                    // Default to light mode during the day
+                    scene.getStylesheets().clear();
+                    scene.getStylesheets().add(lightTheme);
+                    themeToggle.setSelected(false);
+                    themeToggle.setText("Dark Mode");
+                    isDarkMode = false;
+                }
+            }
+        });
+
+        // Keep manual toggle functionality
+        themeToggle.setOnAction(event -> toggleTheme());
+    }
+
+
+    @FXML
     private void goToMenu(ActionEvent event) throws IOException {
         // Load the menu scene
         javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/com/example/demo/main.fxml"));
@@ -92,16 +131,16 @@ public class AddQuartierController {
 
     private void loadListQuartiersView(ActionEvent event) throws IOException {
         // Load the list-quartiers.fxml file
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/list-quartiers.fxml"));
-        Parent root = loader.load();
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/demo/list-quartiers.fxml"));
+        //Parent root = loader.load();
 
         // Get the current stage
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         // Set the new scene
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        //Scene scene = new Scene(root);
+        //stage.setScene(scene);
+        // stage.show();
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
