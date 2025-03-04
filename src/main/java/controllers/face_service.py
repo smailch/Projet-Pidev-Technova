@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-MODEL_PATH = r"C:\Users\chemlali smail\OneDrive\Bureau\ProjetPI\ProjetPiDev - Copie\arcfaceresnet100-8.onnx"
+MODEL_PATH = r"C:\Users\ichaa\Desktop\ESPRIT\ESPRIT 3A\Git Projects\Nouveau dossier\Projet-Pidev-Technova\git\Projet-Pidev-Technova\arcfaceresnet100-8.onnx"
 
 def get_face_embedding():
     cap = cv2.VideoCapture(0)

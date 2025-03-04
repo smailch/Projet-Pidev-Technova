@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import services.PythonFaceService;
-import tools.Myconnection;
+import tools.MyConnection;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -98,7 +98,7 @@ public class EmpreinteController {
 
 
     public boolean updateUserInDatabase(Utilisateur utilisateur) {
-        Connection cnx = Myconnection.getInstance().getCnx();
+        Connection cnx = MyConnection.getInstance().getCnx();
         String query = "UPDATE Utilisateur SET visage_hash = ? WHERE Email = ?";
 
         try (PreparedStatement pstmt = cnx.prepareStatement(query)) {

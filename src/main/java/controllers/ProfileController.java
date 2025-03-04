@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import entities.Utilisateur;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import services.PythonFaceService;
-import tools.Myconnection;
+import tools.MyConnection;
 
 import javax.swing.*;
 
@@ -257,7 +257,7 @@ public class ProfileController extends Component {
 
 
     public boolean updateUserInDatabase(Utilisateur utilisateur) {
-        Connection cnx = Myconnection.getInstance().getCnx();
+        Connection cnx = MyConnection.getInstance().getCnx();
         String query = "UPDATE Utilisateur SET visage_hash = ? WHERE Email = ?";
 
         try (PreparedStatement pstmt = cnx.prepareStatement(query)) {

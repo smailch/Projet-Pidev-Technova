@@ -1,11 +1,8 @@
 package interfaces;
-<<<<<<< HEAD
 
 import java.util.List;
 
-=======
 import java.util.List;
->>>>>>> origin/GestionUtilisateur
 public interface IService<T> {
     public void addEntity(T t) ;
 

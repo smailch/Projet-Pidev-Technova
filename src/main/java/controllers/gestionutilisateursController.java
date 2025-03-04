@@ -302,6 +302,5 @@ public class gestionutilisateursController {
         writeToFileHistorique.ecrireDansFichier(message);
     }
 
-import static controllers.SignUpController.isValidEmail;
 
 }

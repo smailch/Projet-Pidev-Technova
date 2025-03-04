@@ -31,7 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import tools.Myconnection;
+import tools.MyConnection;
 import services.PythonFaceService;
 
 import static controllers.SignUpController.showAlert;
@@ -119,7 +119,7 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         utilisateurService = new UtilisateurService();
         jwtService = new JwtService();
-        con = Myconnection.getInstance().getCnx();
+        con = MyConnection.getInstance().getCnx();
 
         if (con == null) {
             lblErrors.setTextFill(Color.TOMATO);
@@ -221,7 +221,7 @@ public class LoginController implements Initializable {
             }
 
             // Vérifier la similarité avec les encodages dans la base de données
-            Connection cnx = Myconnection.getInstance().getCnx();
+            Connection cnx = MyConnection.getInstance().getCnx();
             String query = "SELECT * FROM Utilisateur WHERE visage_hash IS NOT NULL";  // Récupérer tous les utilisateurs
 
             try (PreparedStatement pstmt = cnx.prepareStatement(query)) {
@@ -319,7 +319,7 @@ public class LoginController implements Initializable {
     public String captureAndGetFaceEmbedding() {
         try {
             // Chemin vers le script Python
-            String pythonScriptPath = "C:\\Users\\chemlali smail\\OneDrive\\Bureau\\ProjetPI\\ProjetPiDev - Copie\\src\\main\\java\\controllers\\face_service.py";
+            String pythonScriptPath = "C:\\Users\\ichaa\\Desktop\\ESPRIT\\ESPRIT 3A\\Git Projects\\Nouveau dossier\\Projet-Pidev-Technova\\git\\Projet-Pidev-Technova\\src\\main\\java\\controllers\\face_service.py";
 
             // Vérifier si le fichier existe
             File scriptFile = new File(pythonScriptPath);

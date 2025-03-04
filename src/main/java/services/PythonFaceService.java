@@ -2,7 +2,7 @@ package services;
 
 import entities.Utilisateur;
 import javafx.scene.control.Alert;
-import tools.Myconnection;
+import tools.MyConnection;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,7 +22,7 @@ public class PythonFaceService {
     public String captureAndGetFaceEmbedding() {
         try {
             // Chemin vers le script Python
-            String pythonScriptPath = "C:\\Users\\chemlali smail\\OneDrive\\Bureau\\ProjetPI\\ProjetPiDev - Copie\\src\\main\\java\\controllers\\face_serviceSignUp.py";
+            String pythonScriptPath = "C:\\Users\\ichaa\\Desktop\\ESPRIT\\ESPRIT 3A\\Git Projects\\Nouveau dossier\\Projet-Pidev-Technova\\git\\Projet-Pidev-Technova\\src\\main\\java\\controllers\\face_serviceSignUp.py";
 
             // Vérifier si le fichier existe
             File scriptFile = new File(pythonScriptPath);
@@ -108,7 +108,7 @@ public class PythonFaceService {
             }
 
             // Vérifier la similarité avec les encodages dans la base de données
-            Connection cnx = Myconnection.getInstance().getCnx();
+            Connection cnx = MyConnection.getInstance().getCnx();
             String query = "SELECT * FROM Utilisateur";  // Récupérer tous les utilisateurs
 
             try (PreparedStatement pstmt = cnx.prepareStatement(query)) {

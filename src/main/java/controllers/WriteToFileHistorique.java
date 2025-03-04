@@ -8,7 +8,7 @@ public  class WriteToFileHistorique {
     private String filePath;
 
     public WriteToFileHistorique() {
-        this.filePath = "C:\\Users\\chemlali smail\\OneDrive\\Bureau\\ProjetPI\\ProjetPiDev - Copie\\Historique.txt";
+        this.filePath = "C:\\Users\\ichaa\\Desktop\\ESPRIT\\ESPRIT 3A\\Git Projects\\Nouveau dossier\\Projet-Pidev-Technova\\git\\Projet-Pidev-Technova\\historique.txt";
     }
 
     public void ecrireDansFichier(String contenu) {

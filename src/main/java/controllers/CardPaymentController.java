@@ -10,7 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import services.SessionManager;
-import services.StripePayment;
 import com.stripe.exception.StripeException;
 import test.PaymentBackendServer;
 

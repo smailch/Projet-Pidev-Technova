@@ -3,7 +3,7 @@ package services;
 import entities.Role;
 import entities.Utilisateur;
 import interfaces.IService;
-import tools.Myconnection;
+import tools.MyConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class UtilisateurService implements IService<Utilisateur> {
                 String req = "INSERT INTO `utilisateur`(`Nom`, `Prenom`, `Email`, `Role`, `DateInscription`, `motDePasse`,`activer`) VALUES (?, ?, ?, ?, ?, ?,?)";
 
                 // Préparer la requête
-                PreparedStatement pst = Myconnection.getInstance().getCnx().prepareStatement(req);
+                PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);
                 pst.setString(1, utilisateur.getNom());
                 pst.setString(2, utilisateur.getPrenom());
                 pst.setString(3, utilisateur.getEmail());
@@ -77,7 +77,7 @@ public class UtilisateurService implements IService<Utilisateur> {
     public void deleteEntity(Utilisateur utilisateur) {
         try {
             String req = "DELETE FROM `utilisateur` WHERE id = " + utilisateur.getId();
-            Statement st = Myconnection.getInstance().getCnx().createStatement();
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
             st.executeUpdate(req);
             System.out.println("Utilisateur supprimé");
         } catch (SQLException e) {
@@ -100,7 +100,7 @@ public class UtilisateurService implements IService<Utilisateur> {
                         "', `Role`='" + utilisateur.getRole().name() +
                         "', `DateInscription`='" + utilisateur.getDateInscription() +
                         "' WHERE id = " + utilisateur.getId();
-                Statement st = Myconnection.getInstance().getCnx().createStatement();
+                Statement st = MyConnection.getInstance().getCnx().createStatement();
                 st.executeUpdate(req);
                 System.out.println("Utilisateur mis à jour");
             } catch (SQLException e) {
@@ -115,7 +115,7 @@ public class UtilisateurService implements IService<Utilisateur> {
         List<Utilisateur> utilisateurs = new ArrayList<>();
         try {
             String req = "SELECT * FROM `utilisateur`";
-            Statement st = Myconnection.getInstance().getCnx().createStatement();
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
             ResultSet res = st.executeQuery(req);
             while (res.next()) { //ResultSet /colonnes/table
                 Utilisateur u = new Utilisateur();
@@ -145,7 +145,7 @@ public class UtilisateurService implements IService<Utilisateur> {
     public boolean emailExists(String email) {
         try {
             String req = "SELECT COUNT(*) FROM utilisateur WHERE Email = ?";
-            PreparedStatement pst = Myconnection.getInstance().getCnx().prepareStatement(req);
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);
             pst.setString(1, email);
             ResultSet res = pst.executeQuery();
             if (res.next()) {//ResultSet /colonnes/table
@@ -370,7 +370,7 @@ public class UtilisateurService implements IService<Utilisateur> {
         try {
             // Requête SQL avec tri croissant par id, nom, et email
             String req = "SELECT id, nom, prenom, email, role, dateInscription, motDePasse,activer FROM utilisateur WHERE email = ? ORDER BY id ASC, nom ASC, email ASC";
-            PreparedStatement pst = Myconnection.getInstance().getCnx().prepareStatement(req);
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);
             pst.setString(1, email);
             ResultSet rs = pst.executeQuery();
 
@@ -430,7 +430,7 @@ public class UtilisateurService implements IService<Utilisateur> {
     }
 
     public Utilisateur findUserByFaceHash(String faceHash) {
-        Connection cnx = Myconnection.getInstance().getCnx();
+        Connection cnx = MyConnection.getInstance().getCnx();
         String query = "SELECT * FROM Utilisateur WHERE visage_hash = ?";
 
         try (PreparedStatement pstmt = cnx.prepareStatement(query)) {
@@ -459,7 +459,7 @@ public class UtilisateurService implements IService<Utilisateur> {
     public void activateUser(Utilisateur utilisateur) {
         try {
             String req = "UPDATE `utilisateur` SET `activer`=1 WHERE id = ?";
-            PreparedStatement pst = Myconnection.getInstance().getCnx().prepareStatement(req);
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);
             pst.setInt(1, utilisateur.getId());
             pst.executeUpdate();
             System.out.println("Utilisateur activé");
@@ -471,7 +471,7 @@ public class UtilisateurService implements IService<Utilisateur> {
     public void deactivateUser(Utilisateur utilisateur) {
         try {
             String req = "UPDATE `utilisateur` SET `activer`=0 WHERE id = " + utilisateur.getId();
-            Statement st = Myconnection.getInstance().getCnx().createStatement();
+            Statement st = MyConnection.getInstance().getCnx().createStatement();
             st.executeUpdate(req);
             System.out.println("Utilisateur désactivé");
             informerDesactivationCompte(utilisateur);
