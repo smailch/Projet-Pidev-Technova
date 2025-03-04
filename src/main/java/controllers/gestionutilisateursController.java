@@ -58,18 +58,7 @@ public class gestionutilisateursController {
         });
     }
 
-    private void loadUserData() {
-        List<Utilisateur> users = utilisateurService.getAllData();
-        allUsers.setAll(users);
 
-        colNom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNom()));
-        colPrenom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPrenom()));
-        colEmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
-        colRole.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole().toString()));
-        colDateInscription.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDateInscription().toString()));
-
-        tableUsers.setItems(allUsers);
-    }
 
     @FXML
     public void handleSearch(KeyEvent event) {
@@ -96,6 +85,18 @@ public class gestionutilisateursController {
             loadUserData();
             clearFields();
         }
+    }
+    private void loadUserData() {
+        List<Utilisateur> users = utilisateurService.getAllData();
+        allUsers.setAll(users);
+
+        colNom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNom()));
+        colPrenom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPrenom()));
+        colEmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
+        colRole.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRole().toString()));
+        colDateInscription.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDateInscription().toString()));
+
+        tableUsers.setItems(allUsers);
     }
 
     @FXML

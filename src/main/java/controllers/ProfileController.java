@@ -7,7 +7,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import controllers.SharedDataController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -44,7 +43,7 @@ public class ProfileController {
     @FXML
     public void initialize() {
         // Retrieve the user data from SharedDataController
-        Utilisateur utilisateur = SharedDataController.getInstance().getUtilisateur();
+        Utilisateur utilisateur =SharedDataController.getInstance().getUtilisateur();
 
         if (utilisateur != null) {
             lblNom.setText(utilisateur.getNom());
@@ -63,15 +62,10 @@ public class ProfileController {
 
     @FXML
     private void handleRetour() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionutilisateurs.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnRetour.getScene().getWindow();
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Erreur", "Erreur lors du changement de scène : " + e.getMessage());
-        }
+
+            // Enregistrer le visage de l'utilisateur
+            FaceRecognitionController faceRecognitionController = new FaceRecognitionController();
+            faceRecognitionController.enregistrerVisageUtilisateur();
     }
 
     @FXML
@@ -96,17 +90,31 @@ public class ProfileController {
                 contentStream.showText("Attestation de Citoyenneté");
                 contentStream.endText();
 
-                // Add a horizontal line under the title (styling)
+                // Add a horizontal line under the title (styling) closer to the title
                 contentStream.setLineWidth(1f);
-                contentStream.moveTo(100, 790);
-                contentStream.lineTo(500, 790);
+                contentStream.moveTo(100, 770); // Move the line closer to the title
+                contentStream.lineTo(500, 770);
                 contentStream.stroke();
+
+                // Add the introductory paragraph before the user data
+                contentStream.beginText();
+                contentStream.setFont(PDType1Font.HELVETICA, 12);
+                contentStream.newLineAtOffset(100, 730); // Adjusted position for the paragraph
+
+                contentStream.showText("Par la présente, nous certifions que l'utilisateur");
+                contentStream.newLine();
+                contentStream.showText("ci-dessous est officiellement reconnu comme citoyen");
+                contentStream.newLine();
+                contentStream.showText("de notre système CIVISmart. Cette attestation lui");
+                contentStream.newLine();
+                contentStream.showText("permet d'accéder aux services numériques et administratifs.");
+                contentStream.endText();
 
                 // Define font and positioning for user data
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
                 float xPosition = (page.getMediaBox().getWidth() - 400) / 2; // Center text horizontally
-                float yPosition = (page.getMediaBox().getHeight() - 200) / 2; // Center text vertically
+                float yPosition = 620; // Adjusted position for the user data below the paragraph
                 contentStream.newLineAtOffset(xPosition, yPosition); // Center text on the page
 
                 // Add the user details in a more structured format
@@ -127,20 +135,20 @@ public class ProfileController {
 
                 contentStream.endText();
 
-                // Add a footer with a line
+                // Add a footer with a line closer to the bottom
                 contentStream.setLineWidth(1f);
-                contentStream.moveTo(100, 100);
-                contentStream.lineTo(500, 100);
+                contentStream.moveTo(100, 120); // Move the line closer to the bottom
+                contentStream.lineTo(500, 120);
                 contentStream.stroke();
 
-                // Add the image (stamp) in the bottom-right corner
+                // Add the image (stamp) in the bottom-right corner closer to the bottom
                 try (InputStream inputStream = getClass().getResourceAsStream("/assets/images/tempon.png")) {
                     PDImageXObject stamp = PDImageXObject.createFromByteArray(document, inputStream.readAllBytes(), "tempon.png");
                     PDPageContentStream imageStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true);
                     float imageWidth = 120; // Increased stamp width
                     float imageHeight = 120; // Increased stamp height
                     float xImagePosition = page.getMediaBox().getWidth() - imageWidth - 50; // Right side
-                    float yImagePosition = 50; // Bottom side
+                    float yImagePosition = 110; // Move stamp closer to the bottom
                     imageStream.drawImage(stamp, xImagePosition, yImagePosition, imageWidth, imageHeight);
                     imageStream.close();
                 } catch (IOException e) {
@@ -165,6 +173,9 @@ public class ProfileController {
             showAlert(Alert.AlertType.WARNING, "Utilisateur non trouvé", "Aucun utilisateur trouvé pour générer le PDF.");
         }
     }
+
+
+
 
 
 

@@ -13,7 +13,10 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <dependencies>
+
+
+
+<dependencies>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -92,9 +95,7 @@
             <version>2.0.27</version> <!-- or any other latest version -->
         </dependency>
 
-
-
-    </dependencies>
+</dependencies>
     <build>
     <plugins>
         <plugin>
