@@ -10,23 +10,27 @@ public class Utilisateur {
     private Role role;
     private Date dateInscription;
     private String motDePasse;
-    public Utilisateur(int id, String nom, String prenom, String email, Role role, java.sql.Date dateInscription) {
+    private String visageHash;  // Le hash du visage (ajouté)
+    private int activer;
+    public Utilisateur(int id, String nom, String prenom, String email, java.sql.Date role, String dateInscription) {
         this.id = id;
     }
 
     public Utilisateur() {
     }
 
-    public Utilisateur(String nom, String prenom, String email, Role role, Date dateInscription, String motDePasse) {
+    public Utilisateur(String nom, String prenom, String email, Role role, Date dateInscription, String motDePasse,int activer) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.role = role;
         this.dateInscription = dateInscription;
         this.motDePasse = motDePasse;
+        this.activer = activer;
+
     }
 
-    public Utilisateur(int id, String nom, String prenom, String email, Role role, Date dateInscription , String motDePasse) {
+    public Utilisateur(int id, String nom, String prenom, String email, Role role, Date dateInscription , String motDePasse, int activer) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -34,6 +38,7 @@ public class Utilisateur {
         this.role = role;
         this.dateInscription = dateInscription;
         this.motDePasse = motDePasse;
+        this.activer = activer;
     }
 
     public int getId() {
@@ -60,7 +65,7 @@ public class Utilisateur {
         this.prenom = prenom;
     }
 
-    public String getEmail() {
+    public  String getEmail() {
         return email;
     }
 
@@ -89,6 +94,12 @@ public class Utilisateur {
     public void setMotDePasse(String motDePasse) {
         this.motDePasse = motDePasse;
     }
+    public int getActiver() {
+        return activer;
+    }
+    public void setActiver(int activer) {
+        this.activer = activer;
+    }
 
 
 
@@ -105,4 +116,12 @@ public class Utilisateur {
                 ", dateInscription=" + dateInscription +
                 '}';
     }
+    public String getVisageHash() {
+        return visageHash;
+    }
+
+    public void setVisageHash(String visageHash) {
+        this.visageHash = visageHash;
+    }
+
 }

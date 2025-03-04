@@ -14,6 +14,9 @@ import entities.Utilisateur;
 import entities.Role;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Calendar;
@@ -38,7 +41,7 @@ public class SignUpController {
     @FXML
     private PasswordField txtConfirmPassword;
 
-    @FXML
+   @FXML
     private ProgressBar passwordStrengthBar;
 
     @FXML
@@ -83,11 +86,28 @@ public class SignUpController {
         Calendar calendar = Calendar.getInstance();
         java.sql.Date sqlDate = new java.sql.Date(calendar.getTimeInMillis());
         Role selectedRole = comboRole.getValue();
-        Utilisateur utilisateur = new Utilisateur(txtNom.getText(), txtPrenom.getText(), txtEmail.getText(), selectedRole, sqlDate, txtPassword.getText());
+        Utilisateur utilisateur = new Utilisateur(txtNom.getText(), txtPrenom.getText(), txtEmail.getText(), selectedRole, sqlDate, txtPassword.getText(),0);
         utilisateurService.addEntity(utilisateur);
+
+        SharedDataController.getInstance().setUtilisateur(utilisateur);
+        SharedDataController.getInstance().setUserEmail(utilisateur.getEmail());
+        // Instanciation de WriteToFileHistorique
+        WriteToFileHistorique writeToFileHistorique = new WriteToFileHistorique();
+
+        // Formatage du message avec date et heure
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = now.format(formatter);
+
+        // Création du message détaillé
+        String message = "Creation de l'utilisateur " + utilisateur.getNom() + " " + utilisateur.getPrenom() + " (Rôle: " + utilisateur.getRole() + ", Email: " + utilisateur.getEmail() + ") le " + formattedDateTime;
+
+        // Appel de la méthode ecrireDansFichier
+        writeToFileHistorique.ecrireDansFichier(message);
 
         // Affichage de succès et redirection
         showAlertAndRedirect("Succès", "Compte créé avec succès !", Alert.AlertType.INFORMATION);
+
     }
 
     private void showAlertAndRedirect(String title, String message, Alert.AlertType type) {
@@ -97,24 +117,45 @@ public class SignUpController {
         alert.setContentText(message);
         alert.showAndWait();
 
-        redirectToLogin();
+        redirectToEmpreinte();
     }
 
     @FXML
     private void redirectToLogin() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml")); // Assure-toi que le chemin est correct
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Login");
             stage.setScene(new Scene(root));
             stage.show();
 
+            // Fermer la fenêtre actuelle (inscription)
             Stage currentStage = (Stage) btnSignUp.getScene().getWindow();
             currentStage.close();
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Erreur", "Impossible d'ouvrir la page de connexion.", Alert.AlertType.ERROR);
+        }
+    }
+
+
+    @FXML
+    private void redirectToEmpreinte() {
+        try {
+            // Fermer la fenêtre actuelle (SignUp)
+            Stage currentStage = (Stage) txtEmail.getScene().getWindow(); // Utiliser un élément existant
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Empreinte.fxml"));
+            Parent root = loader.load();
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+            newStage.setTitle("Vérification d'Empreinte Faciale");
+            newStage.show();
+
+            currentStage.close(); // Fermer SignUp après ouverture d'Empreinte
+        } catch (IOException e) {
+            showAlert("Erreur", "Impossible d'ouvrir l'interface d'empreinte.", Alert.AlertType.ERROR);
         }
     }
 
@@ -137,6 +178,7 @@ public class SignUpController {
             }
         });
     }
+
 
     private void updatePasswordStrength(String password) {
         double strength = calculatePasswordStrength(password);
