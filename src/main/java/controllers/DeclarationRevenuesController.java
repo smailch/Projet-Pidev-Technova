@@ -123,7 +123,7 @@ public class DeclarationRevenuesController {
 
     @FXML
     public void addDeclaration() {
-        int idUser = SessionManager.getUserId();
+        int idUser = SessionManager.getInstance().getUserId();
         double montantRevenu = Double.parseDouble(txtMontantRevenu.getText().trim());
         String sourceRevenu = txtSourceRevenu.getText().trim();
         String dateDeclaration = LocalDate.now().format(dateFormatter);
@@ -257,3 +257,4 @@ public class DeclarationRevenuesController {
         NavigationUtils.switchPage("/DossierFiscale.fxml", currentStage, titleBar);
     }
 }
+

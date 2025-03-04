@@ -2,10 +2,21 @@ package services;
 
 import entities.DeclarationRevenues;
 import interfaces.IService;
+import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
 import tools.MyConnection;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.Properties;
 
 public class DeclarationRevenuesService implements IService<DeclarationRevenues> {
 
@@ -104,3 +115,6 @@ public class DeclarationRevenuesService implements IService<DeclarationRevenues>
 
 
 }
+
+
+

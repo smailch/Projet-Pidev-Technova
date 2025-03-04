@@ -17,6 +17,7 @@ public class Home extends Application {
 
             Parent root = FXMLLoader.load(getClass().getResource("/Login.fxml"));
 
+
             contentPane = new StackPane();
             contentPane.getChildren().add(root); // Initialize with Login page
 

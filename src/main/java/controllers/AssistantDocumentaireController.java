@@ -120,7 +120,7 @@ public class AssistantDocumentaireController {
 
     @FXML
     public void addAssistant() {
-        int iduser = SessionManager.getUserId();
+        int iduser = SessionManager.getInstance().getUserId();
         String typeAssistance = txtTypeAssistance.getText().trim();
         LocalDate dateDemandeValue = dpDateDemande.getValue();
         String dateDemande = (dateDemandeValue != null) ? dateDemandeValue.format(dateFormatter) : "";
@@ -148,7 +148,7 @@ public class AssistantDocumentaireController {
         }
 
         // Pass documentId to the AssistantDocumentaire constructor
-        AssistantDocumentaire newAssistant = new AssistantDocumentaire(0, 16, documentId, typeAssistance, dateDemande, status, remarque, rappelAutomatique);
+        AssistantDocumentaire newAssistant = new AssistantDocumentaire(0, SessionManager.getInstance().getUserId(), documentId, typeAssistance, dateDemande, status, remarque, rappelAutomatique);
         assistantService.addEntity(newAssistant);
         loadAssistantData();
         clearFields();

@@ -99,6 +99,34 @@ public class DossierFiscaleService implements IService<DossierFiscale> {
 
         return result;
     }
+    public List<DossierFiscale> getAllDataUser() {
+        List<DossierFiscale> result = new ArrayList<>();
+        int userid = SessionManager.getInstance().getUserId();  // Get the user ID from the session
+        String req = "SELECT * FROM DossierFiscale WHERE id_user = ?";  // Use id_user to filter by user ID
+        try {
+            PreparedStatement pst = MyConnection.getInstance().getCnx().prepareStatement(req);  // Use PreparedStatement to prevent SQL injection
+            pst.setInt(1, userid);  // Set the user ID parameter in the query
+            ResultSet rs = pst.executeQuery();  // Execute the query
+
+            while (rs.next()) {
+                DossierFiscale dossier = new DossierFiscale();
+                dossier.setId(rs.getInt("id"));
+                dossier.setIdUser(rs.getInt("id_user"));
+                dossier.setAnneeFiscale(rs.getInt("annee_fiscale"));
+                dossier.setTotalImpot(rs.getDouble("total_impot"));
+                dossier.setTotalImpotPaye(rs.getDouble("total_impot_paye"));
+                dossier.setStatus(rs.getString("status"));
+                dossier.setDateCreation(rs.getString("date_creation"));
+                dossier.setMoyenPaiement(rs.getString("moyen_paiement"));
+                result.add(dossier);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return result;
+    }
+
 
     @Override
     public boolean emailExists(String email) {

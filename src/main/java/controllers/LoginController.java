@@ -117,7 +117,7 @@ public class LoginController implements Initializable {
             setLblError(Color.TOMATO, "❌ Email ou mot de passe incorrect.");
         } else {
             setLblError(Color.GREEN, "✅ Connexion réussie !");
-            SessionManager.setUserId(utilisateur.getId());
+            SessionManager.getInstance().setUserId(utilisateur.getId());
         }
 
         return utilisateur;

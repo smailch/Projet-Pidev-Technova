@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stripe Payment Form</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .payment-form {
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-group input,
+        .form-group button,
+        #card-element {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            background-color: #f9f9f9;
+        }
+
+        #card-element {
+            padding: 12px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            transition: border 0.3s;
+        }
+
+        #card-element:focus {
+            border-color: #4CAF50;
+        }
+
+        .form-group button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+
+        .form-group button:active {
+            background-color: #388e3c;
+        }
+
+        #user-info {
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: #555;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        #user-info p {
+            margin: 5px 0;
+        }
+
+        #user-info span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .loading {
+            color: #999;
+        }
+
+        .success-message {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            color: green;
+        }
+
+        .error-message {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            color: red;
+        }
+
+        .retry-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .retry-button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+
+<div class="payment-form" id="payment-form">
+    <h2>Payment Form</h2>
+    <form id="stripe-payment-form">
+        <div class="form-group">
+            <label for="card-element">Credit or Debit Card</label>
+            <div id="card-element">
+                <!-- A Stripe Element will be inserted here. -->
+            </div>
+        </div>
+        <div class="form-group">
+            <button id="payButton">Pay Now</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    var stripe = Stripe('pk_test_51Qxf4dQXJMBIITLCd4kFv238HewbUgOAo5XhMtrrmIJ0rF3Tmt9ju9yi2cUsJMjyx64aRxlMTJrAsT22tZayNeg900MLznze9j'); // Replace with your actual publishable key
+    var elements = stripe.elements();
+    var card = elements.create('card');
+    card.mount('#card-element');
+
+    document.getElementById('payButton').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        stripe.createToken(card).then(function(result) {
+            if (result.error) {
+                alert(result.error.message);
+            } else {
+                sendTokenToBackend(result.token.id);
+            }
+        });
+    });
+
+    function sendTokenToBackend(token) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:8083/process-payment", true); // Backend URL
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Clear the page content and show the success message
+                    document.getElementById('payment-form').innerHTML = `
+                        <div class="success-message">
+                            <p>Payment successful!</p>
+                        </div>
+                    `;
+                } else {
+                    // Payment failed, show error message with retry button
+                    document.getElementById('payment-form').innerHTML = `
+                        <div class="error-message">
+                            <p>Payment unsuccessful!</p>
+                            <button class="retry-button" onclick="retryPayment()">Retry Payment</button>
+                        </div>
+                    `;
+                }
+            }
+        };
+        xhr.send(JSON.stringify({
+            token: token,
+            userId: window.userId,
+            dossierId: window.dossierId
+        }));
+    }
+
+    function retryPayment() {
+        // Restore the original payment form
+        document.getElementById('payment-form').innerHTML = `
+            <h2>Payment Form</h2>
+            <form id="stripe-payment-form">
+                <div class="form-group">
+                    <label for="card-element">Credit or Debit Card</label>
+                    <div id="card-element">
+                        <!-- A Stripe Element will be inserted here. -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button id="payButton">Pay Now</button>
+                </div>
+            </form>
+        `;
+
+        // Reinitialize the Stripe element and event listener
+        var stripe = Stripe('pk_test_51Qxf4dQXJMBIITLCd4kFv238HewbUgOAo5XhMtrrmIJ0rF3Tmt9ju9yi2cUsJMjyx64aRxlMTJrAsT22tZayNeg900MLznze9j');
+        var elements = stripe.elements();
+        var card = elements.create('card');
+        card.mount('#card-element');
+
+        document.getElementById('payButton').addEventListener('click', function(event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function(result) {
+                if (result.error) {
+                    alert(result.error.message);
+                } else {
+                    sendTokenToBackend(result.token.id);
+                }
+            });
+        });
+    }
+</script>
+
+</body>
+</html>

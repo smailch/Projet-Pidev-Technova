@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CardPaymentController">
+   <children>
+      <WebView fx:id="webView" layoutX="-1.0" layoutY="2.0" prefHeight="436.0" prefWidth="600.0" />
+      <Button onAction="#redirectToFiscale" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" layoutX="654.0" layoutY="196.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="83.0" text="retourner" />
+   </children>
+</AnchorPane>

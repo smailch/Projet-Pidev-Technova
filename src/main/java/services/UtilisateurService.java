@@ -292,7 +292,7 @@ public class UtilisateurService implements IService<Utilisateur> {
                             rs.getDate("dateInscription"),
                             motDePasseHash  // Ajout du mot de passe hashé
                     );
-                    SessionManager.setUserId(utilisateur.getId());
+                    SessionManager.getInstance().setUserId(utilisateur.getId());
                     // Affichage des informations de l'utilisateur
                     System.out.println("✅ Connexion réussie : " + utilisateur.getPrenom());
                     System.out.println("Utilisateur connecté : " + utilisateur.getNom() + " " + utilisateur.getPrenom());

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controllers.CardPaymentController">
+
+   <Label text="Enter Card Details" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+   <TextField fx:id="cardHolderName" promptText="Cardholder Name"/>
+   <TextField fx:id="cardNumber" promptText="Card Number"/>
+   <TextField fx:id="amountField" promptText="Amount field"/>
+
+   <HBox spacing="10">
+      <TextField fx:id="expiryDate" promptText="MM/YY" maxWidth="80"/>
+      <PasswordField fx:id="cvv" promptText="CVV" maxWidth="50"/>
+   </HBox>
+
+   <Button text="Pay Now" onAction="#handlePayment"/>
+</VBox>

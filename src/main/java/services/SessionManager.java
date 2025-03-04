@@ -1,13 +1,34 @@
 package services;
 
 public class SessionManager {
-    private static int userId;
+    private int userId = -1; // Remove static
+    private int dossierId = -1;
 
-    public static int getUserId() {
+    private static SessionManager instance; // Singleton instance
+
+    private SessionManager() {}
+
+    public static SessionManager getInstance() {
+        if (instance == null) {
+            instance = new SessionManager();
+        }
+        return instance;
+    }
+
+    public int getUserId() {
         return userId;
     }
 
-    public static void setUserId(int userId) {
-        SessionManager.userId = userId;
+    public void setUserId(int userId) {
+        System.out.println("Setting userId to: " + userId);
+        this.userId = userId;  // No more static reference
+    }
+
+    public int getDossierId() {
+        return dossierId;
+    }
+
+    public void setDossierId(int dossierId) {
+        this.dossierId = dossierId;
     }
 }

@@ -43,7 +43,7 @@ public class SideBarController {
     private void onFinancesClick(Event event) {
         Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
-        NavigationUtils.switchPage("/DeclarationRevenues.fxml", currentStage, titleBar);
+        NavigationUtils.switchPage("/GestionImpot.fxml", currentStage, titleBar);
     }
 
     // Dechet section click action
@@ -67,7 +67,7 @@ public class SideBarController {
     private void onIncidentsClick(Event event) {
         Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         HBox titleBar = NavigationUtils.createCustomTitleBar(currentStage);
-        NavigationUtils.switchPage("/Profil.fxml", currentStage, titleBar);
+        NavigationUtils.switchPage("/DocumentAdministratif.fxml", currentStage, titleBar);
     }
 
     // Paperasses section click action

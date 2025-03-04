@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane stylesheets="@assets/css/Stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GestionImpotController">
+
+    <children>
+        <fx:include source="sidebar.fxml" />
+
+        <VBox fx:id="rightPanel" alignment="CENTER" layoutX="266.0" layoutY="103.0" prefHeight="566.0" prefWidth="1000.0" spacing="10" style="-fx-background-radius: 15px; -fx-border-color: #ddd; -fx-border-radius: 15px;               -fx-background-color: white; -fx-padding: 15px;               -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0.5, 0, 2);">
+
+            <children>
+                <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #333;" text="Gestion Fiscale" />
+                <Label style="-fx-font-size: 16px; -fx-text-fill: #666;" text="Bienvenue dans la gestion des impôts" />
+
+                <HBox alignment="CENTER" prefHeight="347.0" prefWidth="889.0" spacing="20">
+                    <children>
+                        <VBox fx:id="container1" alignment="CENTER" prefHeight="500.0" prefWidth="320.0" spacing="15" style="-fx-background-radius: 15px; -fx-border-color: #ccc; -fx-border-radius: 15px;                               -fx-background-color: linear-gradient(to bottom, #ffffff, #f8f8f8); -fx-padding: 20px;                               -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 2);">
+                            <children>
+                                <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;" text="Gestion des Déclarations Fiscaux" />
+                                <Button onAction="#redirectToDeclarations" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 20px;                                         -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10px 20px; -fx-cursor: hand;" text="Accéder" />
+                            </children>
+                        </VBox>
+
+                        <VBox fx:id="container2" alignment="CENTER" prefHeight="500.0" prefWidth="320.0" spacing="15" style="-fx-background-radius: 15px; -fx-border-color: #ccc; -fx-border-radius: 15px;                               -fx-background-color: linear-gradient(to bottom, #ffffff, #f8f8f8); -fx-padding: 20px;                               -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 2);">
+                            <children>
+                                <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333;" text="Gestion des Dossiers Fiscaux" />
+                                <Button onAction="#redirectToFiscale" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 20px;                                         -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10px 20px; -fx-cursor: hand;" text="Accéder" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

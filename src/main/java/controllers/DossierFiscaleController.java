@@ -1,18 +1,28 @@
 package controllers;
 
+import entities.DocumentAdministratif;
 import entities.DossierFiscale;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import services.DossierFiscaleService;
 import services.SessionManager;
 
+import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javafx.scene.web.WebView;
+
 
 public class DossierFiscaleController {
 
@@ -30,7 +40,8 @@ public class DossierFiscaleController {
     private TableColumn<DossierFiscale, String> colDateCreation;
     @FXML
     private TableColumn<DossierFiscale, String> colMoyenPaiement;
-
+    @FXML
+    private TableColumn<DossierFiscale, String> colPayer;
     @FXML
     private TextField txtAnneeFiscale;
     @FXML
@@ -97,10 +108,12 @@ public class DossierFiscaleController {
         txtTotalImpotPaye.setText(String.valueOf(dossier.getTotalImpotPaye()));
         comboStatus.setValue(dossier.getStatus()); // Changed from txtStatus
         comboMoyenPaiement.setValue(dossier.getMoyenPaiement()); // Changed from txtMoyenPaiement
+
     }
 
     private void loadDossierData() {
         List<DossierFiscale> dossiers = dossierService.getAllData();
+
         allDossiers.setAll(dossiers);
 
         colAnneeFiscale.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getAnneeFiscale())));
@@ -109,7 +122,19 @@ public class DossierFiscaleController {
         colStatus.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus()));
         colDateCreation.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDateCreation()));
         colMoyenPaiement.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMoyenPaiement()));
+        tableDossiers.setItems(allDossiers);
+    }
+    private void loadDossierDataUser() {
+        List<DossierFiscale> dossiers = dossierService.getAllDataUser();
 
+        allDossiers.setAll(dossiers);
+
+        colAnneeFiscale.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getAnneeFiscale())));
+        colTotalImpot.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getTotalImpot())));
+        colTotalImpotPaye.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getTotalImpotPaye())));
+        colStatus.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus()));
+        colDateCreation.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDateCreation()));
+        colMoyenPaiement.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMoyenPaiement()));
         tableDossiers.setItems(allDossiers);
     }
 
@@ -170,7 +195,7 @@ public class DossierFiscaleController {
         String moyenPaiement = comboMoyenPaiement.getValue().trim(); // Changed to get value from ComboBox
         String dateCreation = LocalDate.now().format(dateFormatter);
 
-        return new DossierFiscale(0, SessionManager.getUserId(), anneeFiscale, totalImpot, totalImpotPaye, status, dateCreation, moyenPaiement);
+        return new DossierFiscale(0, SessionManager.getInstance().getUserId(), anneeFiscale, totalImpot, totalImpotPaye, status, dateCreation, moyenPaiement);
     }
 
     private void updateSelectedDossier(DossierFiscale selectedDossier) {
@@ -216,4 +241,41 @@ public class DossierFiscaleController {
         loadDossierData();
         clearFields();
     }
+    @FXML
+    public void HandlePayment() {
+        DossierFiscale selectedDossier = tableDossiers.getSelectionModel().getSelectedItem();
+        if (selectedDossier != null) {
+            // Check if totalImpot equals totalImpotPaye
+            if (selectedDossier.getTotalImpot() == selectedDossier.getTotalImpotPaye()) {
+                // Show alert if they are equal
+                showAlert("Paiement déjà effectué", "Le total de l'impôt est déjà payé. Aucun paiement supplémentaire n'est nécessaire.", Alert.AlertType.INFORMATION);
+            } else {
+                try {
+                    int selectedDossierId = selectedDossier.getId();
+                    SessionManager.getInstance().setDossierId(selectedDossierId);
+                    System.out.println(SessionManager.getInstance().getDossierId());
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/form.fxml"));
+                    Parent root = loader.load(); // Load the form.fxml
+
+                    // Create a new Scene for the form
+                    Scene scene = new Scene(root);
+
+                    // Create a new Stage (window) for the form
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.setTitle("Payment Form");
+
+                    // Optionally, set the stage to be modal (blocks interaction with the main window)
+                    stage.initModality(Modality.APPLICATION_MODAL);
+
+                    // Show the new Stage (window)
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
 }
