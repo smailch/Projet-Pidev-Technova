@@ -34,9 +34,12 @@ public class SharedDataController {
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateurConnecte = utilisateur;
     }
+<<<<<<< HEAD
     public String getUserNom() {
         return utilisateurConnecte.getNom();
     }
+=======
+>>>>>>> origin/GestionIncidents
 
 }
 

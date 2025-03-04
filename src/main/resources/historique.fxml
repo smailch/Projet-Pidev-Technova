@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="638.0" prefWidth="943.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HistoriqueController">
+    <fx:include source="adminsidbar.fxml" />
+
+    <!-- Table d'affichage des services -->
+    <TableView fx:id="tableIncidents" layoutX="256.0" layoutY="189.0" prefHeight="358.0" prefWidth="682.0">
+        <columns>
+            <TableColumn fx:id="colId" prefWidth="58.4000244140625" text="ID" />
+            <TableColumn fx:id="colType" prefWidth="92.800048828125" text="Type" />
+            <TableColumn fx:id="colDescription" prefWidth="88.79998779296875" text="Description" />
+            <TableColumn fx:id="colLocalisation" prefWidth="91.20001220703125" text="Localisation" />
+            <TableColumn fx:id="colStatut" prefWidth="73.60003662109375" text="Statut" />
+            <TableColumn fx:id="colDateSignalement" prefWidth="114.40008544921875" text="Date Signalement" />
+            <TableColumn fx:id="colDateResolution" prefWidth="154.4000244140625" text="Date Résolution" />
+        </columns>
+    </TableView>
+    <AnchorPane layoutX="250.0" prefHeight="76.0" prefWidth="700.0" style="-fx-background-color: #6200ea;">
+        <children>
+
+            <Label layoutX="199.0" layoutY="20.0" text="HISTORIQUE DES INCIDENTS RESOLU" textFill="WHITE">
+                <font>
+                    <Font size="24.0" />
+                </font>
+            </Label>
+        </children>
+    </AnchorPane>
+    <Button fx:id="btnSignin111" layoutX="735.0" layoutY="109.0" mnemonicParsing="false" onMouseClicked="#supprimerIncident" prefHeight="34.0" prefWidth="134.0" style="-fx-background-color: #ff0000; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold;" text="Supprimer Incident" />
+
+    <Button fx:id="btnNavigateToList" layoutX="284.0" layoutY="109.0" mnemonicParsing="false" onAction="#goToadminservicePage" prefHeight="34.0" prefWidth="111.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 25px; -fx-font-weight: bold;" text="&lt;- retour" />
+</AnchorPane>

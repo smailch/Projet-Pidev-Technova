@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="331.0" prefWidth="518.0" spacing="10" style="-fx-background-color: #f8f8f8; -fx-padding: 20; -fx-alignment: center;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.IncidentDetailController">
+   <AnchorPane prefHeight="42.0" prefWidth="478.0" style="-fx-background-color: #6200ea;">
+      <children>
+         <Label fx:id="incidentStatusLabel1" layoutX="143.0" layoutY="8.0" prefHeight="26.0" prefWidth="314.0" style="-fx-font-size: 16px; -fx-text-fill: #555;" text="pour plus d'information" textFill="WHITE">
+            <font>
+               <Font size="32.0" />
+            </font>
+         </Label>
+      </children>
+   </AnchorPane>
+
+
+    <!-- Style pour le label de l'ID de l'incident -->
+    <Label fx:id="incidentIdLabel" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;" text="ID: " />
+
+    <!-- Style pour le label du statut de l'incident -->
+    <Label fx:id="incidentStatusLabel" style="-fx-font-size: 16px; -fx-text-fill: #555;" text="Statut: " />
+
+    <!-- Style pour le label de l'ID de l'utilisateur -->
+    <Label fx:id="incidentUserIdLabel" style="-fx-font-size: 16px; -fx-text-fill: #555;" text="Utilisateur ID: " />
+
+    <!-- Style pour le label du nom de l'utilisateur -->
+    <Label fx:id="incidentUserNameLabel" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;" text="Nom: " />
+
+    <!-- Style pour le label de l'email de l'utilisateur -->
+    <Label fx:id="incidentUserEmailLabel" style="-fx-font-size: 16px; -fx-text-fill: #555;" text="Email: " />  <!-- Autres labels pour les détails de l'incident -->
+
+    <Label fx:id="incidentDateLabel" style="-fx-font-size: 16px; -fx-text-fill: #555;" text="Date de declaration : " />
+
+</VBox>
