@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane stylesheets="@assets/css/Stylesheet.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DeclarationRevenuesController">
+    <children>
+        <fx:include source="sidebar.fxml" />
+
+        <VBox fx:id="rightPanel" alignment="CENTER" layoutX="266.0" layoutY="103.0" prefHeight="566.0" prefWidth="1000.0" spacing="10" style="-fx-background-radius: 10px; -fx-border-color: #ccc; -fx-border-radius: 10px; -fx-background-color: white; -fx-padding: 15px;">
+            <children>
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Gestion des Déclarations de Revenus" />
+
+                <!-- Search Field Section -->
+                <HBox alignment="CENTER" spacing="5">
+                    <children>
+                        <TextField fx:id="searchField" onKeyReleased="#handleSearch" prefWidth="200" promptText="Rechercher..." style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Button onAction="#searchButton" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Réinitialiser" />
+                    </children>
+                </HBox>
+
+                <!-- Table Section -->
+                <TableView fx:id="tableDeclarations" prefHeight="300" prefWidth="500">
+                    <columns>
+                        <TableColumn fx:id="colMontantRevenu" prefWidth="145.0" text="Montant Revenu" />
+                        <TableColumn fx:id="colSourceRevenu" prefWidth="147.0" text="Source Revenu" />
+                        <TableColumn fx:id="colDateDeclaration" prefWidth="183.0" text="Date Déclaration" />
+                        <TableColumn fx:id="colPreuveRevenu" prefWidth="127.0" text="Preuve Revenu" />
+                    </columns>
+                </TableView>
+
+                <!-- Input Fields Section -->
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <TextField fx:id="txtMontantRevenu" prefWidth="200" promptText="Montant Revenu" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <TextField fx:id="txtSourceRevenu" prefWidth="200" promptText="Source Revenu" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                    </children>
+                </HBox>
+
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <TextField fx:id="txtPreuveRevenu" editable="false" prefWidth="200" promptText="Preuve Revenu" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                    </children>
+                </HBox>
+
+                <!-- Buttons Section -->
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <Button onAction="#addDeclaration" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Ajouter" />
+                        <Button onAction="#updateDeclaration" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Modifier" />
+                        <Button onAction="#deleteDeclaration" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Supprimer" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+      <Button layoutX="10.0" layoutY="10.0" onAction="#browseFile" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Parcourir" />
+            <Button layoutX="659.0" layoutY="35.0" onAction="#redirectToFiscale" prefHeight="56.0" prefWidth="215.0" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Gestion Dossier Fiscale" />
+    </children>
+</AnchorPane>

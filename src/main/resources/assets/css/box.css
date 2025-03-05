@@ -1,0 +1,70 @@
+/* Style de la boîte */
+.combo-box {
+    -fx-font-size: 10px;
+    -fx-font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
+    -fx-background-color: #f3e5f5; /* Fond léger violet pour le combo box */
+    -fx-text-fill: #6200ea; /* Texte violet vif */
+    -fx-padding: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #6200ea; /* Bordure violet */
+    -fx-transition: background-color 0.3s ease, border-color 0.3s ease; /* Transition de fond et bordure */
+}
+
+/* Animation de la liste déroulante */
+.combo-box .combo-box-popup {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-border-color: #6200ea; /* Bordure violet pour la liste */
+    -fx-drop-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    opacity: 0; /* Liste invisible au départ */
+    -fx-transition: opacity 0.3s ease-in-out; /* Animation de la visibilité */
+}
+
+/* Animation lors de l'ouverture de la liste */
+.combo-box:focused .combo-box-popup {
+    opacity: 1; /* Liste devient visible */
+}
+
+/* Style de la flèche du ComboBox */
+.combo-box .arrow {
+    -fx-background-color: #6200ea; /* Flèche violet */
+    -fx-border-radius: 3px;
+    -fx-opacity: 0.7;
+    -fx-transition: transform 0.2s ease; /* Animation pour la flèche */
+}
+
+/* Effet au survol de l'élément dans la liste */
+.combo-box .combo-box-popup .list-cell {
+    padding: 15px;
+    background-color: #ffffff;
+    -fx-text-fill: #6200ea; /* Texte des éléments en violet */
+    -fx-transition: background-color 0.3s ease, color 0.3s ease; /* Transition de couleur */
+}
+
+/* Style du texte au survol des éléments de la liste */
+.combo-box .combo-box-popup .list-cell:hover,
+.combo-box .combo-box-popup .list-cell:focused {
+    color: #ffffff; /* Texte blanc au survol */
+    background-color: #6200ea; /* Fond violet au survol */
+    transform: translateX(5px); /* Déplacement de l'élément sur le côté */
+    -fx-transition: transform 0.2s ease; /* Animation du déplacement */
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .combo-box {
+        -fx-pref-width: 70%;
+    }
+}
+
+@media (min-width: 992px) {
+    .combo-box {
+        -fx-pref-width: 50%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .combo-box {
+        -fx-pref-width: 30%;
+    }
+}

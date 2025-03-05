@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DossierFiscaleController">
+
+    <children>
+        <fx:include source="sidebar.fxml" />
+
+        <VBox alignment="CENTER" layoutX="259.0" layoutY="16.0" prefHeight="644.0" prefWidth="830.0" spacing="5" style="-fx-background-radius: 10px; -fx-border-color: #ccc; -fx-border-radius: 10px; -fx-background-color: white; -fx-padding: 15px;">
+            <padding>
+                <Insets bottom="5" left="5" right="5" top="5" />
+            </padding>
+            <children>
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Gestion des Dossiers Fiscaux" />
+
+                <HBox alignment="CENTER" spacing="5">
+                    <children>
+                        <TextField fx:id="searchField" onKeyReleased="#handleSearch" prefWidth="200" promptText="Rechercher..." style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Button onAction="#searchButton" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Réinitialiser" />
+                    </children>
+                </HBox>
+
+                <TableView fx:id="tableDossiers" prefHeight="300" prefWidth="800">
+                    <columns>
+                        <TableColumn fx:id="colAnneeFiscale" prefWidth="135.0" text="Année Fiscale" />
+                        <TableColumn fx:id="colTotalImpot" prefWidth="124.0" text="Total Impôt" />
+                        <TableColumn fx:id="colTotalImpotPaye" prefWidth="152.0" text="Total Impôt Payé" />
+                        <TableColumn fx:id="colStatus" prefWidth="128.0" text="Statut" />
+                        <TableColumn fx:id="colMoyenPaiement" prefWidth="137.0" text="Moyen Paiement" />
+                        <TableColumn fx:id="colDateCreation" prefWidth="224.0" text="Date Création" />
+                    </columns>
+                </TableView>
+
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <TextField fx:id="txtAnneeFiscale" prefWidth="150" promptText="Année Fiscale" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Label fx:id="lblAnneeFiscaleError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
+
+                        <TextField fx:id="txtTotalImpot" prefWidth="150" promptText="Total Impôt" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Label fx:id="lblTotalImpotError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
+
+                        <TextField fx:id="txtTotalImpotPaye" prefWidth="150" promptText="Total Impôt Payé" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Label fx:id="lblTotalImpotPayeError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
+                    </children>
+                </HBox>
+
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <Label fx:id="lblStatusError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
+                        <Label fx:id="lblMoyenPaiementError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
+                        <ComboBox fx:id="comboStatus" prefWidth="150" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="actif" />
+                                    <String fx:value="Inactif" />
+                                    <String fx:value="Suspendu" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                        <ComboBox fx:id="comboMoyenPaiement" prefWidth="150" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Virement Bancaire" />
+                                    <String fx:value="Especes" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                    </children>
+                </HBox>
+
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <Button onAction="#addDossier" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Ajouter" />
+                        <Button onAction="#updateDossier" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Modifier" />
+                        <Button onAction="#deleteDossier" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Supprimer" />
+                        <Button onAction="#clearFields" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Réinitialiser" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="50.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

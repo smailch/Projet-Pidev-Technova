@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AssistantDocumentaireController">
+
+    <children>
+        <fx:include source="sidebar.fxml" />
+
+        <VBox fx:id="rightPanel" alignment="CENTER" layoutX="257.0" layoutY="21.0" prefHeight="637.0" prefWidth="729.0" spacing="10" style="-fx-background-radius: 10px; -fx-border-color: #ccc; -fx-border-radius: 10px; -fx-background-color: white; -fx-padding: 15px;">
+            <padding>
+                <Insets bottom="5" left="5" right="5" top="5" />
+            </padding>
+            <children>
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Gestion des Assistants Documentaires" />
+
+                <!-- Search Field Section -->
+                <HBox alignment="CENTER" spacing="5">
+                    <children>
+                        <TextField fx:id="searchField" onKeyReleased="#handleSearch" prefWidth="200" promptText="Rechercher..." style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Button onAction="#searchButton" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Réinitialiser" />
+                    </children>
+                </HBox>
+
+                <!-- Table Section -->
+                <TableView fx:id="tableAssistants" prefHeight="300" prefWidth="500">
+                    <columns>
+                        <TableColumn fx:id="colTypeAssistance" prefWidth="145.0" text="Type Assistance" />
+                        <TableColumn fx:id="colDateDemande" prefWidth="147.0" text="Date Demande" />
+                        <TableColumn fx:id="colStatus" prefWidth="183.0" text="Statut" />
+                        <TableColumn fx:id="colRemarque" prefWidth="127.0" text="Remarque" />
+                        <TableColumn fx:id="colRappelAutomatique" prefWidth="420.0" text="Rappel Automatique" />
+                    </columns>
+                </TableView>
+
+                <!-- Input Fields Section -->
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <TextField fx:id="txtTypeAssistance" prefWidth="200" promptText="Type Assistance" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Label fx:id="lblTypeAssistanceError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
+
+                        <DatePicker fx:id="dpDateDemande" prefWidth="200" promptText="Date Demande" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Label fx:id="lblDateDemandeError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
+
+                        <TextField fx:id="txtStatus" prefWidth="200" promptText="Statut" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Label fx:id="lblStatusError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
+
+                        <TextField fx:id="txtRemarque" prefWidth="200" promptText="Remarque" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Label fx:id="lblRemarqueError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
+
+                        <CheckBox fx:id="chkRappelAutomatique" style="-fx-padding: 5px;" text="Rappel Automatique" />
+                    </children>
+                </HBox>
+
+                <!-- ComboBox for selecting DocumentAdministratif -->
+                <HBox alignment="CENTER" spacing="10">
+                    <children>
+                        <ComboBox fx:id="comboDocument" prefWidth="200" promptText="Sélectionner un document" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                        <Label fx:id="lblDocumentError" style="-fx-text-fill: red; -fx-font-size: 12px;" visible="false" />
+                    </children>
+                </HBox>
+
+                <!-- Buttons Section -->
+                <HBox alignment="CENTER" spacing="10">
+                    <padding>
+                        <Insets bottom="5" left="5" right="5" top="5" />
+                    </padding>
+                    <children>
+                        <Button onAction="#addAssistant" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Ajouter" />
+                        <Button onAction="#updateAssistant" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Modifier" />
+                        <Button onAction="#deleteAssistant" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Supprimer" />
+                        <Button onAction="#clearFields" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Réinitialiser" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+
+
+    </children>
+</AnchorPane>

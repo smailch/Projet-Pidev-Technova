@@ -1,0 +1,38 @@
+/* Modern TableView styling */
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 10px;
+    -fx-border-color: #ddd;
+    -fx-font-size: 14px;
+}
+
+.table-view .table-column {
+    -fx-alignment: CENTER;
+    -fx-font-size: 14px;
+}
+
+/* Alternating row colors */
+.table-row-cell:filled:nth-child(even) {
+    -fx-background-color: #f9f9f9;
+}
+
+.table-row-cell:filled:nth-child(odd) {
+    -fx-background-color: #ffffff;
+}
+
+/* Hover effect for rows */
+.table-row-cell:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+/* Focus effect */
+.table-view:focused {
+    -fx-border-color: #6200ea;
+}
+
+/* Column header styling */
+.table-view .column-header {
+    -fx-background-color: #6200ea;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}

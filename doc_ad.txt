@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.DocumentAdministratifController">
+   <children>
+      <fx:include source="sidebar.fxml" />
+      <TabPane layoutX="250.0" layoutY="25.0" prefHeight="604.0" prefWidth="818.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Gestion des Documents Administratifs">
+               <content>
+                  <AnchorPane prefHeight="575.0" prefWidth="336.0">
+                     <children>
+                        <VBox alignment="CENTER" layoutX="11.0" layoutY="2.0" prefHeight="575.0" prefWidth="797.0" spacing="5" style="-fx-background-radius: 10px; -fx-border-color: #ccc; -fx-border-radius: 10px; -fx-background-color: white; -fx-padding: 15px;">
+                           <padding>
+                              <Insets bottom="5" left="5" right="5" top="5" />
+                           </padding>
+                           <children>
+                              <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Gestion des Documents Administratifs" />
+                              <HBox alignment="CENTER" spacing="5">
+                                 <children>
+                                    <TextField fx:id="searchField" onKeyReleased="#handleSearch" prefWidth="200" promptText="Rechercher..." style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                                    <Button onAction="#searchButton" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Réinitialiser" />
+                                    <Button onAction="#searchButton" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="tri" />
+                                    <Button fx:id="btnTranslateRemarque" onAction="#translateRemarqueToEnglish" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Traduire" />
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="tableDocuments" prefHeight="300" prefWidth="855.0">
+                                 <columns>
+                                    <TableColumn fx:id="colNomDocument" prefWidth="131.20001220703125" text="Nom Document" />
+                                    <TableColumn fx:id="colCheminFichier" prefWidth="132.79998779296875" text="Chemin Fichier" />
+                                    <TableColumn fx:id="colDateEmission" prefWidth="142.39996337890625" text="Date Emission" />
+                                    <TableColumn fx:id="colStatus" minWidth="0.0" prefWidth="94.39996337890625" text="Status" />
+                                    <TableColumn fx:id="colRemarque" minWidth="0.0" prefWidth="147.20001220703125" text="Remarque" />
+                                    <TableColumn fx:id="colJoursDepuisEmission" prefWidth="120.0" text="Nombre de jours" />
+                                 </columns>
+                              </TableView>
+                              <HBox alignment="CENTER" spacing="10">
+                                 <children>
+                                    <Label fx:id="lblNomDocumentError" textFill="red" visible="false" />
+                                    <TextField fx:id="txtNomDocument" prefWidth="200" promptText="Nom Document" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                                    <HBox alignment="CENTER" spacing="5">
+                                       <children>
+                                          <TextField fx:id="txtCheminFichier" editable="false" prefWidth="200" promptText="Chemin Fichier" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                                          <Button onAction="#browseFile" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Parcourir..." />
+                                       </children>
+                                    </HBox>
+                                    <ComboBox fx:id="comboStatus" prefWidth="150.0" stylesheets="@styles.css" />
+                                    <Label fx:id="lblDateEmissionError" textFill="red" visible="false" />
+                                    <Label fx:id="lblStatusError" textFill="red" visible="false" />
+                                    <Label fx:id="lblRemarqueError" textFill="red" visible="false" />
+                                    <TextField fx:id="txtRemarque" prefWidth="200" promptText="Remarque" style="-fx-background-color: #f0f0f5; -fx-border-radius: 15px; -fx-border-color: #ccc; -fx-padding: 3px;" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" spacing="10">
+                                 <children>
+                                    <Button onAction="#addDocument" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Ajouter" />
+                                    <Button onAction="#updateDocument" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Modifier" />
+                                    <Button onAction="#deleteDocument" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Supprimer" />
+                                    <Button onAction="#clearFields" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Réinitialiser" />
+                                    <Button onAction="#next_entity" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="Assistant Documentaire" />
+                                    <Button onAction="#PDFSELECTOR" style="-fx-background-color: #6200ea; -fx-text-fill: white; -fx-background-radius: 15px; -fx-font-weight: bold;" text="PDF" />
+                                    <Button fx:id="btnOcrExtract" onAction="#handleOcrExtraction" style="-fx-background-color: #FF9800;        -fx-text-fill: white;     -fx-background-radius: 15px;  -fx-font-weight: bold; -fx-padding: 5px 15px;" text="OCR Extraction" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Prompt">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="txtareainput" layoutX="41.0" layoutY="68.0" prefHeight="224.0" prefWidth="531.0" promptText="Veuillez entrer du texte avant de générer le PDF." />
+                        <Label layoutX="21.0" layoutY="34.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Prompt : " />
+                        <Button fx:id="btnprompt" layoutX="479.0" layoutY="339.0" onAction="#generateprompt" style="-fx-background-color: #FF9800;        -fx-text-fill: white;     -fx-background-radius: 15px;  -fx-font-weight: bold; -fx-padding: 5px 15px;" text="generate" />
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,136 @@
+/* Sidebar Styles */
+#sidebar {
+    /* Use JavaFX gradient syntax */
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #6a1b9a, #8e24aa);
+    -fx-padding: 20px 15px; /* Comfortable padding */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0.0, 0, 5); /* Soft drop shadow */
+}
+
+/* VBox inside Sidebar */
+#sidebar VBox {
+    -fx-spacing: 20px; /* Spacious layout */
+}
+
+/* HBox inside Sidebar */
+#sidebar HBox {
+    -fx-alignment: CENTER_LEFT; /* Left-align items */
+    -fx-padding: 10px 0; /* Ample clickable area */
+    -fx-spacing: 10px; /* Spacing between icons and labels */
+}
+
+/* Labels inside the Sidebar */
+#sidebar Label {
+    -fx-font-size: 16px; /* Improved readability */
+    -fx-text-fill: white; /* High contrast text */
+    -fx-padding: 0 0 5px 0; /* Bottom padding for spacing */
+    -fx-font-weight: 500; /* Medium weight */
+    -fx-opacity: 0.85; /* Slightly transparent for style */
+}
+
+/* Underline effect on hover for labels within HBox */
+#sidebar HBox:hover Label {
+    /* Add a bottom border to simulate an underline */
+    -fx-border-color: transparent transparent #ff9800 transparent;
+    -fx-border-width: 0 0 3px 0;
+    -fx-opacity: 1; /* Full opacity on hover */
+}
+
+/* Sidebar Button Styles */
+#sidebar Button {
+    -fx-background-color: transparent; /* No default background */
+    -fx-text-fill: white; /* White text */
+    -fx-font-size: 16px; /* Larger font size */
+    -fx-padding: 12px 20px; /* Spacious button padding */
+    -fx-background-radius: 25px; /* Fully rounded shape */
+    -fx-cursor: hand; /* Pointer cursor for interactivity */
+}
+
+/* Button hover effect with a glow */
+#sidebar Button:hover {
+    -fx-background-color: rgba(255, 152, 0, 0.2); /* Light orange background */
+    /* Add a drop shadow glow effect */
+    -fx-effect: dropshadow(gaussian, rgba(255, 152, 0, 0.7), 10, 0.0, 0, 0);
+}
+
+/* Logout Button */
+#sidebar .logout-button {
+    -fx-background-color: #d32f2f; /* Bright red background */
+    -fx-font-weight: bold; /* Bold text for emphasis */
+}
+
+#sidebar .logout-button:hover {
+    -fx-background-color: #b71c1c; /* Darker red on hover */
+}
+
+/* ImageView inside Sidebar */
+#sidebar ImageView {
+    -fx-fit-height: 30px; /* Consistent icon height */
+    -fx-fit-width: 30px; /* Consistent icon width */
+    -fx-preserve-ratio: true; /* Preserve the aspect ratio */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 6, 0.0, 0, 4); /* Subtle drop shadow for icons */
+}
+
+/* Header Styles */
+#header {
+    -fx-background-color: #512da8; /* Purple background */
+    -fx-padding: 10px 20px; /* Padding around header */
+    -fx-alignment: CENTER_LEFT; /* Align items to the left */
+    -fx-spacing: 20px; /* Spacing between elements */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.0, 0, 4); /* Subtle drop shadow */
+}
+
+/* Logo in Header */
+#logoHeader {
+    -fx-fit-height: 50px;
+    -fx-fit-width: 50px;
+    -fx-preserve-ratio: true;
+}
+
+/* Search Bar in Header */
+#searchBar {
+    -fx-background-color: #ffffff; /* White background */
+    -fx-text-fill: #000000; /* Black text */
+    -fx-font-size: 16px; /* Font size */
+    -fx-background-radius: 25px; /* Rounded corners */
+    -fx-padding: 8 15; /* Padding inside search bar */
+}
+
+/* Icon Buttons in Header (Settings, Notifications) */
+#settingsButton, #notificationsButton {
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-padding: 10px; /* Padding around icon */
+}
+
+/* Profile Section in Header */
+#profileSection {
+    -fx-alignment: CENTER_RIGHT; /* Align profile section to the right */
+    -fx-spacing: 10px; /* Spacing between profile picture and label */
+}
+
+/* Profile Picture */
+#profilePic {
+    -fx-fit-height: 36px;
+    -fx-fit-width: 36px;
+    -fx-preserve-ratio: true;
+}
+
+/* Profile Label */
+#profileLabel {
+    -fx-font-size: 17px;
+    -fx-text-fill: white;
+    -fx-font-family: 'Berlin Sans FB';
+}
+
+/* Hover effects for header buttons */
+#settingsButton:hover, #notificationsButton:hover {
+    -fx-effect: dropshadow(gaussian, rgba(255, 152, 0, 0.7), 10, 0.0, 0, 0); /* Glow effect */
+}
+
+/* Logo and text inside Header on hover */
+#logoHeader:hover {
+    -fx-opacity: 0.8; /* Slight opacity change on hover */
+}
+
+#profilePic:hover {
+    -fx-effect: dropshadow(gaussian, rgba(255, 152, 0, 0.5), 6, 0.0, 0, 4); /* Subtle shadow effect */
+}
